@@ -22,7 +22,7 @@ type AuthCtx = {
   refresh: () => Promise<void>;
 };
 
-export type RegisterInput = Pick<User, 'name' | 'cpf' | 'oab' | 'oabUf' | 'email' | 'phone' | 'planId'> & { password: string; logo?: string; avatar?: string };
+export type RegisterInput = Pick<User, 'name' | 'cpf' | 'oab' | 'oabUf' | 'email' | 'phone'> & { password: string; logo?: string; avatar?: string };
 
 const Ctx = createContext<AuthCtx | null>(null);
 

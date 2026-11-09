@@ -14,7 +14,6 @@ import { Badge, Button, Card, Field, Input, PageHeader, Select } from '@/compone
 export default function Perfil() {
   const { user, refresh } = useAuth();
   const { toast } = useUi();
-  const plans = useLiveQuery(() => db.plans.filter((p) => p.active).sortBy('price'), []);
   const [form, setForm] = useState(user);
   useEffect(() => setForm(user), [user]);
   if (!user || !form) return null;
@@ -24,7 +23,7 @@ export default function Perfil() {
   const save = async (e: FormEvent) => {
     e.preventDefault();
     if (form.cpf && !isValidCpf(form.cpf)) return toast('CPF inválido.', 'erro');
-    await db.users.update(user.id, { name: form.name, cpf: form.cpf, oab: form.oab, oabUf: form.oabUf, phone: form.phone, planId: form.planId, logo: form.logo, avatar: form.avatar });
+    await db.users.update(user.id, { name: form.name, cpf: form.cpf, oab: form.oab, oabUf: form.oabUf, phone: form.phone, logo: form.logo, avatar: form.avatar });
     await audit('perfil.atualizado', undefined, user.id);
     await refresh();
     toast('Perfil atualizado.');
@@ -53,11 +52,7 @@ export default function Perfil() {
                 </Select>
               </Field>
               <Field label="E-mail" hint="O e-mail é o login e não pode ser alterado."><Input value={form.email} disabled /></Field>
-              <Field label="Plano de assinatura">
-                <Select value={form.planId} onChange={(e) => set('planId', e.target.value)}>
-                  {plans?.map((p) => <option key={p.id} value={p.id}>{p.name} — {p.price ? `R$ ${p.price.toFixed(2).replace('.', ',')}/mês` : 'gratuito'}</option>)}
-                </Select>
-              </Field>
+              <Field label="Versão"><Input value="Completa (gratuita, sem limites)" disabled /></Field>
             </div>
             <div className="mt-6 grid gap-4 sm:grid-cols-2">
               <ImagePick label="Foto de perfil" value={form.avatar} round onPick={(f) => upload('avatar', f)} onClear={() => setForm({ ...form, avatar: undefined })} />

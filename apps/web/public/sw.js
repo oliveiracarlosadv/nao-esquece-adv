@@ -1,29 +1,36 @@
 // Service worker do NÃO ESQUECE ADV: deixa o app abrir sem internet.
-// Estratégia: rede primeiro para páginas (sempre a versão nova), cache para arquivos estáticos.
-const CACHE = 'nea-v1';
+// - Arquivos com hash (/_next/static/): cache primeiro (nunca mudam).
+// - Todo o resto (páginas, manifesto, ícones): rede primeiro, cache se estiver offline.
+const CACHE = 'nea-v2';
 
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (e) => {
   e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
 });
 
+function save(req, res) {
+  if (res && res.ok) {
+    const copy = res.clone();
+    caches.open(CACHE).then((c) => c.put(req, copy));
+  }
+  return res;
+}
+
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   const url = new URL(req.url);
   if (req.method !== 'GET' || url.origin !== self.location.origin) return;
-  if (req.mode === 'navigate') {
-    e.respondWith(
-      fetch(req)
-        .then((res) => { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); return res; })
-        .catch(() => caches.match(req).then((r) => r || caches.match(new URL('./painel/', self.registration.scope).href))),
-    );
+
+  if (url.pathname.includes('/_next/static/')) {
+    e.respondWith(caches.match(req).then((hit) => hit || fetch(req).then((res) => save(req, res))));
     return;
   }
   e.respondWith(
-    caches.match(req).then((hit) => hit || fetch(req).then((res) => {
-      if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
-      return res;
-    })),
+    fetch(req)
+      .then((res) => save(req, res))
+      .catch(() =>
+        caches.match(req).then((hit) => hit || (req.mode === 'navigate' ? caches.match(new URL('./painel/', self.registration.scope).href) : undefined)),
+      ),
   );
 });
 

@@ -51,7 +51,7 @@ export default function Home() {
             </>
           )}
         </div>
-        <p className="mt-4 text-xs text-faint">Gratuito para testar · Funciona sem instalar · Dados salvos só no seu navegador</p>
+        <p className="mt-4 text-xs text-faint">100% gratuito e completo · Funciona sem instalar · Dados salvos só no seu navegador</p>
       </section>
 
       <section className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">

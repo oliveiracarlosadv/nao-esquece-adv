@@ -1,5 +1,24 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.2.0] — 09/11/2026
+
+Pedidos atendidos: 06 e 07.
+
+### Alterado
+- **App gratuito e completo (versão full):** removidos planos de assinatura, preços e limites de processos/partes. Todos os recursos liberados no app publicado.
+- **Rotina de leitura:** o Painel mostra só as publicações **não lidas**. Ao abrir (ler) uma intimação, ela sai do Painel e vai para a nova tela **Intimações lidas**. “Marcar como não lida” devolve ao Painel. Alternância “Não lidas · Lidas” no topo da tabela.
+- Clicar em uma notificação agora abre a publicação correspondente.
+- Busca global avisa quando há resultados na outra lista (lidas/não lidas).
+- Service worker passa a buscar páginas, manifesto e ícones na rede primeiro (atualizações chegam ao app instalado).
+
+### Adicionado
+- Tela **Intimações lidas** (menu lateral).
+- Explicação na tela **Notificações** (para que serve e como funciona).
+- Ícones PNG (192, 512, maskable) e `apple-touch-icon` para o **Dock do Mac**, Windows e celular.
+
+### Removido
+- Aba “Planos” e colunas de plano/assinatura no painel administrativo; escolha de plano no cadastro e no perfil.
+
 ## [0.1.0] — 09/11/2026
 
 Primeira versão. Pedidos atendidos: 01 a 05 (ver [PEDIDOS/](PEDIDOS/README.md)).
@@ -28,4 +47,4 @@ Primeira versão. Pedidos atendidos: 01 a 05 (ver [PEDIDOS/](PEDIDOS/README.md))
 ### Pendências conhecidas
 - Confirmar resposta do DataJud e do Querido Diário via conector local (sem resposta nos testes de 09/11/2026).
 - DOU (INLABS) e Diários Oficiais Estaduais: planejados.
-- WhatsApp automático e cobrança de assinaturas: integrações futuras.
+- WhatsApp automático: integração futura.

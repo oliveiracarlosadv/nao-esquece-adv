@@ -4,12 +4,16 @@
 
 1. Abra o app: https://oliveiracarlosadv.github.io/nao-esquece-adv/
 2. Clique em **Criar minha conta** e preencha nome completo, CPF, OAB e UF, e-mail, telefone e senha. Foto e logomarca são opcionais.
-3. Escolha o plano. O plano define quantos processos e partes podem ser monitorados.
+3. O app é gratuito e completo: não há planos nem limites.
 4. Aceite o tratamento de dados (LGPD). Pronto: você vai direto para **Monitoramento**.
 
 > Quer só conhecer? Use **Ver demonstração**. A conta de demonstração tem dados fictícios e **não** faz buscas reais.
 
-**Dica:** instale o app (no Chrome/Edge: ícone de instalar na barra de endereço). Assim ele abre como um programa e continua monitorando enquanto estiver aberto.
+**Dica:** instale o app para ele abrir como um programa e continuar monitorando enquanto estiver aberto.
+- **Chrome/Edge (Mac ou Windows):** ícone de instalar na barra de endereço, ou menu ⋮ → Transmitir, salvar e compartilhar → Instalar página como app.
+- **Safari no Mac:** menu Arquivo → Adicionar ao Dock.
+
+> **Atenção (Safari):** o app adicionado ao Dock pelo Safari tem um armazenamento **separado** do Safari comum. Contas e dados criados numa janela do Safari não aparecem no app do Dock (e vice-versa). Se já tiver dados, exporte um backup e importe dentro do app do Dock. No Chrome/Edge, o app instalado compartilha os dados com o navegador.
 
 ## 2. Monitoramento
 
@@ -31,13 +35,16 @@ Aba **Histórico de buscas**: tudo o que foi pesquisado, quando e com que result
 
 O botão **Buscar agora** força uma busca imediata.
 
-## 3. Painel
+## 3. Painel e Intimações lidas
+
+**Rotina de leitura:** o **Painel** mostra só o que ainda **não foi lido**. Ao abrir uma publicação (ou marcá-la como lida), ela **sai do Painel** e passa a ficar em **Intimações lidas** (menu lateral). Para devolvê-la ao Painel, use **Marcar como não lida**. As duas listas têm os mesmos filtros, busca e exportação; a troca entre elas fica no topo da tabela (“Não lidas · Lidas”).
+
 
 - **Contadores**: não lidas, prazos que vencem em até 3 dias úteis, novas hoje e total.
-- **Tabela**: Status (lido/não lido) · Data (publicação e disponibilização) · Processo · Partes · Tribunal/Vara · Comarca · Fim do prazo · Tipo · Origem · Ações.
+- **Tabela**: Status (lida/não lida) · Data (publicação e disponibilização) · Processo · Partes · Tribunal/Vara · Comarca · Fim do prazo · Tipo · Origem · Ações.
 - **Cores do prazo**: vermelho (até 2 dias úteis), amarelo (até 5), verde (mais de 5), riscado (vencido). “Presumido” = o texto não trazia o prazo; confira.
-- **Ações por linha**: 👁 visualizar · ✓ marcar como lido/não lido · ★ salvar · ⬇ exportar · compartilhar.
-- **Seleção em lote**: marque várias linhas e use “Marcar como lido/não lido” ou “Exportar”.
+- **Ações por linha**: 👁 visualizar · ✓ marcar como lida (vai para Lidas) / não lida (volta ao Painel) · ★ salvar · ⬇ exportar · compartilhar.
+- **Seleção em lote**: marque várias linhas e use “Marcar como lida” (no Painel), “Marcar como não lida” (em Lidas) ou “Exportar”.
 - **Filtros**: processo, parte, tribunal, vara, comarca, datas, lidas/não lidas, tipo, origem e favoritas.
 - **Busca global** (topo): digite e escolha onde buscar (tudo, partes, processo, advogado, OAB).
 
@@ -57,6 +64,9 @@ Também ficam aqui os **processos fixados** e as **publicações salvas** (estre
 
 ## 6. Notificações
 
+**Para que serve:** é o **histórico de avisos**. Toda vez que a busca automática (de hora em hora) encontra uma intimação, citação, publicação, prazo ou licitação **nova**, o app cria um aviso aqui e acende o ponto laranja no sino do topo. Clicar no aviso abre a publicação. O lugar de ler e controlar as publicações continua sendo o Painel; a tela de Notificações só avisa que chegou algo novo e define **como** você quer ser avisado:
+
+
 - **No sistema**: sino no topo e menu Notificações.
 - **Push**: clique em “Permitir notificações” para receber avisos do computador.
 - **E-mail**: abre o seu programa de e-mail com o resumo pronto.
@@ -69,8 +79,8 @@ Veja [BACKUP.md](BACKUP.md). Resumo: **exporte um backup com frequência** e gua
 
 ## 8. Perfil
 
-Altere dados, foto, logomarca, plano e senha. Ative a **autenticação em dois fatores** lendo o QR code com um aplicativo autenticador.
+Altere dados, foto, logomarca e senha. Ative a **autenticação em dois fatores** lendo o QR code com um aplicativo autenticador.
 
 ## 9. Administração (somente administradores)
 
-Usuários e assinaturas · Planos · Logomarcas · Bases e APIs · Logs de pesquisas · Auditoria · Relatórios · Página Sobre (escolha da pasta de conteúdo).
+Usuários · Logomarcas · Bases e APIs · Logs de pesquisas · Auditoria · Relatórios · Página Sobre (escolha da pasta de conteúdo).

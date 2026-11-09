@@ -59,19 +59,16 @@ function RunButton() {
 }
 
 function Terms({ userId }: { userId: string }) {
-  const { user } = useAuth();
   const { toast } = useUi();
   const terms = useLiveQuery(() => db.terms.where('userId').equals(userId).reverse().sortBy('createdAt'), [userId]);
-  const plan = useLiveQuery(() => (user ? db.plans.get(user.planId) : undefined), [user?.planId]);
   const [kind, setKind] = useState<TermKind>('processo');
   const [value, setValue] = useState('');
   const [label, setLabel] = useState('');
   const [bulk, setBulk] = useState('');
 
   const add = async (values: string[]) => {
-    const max = plan?.maxTerms ?? 1000;
     const list = values.map((v) => v.trim()).filter(Boolean).map((v) => (kind === 'processo' ? maskCnj(v) : v));
-    if ((terms?.length || 0) + list.length > max) return toast(`Seu plano permite até ${max} termos monitorados.`, 'erro');
+    if (!list.length) return;
     await db.terms.bulkAdd(list.map((v) => ({ id: uid('t_'), userId, kind, value: v, label: label.trim() || undefined, active: true, createdAt: nowIso() })));
     await audit('termo.adicionado', `${kind}: ${list.join(', ')}`, userId);
     setValue('');
@@ -110,7 +107,7 @@ function Terms({ userId }: { userId: string }) {
           <Button size="sm" className="mt-2" onClick={() => add(bulk.split('\n'))}>Adicionar lista</Button>
         </details>
         <p className="mt-5 rounded-lg bg-muted p-3 text-xs leading-5 text-soft">
-          Seu nome, CPF e OAB (do perfil) já são monitorados automaticamente. Plano: <strong>{plan?.name}</strong> — até {plan?.maxTerms} termos.
+          Seu nome, CPF e OAB (do perfil) já são monitorados automaticamente. Sem limite de processos ou partes.
         </p>
       </Card>
 

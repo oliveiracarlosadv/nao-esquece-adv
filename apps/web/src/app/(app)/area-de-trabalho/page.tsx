@@ -11,7 +11,7 @@ import { fmtDate } from '@/lib/format';
 import { DeadlineBadge, PublicationDrawer, ShareDialog } from '@/components/publications';
 import { Badge, Button, Card, Empty, IconButton, Input, PageHeader } from '@/components/ui';
 
-const link = (f?: Filters) => `/painel/?filtros=${encodeURIComponent(JSON.stringify(f || {}))}`;
+const link = (f?: Filters) => `${f?.read === 'lidos' ? '/lidas/' : '/painel/'}?filtros=${encodeURIComponent(JSON.stringify(f || {}))}`;
 
 export default function AreaDeTrabalho() {
   const { user } = useAuth();

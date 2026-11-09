@@ -11,7 +11,7 @@ import { Badge, Button, Card, Field, IconButton, Input, Modal, PageHeader, Toggl
 
 const LABELS: Record<string, string> = {
   users: 'Contas', terms: 'Processos e partes', publications: 'Publicações', workspace: 'Área de trabalho', notifications: 'Notificações',
-  runs: 'Histórico de buscas', audit: 'Auditoria', plans: 'Planos', settings: 'Configurações', files: 'Arquivos (Sobre)',
+  runs: 'Histórico de buscas', audit: 'Auditoria', settings: 'Configurações', files: 'Arquivos (Sobre)',
 };
 
 export default function BackupPage() {

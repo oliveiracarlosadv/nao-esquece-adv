@@ -38,7 +38,7 @@ export default function Notificacoes() {
     <>
       <PageHeader
         title="Notificações"
-        subtitle="Avisos de novas intimações, publicações, prazos e licitações."
+        subtitle="Avisos automáticos sempre que chega algo novo."
         actions={
           unread.length > 0 && (
             <Button icon={<CheckCheck size={16} />} onClick={() => db.notifications.where('userId').equals(user.id).modify({ read: true })}>
@@ -47,6 +47,17 @@ export default function Notificacoes() {
           )
         }
       />
+      <div className="mb-6 rounded-xl border border-line bg-surface p-5 text-sm leading-6 text-soft">
+        <p className="font-medium text-ink">Para que serve esta tela?</p>
+        <p className="mt-1">
+          É o seu <strong className="text-ink">histórico de avisos</strong>. A cada busca automática (de hora em hora), quando o app encontra uma intimação, citação, publicação, prazo ou
+          licitação <strong className="text-ink">nova</strong>, ele cria um aviso aqui e acende o ponto laranja no sino do topo. Clique em um aviso para abrir a publicação.
+        </p>
+        <p className="mt-2">
+          Ao lado você escolhe <strong className="text-ink">como</strong> quer ser avisado: no próprio app (sempre), com um alerta no canto da tela do computador (push), por e-mail ou
+          pelo WhatsApp. O painel continua sendo o lugar onde você lê e controla as publicações; aqui é só o aviso de que chegou algo novo.
+        </p>
+      </div>
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <Card className="min-w-0 overflow-hidden">
           <div className="-m-5">
@@ -61,7 +72,7 @@ export default function Notificacoes() {
                       <span className={cx('mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg', n.kind === 'licitacao' ? 'bg-amber-50 text-amber-600 dark:bg-amber-500/15' : 'bg-brand-50 text-brand-600 dark:bg-brand-600/15')}>
                         <Icon size={16} />
                       </span>
-                      <Link href={n.publicationId ? `/painel/?q=${encodeURIComponent(n.body.split(' — ')[0])}` : '#'} onClick={() => db.notifications.update(n.id, { read: true })} className="min-w-0 flex-1">
+                      <Link href={n.publicationId ? `/painel/?abrir=${encodeURIComponent(n.publicationId)}` : '#'} onClick={() => db.notifications.update(n.id, { read: true })} className="min-w-0 flex-1">
                         <p className={cx('text-sm', n.read ? 'text-soft' : 'font-semibold text-ink')}>{n.title}</p>
                         <p className="truncate text-sm text-soft">{n.body}</p>
                         <p className="mt-0.5 text-xs text-faint">{fmtDateTime(n.createdAt)}</p>

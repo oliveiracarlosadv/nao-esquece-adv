@@ -30,14 +30,14 @@
 
 | Tabela | Conteúdo |
 |---|---|
-| `users` | Contas locais (senha com hash PBKDF2, segredo 2FA, foto, logomarca, plano, perfil) |
+| `users` | Contas locais (senha com hash PBKDF2, segredo 2FA, foto, logomarca, perfil) |
 | `terms` | Processos, partes, CPF/CNPJ e termos monitorados |
 | `publications` | Publicações encontradas, com prazo, leitura, favorito e anotação |
 | `workspace` | Consultas salvas, painéis personalizados e processos fixados |
 | `notifications` | Central de notificações |
 | `runs` | Log de cada pesquisa feita nas fontes |
 | `audit` | Auditoria (login, alterações, exportações, backups) |
-| `plans` | Planos de assinatura |
+| `plans` | Legado (vazia). O app é gratuito e completo, sem planos |
 | `settings` | Configurações (monitoramento, notificações, pasta do Sobre…) |
 | `files` | Arquivos da página Sobre carregados de uma pasta |
 | `snapshots` | Pontos de restauração |

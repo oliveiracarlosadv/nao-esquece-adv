@@ -16,7 +16,8 @@ export type User = {
   oabUf: string;
   phone: string;
   role: Role;
-  planId: string;
+  /** Campo legado (versões com planos). O app é gratuito e completo. */
+  planId?: string;
   passwordHash: string;
   passwordSalt: string;
   totpSecret?: string;
@@ -125,6 +126,7 @@ export type RunLog = {
 
 export type AuditLog = { id: string; at: string; userId?: string; action: string; detail?: string };
 
+/** Legado: tabela mantida só para abrir bancos e backups antigos. */
 export type Plan = { id: string; name: string; price: number; maxTerms: number; features: string[]; active: boolean };
 
 export type Snapshot = { id: string; createdAt: string; label: string; size: number; data: string };
@@ -167,7 +169,7 @@ class NeaDB extends Dexie {
 export const db = new NeaDB();
 
 /** Tabelas incluídas no backup (snapshots ficam de fora para o arquivo não crescer sem limite). */
-export const BACKUP_TABLES = ['users', 'terms', 'publications', 'workspace', 'notifications', 'runs', 'audit', 'plans', 'settings', 'files'] as const;
+export const BACKUP_TABLES = ['users', 'terms', 'publications', 'workspace', 'notifications', 'runs', 'audit', 'settings', 'files'] as const;
 
 export function uid(prefix = ''): string {
   return prefix + (crypto.randomUUID?.() ?? Math.random().toString(36).slice(2) + Date.now().toString(36));
@@ -190,12 +192,7 @@ export async function audit(action: string, detail?: string, userId?: string): P
   await db.audit.add({ id: uid('a_'), at: nowIso(), userId, action, detail });
 }
 
-export const DEFAULT_PLANS: Plan[] = [
-  { id: 'essencial', name: 'Essencial', price: 0, maxTerms: 10, features: ['1 advogado', 'DJEN e Querido Diário', 'Exportação CSV'], active: true },
-  { id: 'profissional', name: 'Profissional', price: 49.9, maxTerms: 100, features: ['Todas as fontes', 'Exportação PDF/Excel', 'Área de trabalho'], active: true },
-  { id: 'escritorio', name: 'Escritório', price: 149.9, maxTerms: 1000, features: ['Vários advogados', 'Painel administrativo', 'Relatórios'], active: true },
-];
-
+/** O app é gratuito e completo (versão full): não há planos nem limites. Remove planos de versões antigas. */
 export async function ensureSeed(): Promise<void> {
-  if ((await db.plans.count()) === 0) await db.plans.bulkPut(DEFAULT_PLANS);
+  if ((await db.plans.count()) > 0) await db.plans.clear();
 }

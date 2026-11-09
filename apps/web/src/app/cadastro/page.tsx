@@ -2,18 +2,15 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
-import { useLiveQuery } from 'dexie-react-hooks';
 import { useAuth, type RegisterInput } from '@/lib/auth';
-import { db } from '@/lib/db';
-import { cx, isValidCpf, maskCpf, maskPhone, readFileAsDataUrl, UFS } from '@/lib/format';
+import { isValidCpf, maskCpf, maskPhone, readFileAsDataUrl, UFS } from '@/lib/format';
 import { Logo } from '@/components/Logo';
 import { Button, Field, Input, Select } from '@/components/ui';
 
 export default function Cadastro() {
   const { register } = useAuth();
   const router = useRouter();
-  const plans = useLiveQuery(() => db.plans.filter((p) => p.active).sortBy('price'), []);
-  const [f, setF] = useState<RegisterInput>({ name: '', cpf: '', oab: '', oabUf: 'PA', email: '', phone: '', planId: 'essencial', password: '' });
+  const [f, setF] = useState<RegisterInput>({ name: '', cpf: '', oab: '', oabUf: 'PA', email: '', phone: '', password: '' });
   const [confirm, setConfirm] = useState('');
   const [accept, setAccept] = useState(false);
   const [error, setError] = useState('');
@@ -48,7 +45,7 @@ export default function Cadastro() {
         <form onSubmit={submit} className="space-y-6 rounded-2xl border border-line bg-surface p-6 shadow-sm sm:p-8">
           <div>
             <h1 className="text-xl font-semibold text-ink">Criar conta</h1>
-            <p className="mt-1 text-sm text-soft">Nome, CPF e OAB serão usados nas buscas automáticas.</p>
+            <p className="mt-1 text-sm text-soft">Gratuito e completo. Nome, CPF e OAB serão usados nas buscas automáticas.</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Nome completo" className="sm:col-span-2"><Input value={f.name} onChange={(e) => set('name', e.target.value)} required autoFocus /></Field>
@@ -63,18 +60,6 @@ export default function Cadastro() {
             <Field label="Logomarca (opcional)"><Input type="file" accept="image/*" className="py-2" onChange={(e) => img('logo', e.target.files?.[0])} /></Field>
           </div>
 
-          <div>
-            <p className="mb-2 text-[13px] font-medium text-soft">Plano de assinatura</p>
-            <div className="grid gap-3 sm:grid-cols-3">
-              {plans?.map((p) => (
-                <button type="button" key={p.id} onClick={() => set('planId', p.id)} className={cx('rounded-xl border p-4 text-left transition-colors', f.planId === p.id ? 'border-brand-600 ring-2 ring-brand-500/20' : 'border-line hover:bg-muted')}>
-                  <p className="font-semibold text-ink">{p.name}</p>
-                  <p className="text-sm text-soft">{p.price ? `R$ ${p.price.toFixed(2).replace('.', ',')}/mês` : 'Gratuito'}</p>
-                  <ul className="mt-2 space-y-0.5 text-xs text-faint">{p.features.map((x) => <li key={x}>· {x}</li>)}</ul>
-                </button>
-              ))}
-            </div>
-          </div>
 
           <label className="flex items-start gap-2 text-sm text-soft">
             <input type="checkbox" checked={accept} onChange={(e) => setAccept(e.target.checked)} className="mt-1 accent-brand-600" />

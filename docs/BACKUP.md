@@ -26,7 +26,7 @@ Antes de importar ou restaurar, o app cria **automaticamente** um ponto de resta
 
 ## O que vai no backup
 
-Contas, processos e partes monitorados, publicações (com leitura, favoritos, prazos e anotações), área de trabalho, notificações, histórico de buscas, auditoria, planos, configurações e arquivos da página Sobre. Pontos de restauração não entram no arquivo.
+Contas, processos e partes monitorados, publicações (com leitura, favoritos, prazos e anotações), área de trabalho, notificações, histórico de buscas, auditoria, configurações e arquivos da página Sobre. Pontos de restauração não entram no arquivo.
 
 ## Backup do código-fonte
 

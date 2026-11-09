@@ -4,7 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { Download, FolderOpen, Plus, RefreshCw, Trash2, UserPlus } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { hashPassword } from '@/lib/crypto';
-import { audit, db, getSetting, nowIso, setSetting, uid, type Plan, type User } from '@/lib/db';
+import { audit, db, getSetting, nowIso, setSetting, uid, type User } from '@/lib/db';
 import { exportCsv } from '@/lib/export';
 import { fmtDateTime } from '@/lib/format';
 import { getMonitorSettings, type MonitorSettings } from '@/lib/monitor';
@@ -13,7 +13,7 @@ import { SOURCES } from '@/lib/sources';
 import { useUi } from '@/components/Providers';
 import { Badge, Button, Card, Empty, Field, IconButton, Input, Modal, PageHeader, Select, Spinner, Tabs, Toggle } from '@/components/ui';
 
-type Tab = 'usuarios' | 'planos' | 'logos' | 'fontes' | 'logs' | 'historico' | 'relatorios' | 'sobre';
+type Tab = 'usuarios' | 'logos' | 'fontes' | 'logs' | 'historico' | 'relatorios' | 'sobre';
 
 export default function Admin() {
   const { user } = useAuth();
@@ -22,13 +22,12 @@ export default function Admin() {
   if (user.role !== 'admin') return <Card><Empty title="Acesso restrito" text="Apenas administradores acessam esta área." /></Card>;
   return (
     <>
-      <PageHeader title="Administração" subtitle="Gestão de usuários, planos, fontes, registros e conteúdo institucional." />
+      <PageHeader title="Administração" subtitle="Gestão de usuários, fontes, registros e conteúdo institucional." />
       <Tabs
         value={tab}
         onChange={setTab}
         tabs={[
-          { id: 'usuarios', label: 'Usuários e assinaturas' },
-          { id: 'planos', label: 'Planos' },
+          { id: 'usuarios', label: 'Usuários' },
           { id: 'logos', label: 'Logomarcas' },
           { id: 'fontes', label: 'Bases e APIs' },
           { id: 'logs', label: 'Logs de pesquisas' },
@@ -38,7 +37,6 @@ export default function Admin() {
         ]}
       />
       {tab === 'usuarios' && <Users me={user} />}
-      {tab === 'planos' && <Plans />}
       {tab === 'logos' && <Logos />}
       {tab === 'fontes' && <Sources />}
       {tab === 'logs' && <Logs />}
@@ -52,15 +50,14 @@ export default function Admin() {
 function Users({ me }: { me: User }) {
   const { toast } = useUi();
   const users = useLiveQuery(() => db.users.toArray(), []);
-  const plans = useLiveQuery(() => db.plans.toCollection().sortBy('price'), []);
   const [open, setOpen] = useState(false);
-  const [f, setF] = useState({ name: '', email: '', password: '', role: 'usuario', planId: 'essencial', oab: '', oabUf: 'PA' });
+  const [f, setF] = useState({ name: '', email: '', password: '', role: 'usuario', oab: '', oabUf: 'PA' });
 
   const create = async () => {
     if (!f.name || !f.email || f.password.length < 8) return toast('Preencha nome, e-mail e senha (mín. 8).', 'erro');
     if (await db.users.where('email').equals(f.email.toLowerCase()).first()) return toast('E-mail já cadastrado.', 'erro');
     const { hash, salt } = await hashPassword(f.password);
-    await db.users.add({ id: uid('u_'), name: f.name, email: f.email.toLowerCase(), cpf: '', oab: f.oab, oabUf: f.oabUf, phone: '', role: f.role as User['role'], planId: f.planId, passwordHash: hash, passwordSalt: salt, active: true, createdAt: nowIso() });
+    await db.users.add({ id: uid('u_'), name: f.name, email: f.email.toLowerCase(), cpf: '', oab: f.oab, oabUf: f.oabUf, phone: '', role: f.role as User['role'], passwordHash: hash, passwordSalt: salt, active: true, createdAt: nowIso() });
     await audit('admin.usuario.criado', f.email, me.id);
     setOpen(false);
     toast('Usuário criado.');
@@ -77,7 +74,7 @@ function Users({ me }: { me: User }) {
       <div className="-m-5 overflow-x-auto">
         <table className="w-full min-w-[820px] text-left text-sm">
           <thead className="border-b border-line text-xs uppercase tracking-wide text-faint">
-            <tr><th className="px-5 py-3">Nome</th><th className="px-3 py-3">OAB</th><th className="px-3 py-3">Perfil</th><th className="px-3 py-3">Plano</th><th className="px-3 py-3">2FA</th><th className="px-3 py-3">Ativo</th><th className="px-3 py-3">Desde</th></tr>
+            <tr><th className="px-5 py-3">Nome</th><th className="px-3 py-3">OAB</th><th className="px-3 py-3">Perfil</th><th className="px-3 py-3">2FA</th><th className="px-3 py-3">Ativo</th><th className="px-3 py-3">Desde</th></tr>
           </thead>
           <tbody className="divide-y divide-line">
             {users?.map((u) => (
@@ -86,9 +83,6 @@ function Users({ me }: { me: User }) {
                 <td className="px-3 py-3 text-soft">{u.oab ? `${u.oab}/${u.oabUf}` : '—'}</td>
                 <td className="px-3 py-3">
                   <Select value={u.role} onChange={(e) => update(u, { role: e.target.value as User['role'] })} className="h-8 w-36 text-xs"><option value="admin">Administrador</option><option value="usuario">Advogado</option></Select>
-                </td>
-                <td className="px-3 py-3">
-                  <Select value={u.planId} onChange={(e) => update(u, { planId: e.target.value })} className="h-8 w-36 text-xs">{plans?.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</Select>
                 </td>
                 <td className="px-3 py-3">{u.totpSecret ? <Badge tone="green">Sim</Badge> : <Badge>Não</Badge>}</td>
                 <td className="px-3 py-3"><Toggle checked={u.active} onChange={(v) => update(u, { active: v })} label="" /></td>
@@ -106,42 +100,12 @@ function Users({ me }: { me: User }) {
           <Field label="OAB"><Input value={f.oab} onChange={(e) => setF({ ...f, oab: e.target.value })} /></Field>
           <Field label="UF"><Input value={f.oabUf} maxLength={2} onChange={(e) => setF({ ...f, oabUf: e.target.value.toUpperCase() })} /></Field>
           <Field label="Perfil"><Select value={f.role} onChange={(e) => setF({ ...f, role: e.target.value })}><option value="usuario">Advogado</option><option value="admin">Administrador</option></Select></Field>
-          <Field label="Plano"><Select value={f.planId} onChange={(e) => setF({ ...f, planId: e.target.value })}>{plans?.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}</Select></Field>
         </div>
       </Modal>
     </Card>
   );
 }
 
-function Plans() {
-  const plans = useLiveQuery(() => db.plans.toCollection().sortBy('price'), []);
-  const save = (p: Plan, patch: Partial<Plan>) => db.plans.update(p.id, patch);
-  const add = () => db.plans.add({ id: uid('p_'), name: 'Novo plano', price: 0, maxTerms: 10, features: [], active: false });
-  return (
-    <div className="space-y-4">
-      <div className="grid gap-4 md:grid-cols-3">
-        {plans?.map((p) => (
-          <Card key={p.id}>
-            <div className="space-y-3">
-              <Field label="Nome"><Input defaultValue={p.name} onBlur={(e) => save(p, { name: e.target.value })} /></Field>
-              <div className="grid grid-cols-2 gap-3">
-                <Field label="Preço (R$/mês)"><Input type="number" step="0.01" defaultValue={p.price} onBlur={(e) => save(p, { price: Number(e.target.value) })} /></Field>
-                <Field label="Limite de termos"><Input type="number" defaultValue={p.maxTerms} onBlur={(e) => save(p, { maxTerms: Number(e.target.value) })} /></Field>
-              </div>
-              <Field label="Recursos (separados por vírgula)"><Input defaultValue={p.features.join(', ')} onBlur={(e) => save(p, { features: e.target.value.split(',').map((x) => x.trim()).filter(Boolean) })} /></Field>
-              <div className="flex items-center justify-between">
-                <Toggle checked={p.active} onChange={(v) => save(p, { active: v })} label="Disponível" />
-                <IconButton label="Excluir plano" onClick={() => db.plans.delete(p.id)}><Trash2 size={15} /></IconButton>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
-      <Button icon={<Plus size={16} />} onClick={add}>Novo plano</Button>
-      <p className="text-xs text-faint">A cobrança de assinaturas exige um provedor de pagamento (integração futura). Aqui o plano define limites de uso.</p>
-    </div>
-  );
-}
 
 function Logos() {
   const users = useLiveQuery(() => db.users.toArray(), []);

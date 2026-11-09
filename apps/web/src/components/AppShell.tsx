@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
-  Archive, Bell, Bookmark, Info, LayoutList, LogOut, Menu, Moon, Radar, RefreshCw, Search, Shield, Sun, User as UserIcon, X,
+  Archive, Bell, Bookmark, CheckCheck, Info, LayoutList, LogOut, Menu, Moon, Radar, RefreshCw, Search, Shield, Sun, User as UserIcon, X,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { db } from '@/lib/db';
@@ -20,6 +20,7 @@ export const useMonitor = () => useContext(MCtx);
 
 const NAV = [
   { href: '/painel/', label: 'Painel', icon: LayoutList },
+  { href: '/lidas/', label: 'Intimações lidas', icon: CheckCheck },
   { href: '/monitoramento/', label: 'Monitoramento', icon: Radar },
   { href: '/area-de-trabalho/', label: 'Área de trabalho', icon: Bookmark },
   { href: '/notificacoes/', label: 'Notificações', icon: Bell },

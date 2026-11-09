@@ -89,7 +89,7 @@ export async function ensureDemoUser(): Promise<User> {
   const first = (await db.users.count()) === 0;
   const user: User = {
     id: uid('u_'), email, name: 'Carlos Exemplo', cpf: '000.000.000-00', oab: '12345', oabUf: 'PA', phone: '(91) 90000-0000',
-    role: first ? 'admin' : 'usuario', planId: 'profissional', passwordHash: hash, passwordSalt: salt, active: true, createdAt: nowIso(),
+    role: first ? 'admin' : 'usuario', passwordHash: hash, passwordSalt: salt, active: true, createdAt: nowIso(),
   };
   await db.users.add(user);
   await loadDemoData(user);

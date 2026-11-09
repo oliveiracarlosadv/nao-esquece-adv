@@ -10,6 +10,11 @@ export const metadata: Metadata = {
   description: 'Monitoramento automático de publicações jurídicas, intimações e licitações. Seus dados ficam no seu computador.',
   manifest: `${base}/manifest.webmanifest`,
   applicationName: 'Não Esquece Adv',
+  icons: {
+    icon: [{ url: `${base}/icon-192.png`, sizes: '192x192', type: 'image/png' }, { url: `${base}/logo.svg`, type: 'image/svg+xml' }],
+    apple: [{ url: `${base}/apple-touch-icon.png`, sizes: '180x180' }],
+  },
+  appleWebApp: { capable: true, title: 'Não Esquece', statusBarStyle: 'default' },
 };
 
 export const viewport: Viewport = {

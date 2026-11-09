@@ -104,9 +104,9 @@ export function PublicationTable({ rows, selected, onSelect, onOpen, onShare, on
                 <td className="px-4 py-3.5">
                   <div className="flex items-center gap-2">
                     <input type="checkbox" checked={selected.has(p.id)} onChange={() => toggle(p.id)} className="accent-brand-600" aria-label="Selecionar" />
-                    <button onClick={() => setRead([p.id], !p.read)} title={p.read ? 'Marcar como não lido' : 'Marcar como lido'} className="flex items-center gap-1.5">
+                    <button onClick={() => setRead([p.id], !p.read)} title={p.read ? 'Marcar como não lida (volta ao Painel)' : 'Marcar como lida (vai para Lidas)'} className="flex items-center gap-1.5">
                       <span className={cx('h-2.5 w-2.5 rounded-full', p.read ? 'border border-faint' : 'bg-brand-600')} />
-                      <span className={cx('whitespace-nowrap text-xs', p.read ? 'text-faint' : 'font-medium text-brand-700 dark:text-brand-100')}>{p.read ? 'Lido' : 'Não lido'}</span>
+                      <span className={cx('whitespace-nowrap text-xs', p.read ? 'text-faint' : 'font-medium text-brand-700 dark:text-brand-100')}>{p.read ? 'Lida' : 'Não lida'}</span>
                     </button>
                   </div>
                 </td>
@@ -139,7 +139,7 @@ export function PublicationTable({ rows, selected, onSelect, onOpen, onShare, on
                     <IconButton label="Visualizar" onClick={() => onOpen(p)}>
                       <Eye size={16} />
                     </IconButton>
-                    <IconButton label={p.read ? 'Marcar como não lido' : 'Marcar como lido'} onClick={() => setRead([p.id], !p.read)}>
+                    <IconButton label={p.read ? 'Marcar como não lida (volta ao Painel)' : 'Marcar como lida (vai para Lidas)'} onClick={() => setRead([p.id], !p.read)}>
                       {p.read ? <EyeOff size={16} /> : <Check size={16} />}
                     </IconButton>
                     <IconButton label={p.favorite ? 'Remover dos salvos' : 'Salvar'} onClick={() => toggleFavorite(p)}>
@@ -199,7 +199,7 @@ export function PublicationTable({ rows, selected, onSelect, onOpen, onShare, on
 
 /* ---------------------------------------------------------------- Filtros */
 
-export function FiltersForm({ value, onChange, courts, origins }: { value: Filters; onChange: (f: Filters) => void; courts: string[]; origins: string[] }) {
+export function FiltersForm({ value, onChange, courts, origins, hideRead }: { value: Filters; onChange: (f: Filters) => void; courts: string[]; origins: string[]; hideRead?: boolean }) {
   const set = (k: keyof Filters, v: string | boolean) => onChange({ ...value, [k]: v || undefined });
   return (
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
@@ -223,13 +223,15 @@ export function FiltersForm({ value, onChange, courts, origins }: { value: Filte
       <Field label="Comarca">
         <Input value={value.comarca || ''} onChange={(e) => set('comarca', e.target.value)} />
       </Field>
-      <Field label="Situação">
-        <Select value={value.read || 'todos'} onChange={(e) => set('read', e.target.value)}>
-          <option value="todos">Lidas e não lidas</option>
-          <option value="nao-lidos">Apenas não lidas</option>
-          <option value="lidos">Apenas lidas</option>
-        </Select>
-      </Field>
+      {!hideRead && (
+        <Field label="Situação">
+          <Select value={value.read || 'todos'} onChange={(e) => set('read', e.target.value)}>
+            <option value="todos">Lidas e não lidas</option>
+            <option value="nao-lidos">Apenas não lidas</option>
+            <option value="lidos">Apenas lidas</option>
+          </Select>
+        </Field>
+      )}
       <Field label="Data inicial">
         <Input type="date" value={value.from || ''} onChange={(e) => set('from', e.target.value)} />
       </Field>
@@ -309,7 +311,7 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
       footer={
         <>
           <Button size="sm" variant="primary" icon={p.read ? <EyeOff size={15} /> : <Check size={15} />} onClick={() => setRead([p.id], !p.read)}>
-            {p.read ? 'Marcar como não lido' : 'Marcar como lido'}
+            {p.read ? 'Marcar como não lida (volta ao Painel)' : 'Marcar como lida (vai para Lidas)'}
           </Button>
           <Button size="sm" icon={<Star size={15} className={p.favorite ? 'fill-alert text-alert' : ''} />} onClick={() => toggleFavorite(p)}>
             {p.favorite ? 'Salvo' : 'Salvar'}

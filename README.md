@@ -20,6 +20,8 @@
 
 O **NÃO ESQUECE ADV** é um webapp para advogados, escritórios de advocacia e departamentos jurídicos que **monitora automaticamente, a cada 1 hora**, intimações, citações, notificações, andamentos processuais, menções ao advogado (nome, CPF e OAB) e publicações em licitações públicas, e reúne tudo em **um único painel** com controle de leitura, prazos calculados, pesquisa avançada e exportação.
 
+O app é **100% gratuito e completo (versão full)**: todos os recursos liberados, sem planos nem limites.
+
 Diferencial: **os dados ficam no seu computador**, guardados no próprio navegador. Não há servidor central com informações de clientes, o que simplifica muito a adequação à LGPD. Backups podem ser criados, exportados e importados a qualquer momento, inclusive com senha.
 
 **Link direto:** https://oliveiracarlosadv.github.io/nao-esquece-adv/
@@ -39,12 +41,12 @@ Para conhecer sem cadastrar nada, clique em **“Ver demonstração”** (dados 
                          a cada 1 hora               Fim do prazo
 ```
 
-1. **Cadastro** — nome completo, CPF, OAB/UF, e-mail, telefone, foto, logomarca e plano.
+1. **Cadastro** — nome completo, CPF, OAB/UF, e-mail, telefone, foto e logomarca. **O app é gratuito e completo: sem planos, sem cobrança, sem limites.**
 2. **Monitoramento** — cadastre processos, partes, CPF/CNPJ e termos de licitação. Seu nome, CPF e OAB já entram automaticamente.
 3. **Busca automática** — a cada hora (configurável), enquanto o app estiver aberto em alguma aba ou instalado como aplicativo. Na primeira vez, busca os últimos 30 dias.
 4. **Processamento inteligente** — cada publicação é lida para extrair número do processo, partes, tribunal, vara, comarca, órgão emissor e categoria (intimação, citação, sentença, despacho, acórdão, pauta, edital, licitação…).
 5. **Prazo automático** — quando o texto informa o prazo (“no prazo de 15 (quinze) dias”), o fim é calculado em **dias úteis**, com publicação no 1º dia útil após a disponibilização (Lei 11.419/2006, art. 4º), feriados nacionais e móveis, **suspensão de 20/12 a 20/01** (CPC, art. 220) e feriados locais. Quando não há prazo no texto, aplica-se um prazo **presumido** (CPC, art. 218, §3º), sinalizado para conferência.
-6. **Painel** — tabela com Lido/Não lido, datas de publicação e disponibilização, processo, partes, tribunal/vara, comarca, fim do prazo, tipo, origem e ações (visualizar, marcar como lido/não lido, salvar, exportar, compartilhar).
+6. **Painel** — mostra só o que ainda **não foi lido**. Ao abrir (ler) uma intimação, ela sai do Painel e vai para **Intimações lidas**; “Marcar como não lida” devolve. Tabela com Lida/Não lida, datas de publicação e disponibilização, processo, partes, tribunal/vara, comarca, fim do prazo, tipo, origem e ações (visualizar, marcar como lido/não lido, salvar, exportar, compartilhar).
 7. **Avisos** — notificações no sistema e do computador; resumo por e-mail e WhatsApp.
 
 ### Fontes consultadas
@@ -71,11 +73,12 @@ Para conhecer sem cadastrar nada, clique em **“Ver demonstração”** (dados 
 - **Busca global** com lupa: partes, processo, advogado ou OAB.
 - **Exportação** para **PDF, Excel e CSV**, por resultado atual, selecionados ou filtros próprios (vara, processo, tribunal, período, lidos/não lidos).
 - **Área de trabalho**: consultas e filtros salvos, painéis personalizados com contadores, processos fixados e publicações favoritas.
-- **Central de notificações**: no sistema, push do computador, e-mail e WhatsApp (envio automático é integração futura).
+- **Intimações lidas**: lista própria para o que já foi lido, com filtros, exportação e “Marcar como não lida”.
+- **Central de notificações**: histórico de avisos de tudo o que chegou de novo. Avisa no app, no computador (push), por e-mail e WhatsApp (envio automático é integração futura).
 - **Backup**: pontos de restauração, exportação `.json` (com criptografia AES-256 opcional) e importação (mesclar ou substituir).
-- **Painel administrativo**: usuários, assinaturas, planos, logomarcas, bases e APIs, logs de pesquisas, auditoria, relatórios e a pasta da página Sobre.
+- **Painel administrativo**: usuários, logomarcas, bases e APIs, logs de pesquisas, auditoria, relatórios e a pasta da página Sobre.
 - **Página Sobre** montada automaticamente a partir dos arquivos de uma pasta (`conteudo/sobre/` ou outra escolhida pelo administrador).
-- **Tema claro e escuro**, layout responsivo (desktop, tablet e celular) e **instalável como aplicativo** (PWA).
+- **Tema claro e escuro**, layout responsivo (desktop, tablet e celular) e **instalável como aplicativo** (PWA), com ícone para o Dock do Mac, barra de tarefas do Windows e tela inicial do celular.
 
 ---
 
