@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 64" width="360" height="64" role="img" aria-label="Não Esquece Adv — Nenhuma intimação passa despercebida.">
+  <rect width="64" height="64" rx="16" fill="#1D4ED8"/><path d="M21 15h20a3 3 0 0 1 3 3v31l-13-8.5L18 49V18a3 3 0 0 1 3-3z" fill="#FFFFFF"/><path d="M24.5 28.5l4.5 4.5 8.5-9" fill="none" stroke="#1D4ED8" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="45" cy="17" r="7" fill="#F59E0B" stroke="#1D4ED8" stroke-width="3"/>
+  <text x="80" y="33" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="24" font-weight="800" letter-spacing="-0.5" fill="#0F172A">NÃO ESQUECE<tspan font-weight="400" fill="#1D4ED8" dx="6">ADV</tspan></text>
+  <text x="80" y="52" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="11.5" font-weight="500" fill="#64748B">Nenhuma intimação passa despercebida.</text>
+</svg>

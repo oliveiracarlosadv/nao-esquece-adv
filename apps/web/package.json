@@ -1,0 +1,38 @@
+{
+  "name": "@nea/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prebuild": "node scripts/copiar-sobre.mjs",
+    "predev": "node scripts/copiar-sobre.mjs",
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "npx serve out -l 3000",
+    "lint": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types src/lib/*.test.ts"
+  },
+  "dependencies": {
+    "dexie": "4.0.10",
+    "dexie-react-hooks": "1.1.7",
+    "exceljs": "4.4.0",
+    "jspdf": "4.2.1",
+    "jspdf-autotable": "5.0.9",
+    "lucide-react": "0.468.0",
+    "marked": "14.1.4",
+    "next": "15.5.28",
+    "otpauth": "9.3.6",
+    "qrcode": "1.5.4",
+    "react": "19.1.10",
+    "react-dom": "19.1.10"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.5",
+    "@types/qrcode": "1.5.5",
+    "@types/react": "19.0.4",
+    "@types/react-dom": "19.0.2",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.5.32",
+    "tailwindcss": "3.4.17",
+    "typescript": "5.7.3"
+  }
+}

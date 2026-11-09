@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Paleta neutra e de alto contraste para leitura confortável. */
+:root {
+  --bg: 248 250 252;
+  --surface: 255 255 255;
+  --muted: 241 245 249;
+  --line: 226 232 240;
+  --ink: 15 23 42;
+  --soft: 71 85 105;
+  --faint: 148 163 184;
+  color-scheme: light;
+}
+
+.dark {
+  --bg: 9 13 22;
+  --surface: 17 22 34;
+  --muted: 28 35 50;
+  --line: 39 48 66;
+  --ink: 241 245 249;
+  --soft: 160 172 192;
+  --faint: 100 113 135;
+  color-scheme: dark;
+}
+
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--ink));
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'cv11', 'ss01';
+}
+
+
+.prose-sobre h1 { @apply mb-4 text-3xl font-semibold tracking-tight; }
+.prose-sobre h2 { @apply mb-3 mt-8 text-xl font-semibold; }
+.prose-sobre h3 { @apply mb-2 mt-6 font-semibold; }
+.prose-sobre p { @apply mb-4 leading-7 text-soft; }
+.prose-sobre ul { @apply mb-4 list-disc space-y-1 pl-5 text-soft; }
+.prose-sobre a { @apply text-brand-600 underline underline-offset-2; }
+.prose-sobre img { @apply my-6 max-h-96 rounded-xl; }
+.prose-sobre strong { @apply text-ink; }
+
+@media print {
+  aside, header, nav { display: none !important; }
+}

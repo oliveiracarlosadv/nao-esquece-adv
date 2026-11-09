@@ -1,0 +1,24 @@
+{
+  "name": "nao-esquece-adv",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NÃO ESQUECE ADV — monitoramento automático de publicações jurídicas. Nenhuma intimação passa despercebida.",
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev -w apps/web",
+    "conector": "node conector-local/server.mjs",
+    "build": "npm run build -w apps/web",
+    "backup": "bash scripts/backup.sh"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "overrides": {
+    "jspdf": "4.2.1",
+    "dompurify": "3.4.17",
+    "postcss": "8.5.32",
+    "uuid": "11.1.1"
+  }
+}

@@ -1,0 +1,6 @@
+Esta pasta alimenta a página "Sobre" do NÃO ESQUECE ADV.
+
+- Os textos (.md, .txt ou .html) aparecem em ordem alfabética: use prefixos 01-, 02-...
+- Imagens (.jpg, .png, .svg, .webp) podem ser citadas nos textos: ![legenda](arquivo.jpg)
+- Arquivos chamados LEIA-ME são ignorados.
+- No painel Administração → Página Sobre é possível escolher outra pasta do computador.
