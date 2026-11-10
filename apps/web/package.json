@@ -1,6 +1,6 @@
 {
   "name": "@nea/web",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "prebuild": "node scripts/copiar-sobre.mjs",

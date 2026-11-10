@@ -1,5 +1,20 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.4.0] — 10/11/2026
+
+Pedidos atendidos: 18 a 23.
+
+### Adicionado
+- Botão **“Marcar todas como lidas”** no Painel (e “Marcar todas como não lidas” em Intimações lidas).
+- **Imagens do app** no README do GitHub (`docs/imagens/`).
+- **Compartilhar o app** fixo no menu, na página inicial e no cabeçalho público.
+- Página **Como funciona** (menu e página inicial) com aviso de responsabilidade.
+- **Termos de uso** (`/termos/` e `docs/TERMOS-DE-USO.md`): plena responsabilidade do usuário pelo gerenciamento de intimações e prazos; limitação de responsabilidade do criador. Aceite obrigatório na primeira abertura e para quem já usava o app; aceite registrado na auditoria.
+
+### Alterado
+- **Celular:** linha “Prazo para manifestação” sempre visível em cada item (ou “não identificado — confira”).
+- **Compartilhar publicação:** envia o **teor completo em texto** (dados, prazo e inteiro teor) — não imagem nem PDF. O texto não é mais cortado.
+
 ## [0.3.2] — 10/11/2026
 
 Pedido atendido: 16.

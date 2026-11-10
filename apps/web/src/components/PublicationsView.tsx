@@ -17,6 +17,7 @@ import { db, type Filters, type Publication } from '@/lib/db';
 import { businessDaysUntil } from '@/lib/deadline';
 import { applyFilters, countActive, distinct, sortPublications } from '@/lib/filters';
 import { cx, todayIso } from '@/lib/format';
+import { shareTeor } from '@/lib/share';
 import { useMonitor } from './AppShell';
 import { useUi } from './Providers';
 import { ExportDialog, FiltersForm, PublicationDrawer, PublicationTable, SaveWorkspaceDialog, ShareDialog, setRead } from './publications';
@@ -100,6 +101,23 @@ export function PublicationsView({ mode }: { mode: ViewMode }) {
     setSelected(new Set());
   };
 
+  // Compartilhar pela lista: teor completo em texto; sem compartilhamento nativo, abre as opções.
+  const shareOrDialog = async (p: Publication) => {
+    if ((await shareTeor(p)) === 'sem-suporte') setShareP(p);
+  };
+
+  // Marca TODAS as publicações exibidas (respeita filtros e busca) de uma vez.
+  const moveAll = async () => {
+    if (!rows.length) return;
+    const msg = lidas
+      ? `Marcar todas as ${rows.length} como não lidas? Elas voltam para o Painel.`
+      : `Marcar todas as ${rows.length} como lidas? Elas vão para Intimações lidas.`;
+    if (!confirm(msg)) return;
+    await setRead(rows.map((r) => r.id), !lidas);
+    toast(lidas ? `${rows.length} devolvida(s) ao Painel.` : `${rows.length} marcada(s) como lidas.`);
+    setSelected(new Set());
+  };
+
   return (
     <>
       <PageHeader
@@ -167,7 +185,14 @@ export function PublicationsView({ mode }: { mode: ViewMode }) {
                   )}
                 </>
               ) : (
-                <span>{rows.length} resultado(s)</span>
+                <>
+                  <span>{rows.length} resultado(s)</span>
+                  {rows.length > 0 && (
+                    <Button size="sm" icon={lidas ? <Undo2 size={14} /> : <CheckCheck size={14} />} onClick={moveAll}>
+                      {lidas ? 'Marcar todas como não lidas' : 'Marcar todas como lidas'}
+                    </Button>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -199,7 +224,7 @@ export function PublicationsView({ mode }: { mode: ViewMode }) {
             )
           ) : (
             <>
-              <PublicationTable rows={rows.slice(0, limit)} selected={selected} onSelect={setSelected} onOpen={(p) => setOpenId(p.id)} onShare={setShareP} onExportOne={(p) => setExporting([p])} />
+              <PublicationTable rows={rows.slice(0, limit)} selected={selected} onSelect={setSelected} onOpen={(p) => setOpenId(p.id)} onShare={shareOrDialog} onExportOne={(p) => setExporting([p])} />
               {rows.length > limit && (
                 <div className="border-t border-line p-3 text-center">
                   <Button size="sm" variant="ghost" onClick={() => setLimit((l) => l + PAGE)}>

@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
-  Archive, Bell, Bookmark, CheckCheck, Info, LayoutList, Menu, Moon, Radar, RefreshCw, Search, Shield, Sun, User as UserIcon, X,
+  Archive, Bell, Bookmark, CheckCheck, CircleHelp, Info, LayoutList, Menu, Moon, Radar, RefreshCw, Search, Shield, Sun, User as UserIcon, X,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { db } from '@/lib/db';
@@ -12,6 +12,8 @@ import { cx, fmtDateTime } from '@/lib/format';
 import { isDemo, lastRunAt, runMonitor, startScheduler, type RunResult } from '@/lib/monitor';
 import { leaveDemo } from '@/lib/demo';
 import { InstallButton } from './InstallApp';
+import { ShareAppButton } from './ShareApp';
+import { TermsGate } from './TermsGate';
 import { Logo } from './Logo';
 import { useUi } from './Providers';
 import { Spinner } from './ui';
@@ -28,6 +30,7 @@ const NAV = [
   { href: '/notificacoes/', label: 'Notificações', icon: Bell },
   { href: '/backup/', label: 'Backup', icon: Archive },
   { href: '/perfil/', label: 'Meu perfil', icon: UserIcon },
+  { href: '/como-funciona/', label: 'Como funciona', icon: CircleHelp },
   { href: '/sobre/', label: 'Sobre', icon: Info },
 ];
 
@@ -127,6 +130,10 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Link>
         );
       })}
+      <div className="mt-3 border-t border-line pt-3">
+        <ShareAppButton />
+        <Link href="/termos/" className="mt-1 block px-3 py-1 text-xs text-faint hover:text-ink">Termos de uso</Link>
+      </div>
       <div className="mt-auto space-y-3 border-t border-line px-2 pt-4">
         <button onClick={runNow} disabled={running} className="flex w-full items-center gap-2 text-left text-xs text-soft hover:text-ink disabled:opacity-60">
           {running ? <Spinner className="h-3 w-3" /> : <RefreshCw size={13} />}
@@ -212,6 +219,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             )}
             {children}
           </main>
+          <TermsGate userId={user.id} />
         </div>
       </div>
     </MCtx.Provider>

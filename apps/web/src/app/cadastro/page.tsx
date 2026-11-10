@@ -7,10 +7,12 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, type FormEvent } from 'react';
-import { Archive, HardDrive, ShieldCheck, Upload } from 'lucide-react';
+import { Archive, HardDrive, Scale, ShieldCheck, Upload } from 'lucide-react';
 import { useAuth, type RegisterInput } from '@/lib/auth';
 import { NeedsPassword, readBackupFile, restore } from '@/lib/backup';
+import { aceitarTermos } from '@/lib/aceite';
 import { setSetting } from '@/lib/db';
+import { RESPONSABILIDADE_RESUMO } from '@/lib/termos';
 import { isValidCpf, maskCpf, maskPhone, readFileAsDataUrl, UFS } from '@/lib/format';
 import { Logo } from '@/components/Logo';
 import { useUi } from '@/components/Providers';
@@ -34,6 +36,7 @@ export default function PrimeirosPassos() {
 
   const accept = async () => {
     await setSetting('aviso.armazenamento', new Date().toISOString());
+    await aceitarTermos();
     setStep('dados');
   };
 
@@ -65,6 +68,7 @@ export default function PrimeirosPassos() {
       }
       await restore(data, 'substituir');
       await setSetting('aviso.armazenamento', new Date().toISOString());
+      await aceitarTermos();
       await refresh();
       toast('Backup restaurado.');
       router.replace('/painel/');
@@ -82,7 +86,7 @@ export default function PrimeirosPassos() {
 
         {step === 'aviso' ? (
           <div className="space-y-6 rounded-2xl border border-line bg-surface p-6 shadow-sm sm:p-8">
-            <h1 className="text-xl font-semibold text-ink">Antes de começar, um aviso importante</h1>
+            <h1 className="text-xl font-semibold text-ink">Antes de começar: aviso e Termos de uso</h1>
             <ul className="space-y-4 text-[15px] leading-7 text-soft">
               <li className="flex gap-3">
                 <HardDrive className="mt-1 shrink-0 text-brand-600" size={20} />
@@ -99,18 +103,28 @@ export default function PrimeirosPassos() {
                 </span>
               </li>
               <li className="flex gap-3">
+                <Scale className="mt-1 shrink-0 text-red-500" size={20} />
+                <span>
+                  <strong className="text-ink">Responsabilidade:</strong> {RESPONSABILIDADE_RESUMO}
+                </span>
+              </li>
+              <li className="flex gap-3">
                 <ShieldCheck className="mt-1 shrink-0 text-emerald-500" size={20} />
                 <span>Quem usar este computador e este navegador terá acesso ao app. Proteja o computador com senha.</span>
               </li>
             </ul>
             <label className="flex items-start gap-2 rounded-lg bg-muted p-3 text-sm text-ink">
               <input type="checkbox" checked={ciente} onChange={(e) => setCiente(e.target.checked)} className="mt-1 accent-brand-600" />
-              <span>Li e entendi. Concordo que meus dados sejam guardados neste computador e usados apenas para pesquisar publicações nas fontes públicas (LGPD).</span>
+              <span>
+                Li e aceito os{' '}
+                <Link href="/termos/" target="_blank" className="font-medium text-brand-600 underline">Termos de uso</Link>. Assumo plena responsabilidade pelo gerenciamento das minhas
+                intimações e prazos e concordo que meus dados sejam guardados neste computador e usados apenas para pesquisar publicações nas fontes públicas (LGPD).
+              </span>
             </label>
-            <Button variant="primary" className="w-full" disabled={!ciente} onClick={accept}>Entendi, continuar</Button>
-            <label className="flex cursor-pointer items-center justify-center gap-2 text-sm text-soft hover:text-ink">
+            <Button variant="primary" className="w-full" disabled={!ciente} onClick={accept}>Aceito, continuar</Button>
+            <label className={`flex items-center justify-center gap-2 text-sm text-soft ${ciente ? 'cursor-pointer hover:text-ink' : 'cursor-not-allowed opacity-50'}`} title={ciente ? '' : 'Aceite os Termos de uso primeiro'}>
               <Upload size={15} /> Já usa o app em outro computador? Restaurar um backup
-              <input type="file" accept=".json,application/json" className="hidden" onChange={(e) => importBackup(e.target.files?.[0])} />
+              <input type="file" accept=".json,application/json" className="hidden" disabled={!ciente} onChange={(e) => importBackup(e.target.files?.[0])} />
             </label>
           </div>
         ) : (

@@ -60,8 +60,7 @@ export function shareText(p: Publication): string {
     `Disponibilização: ${fmtDate(p.availableAt)} · Publicação: ${fmtDate(p.publishedAt)}`,
     p.deadline && `Fim do prazo: ${fmtDate(p.deadline.endAt)} (${p.deadline.days} dias ${p.deadline.corridos ? 'corridos' : 'úteis'})`,
     p.link && `Link: ${p.link}`,
-    '',
-    p.text.slice(0, 1500),
+    `\nINTEIRO TEOR:\n${p.text}`,
   ]
     .filter(Boolean)
     .join('\n');

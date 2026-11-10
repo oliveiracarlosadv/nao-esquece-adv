@@ -21,6 +21,12 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 | 15 | 10/11/2026 | Ícone verde-oliva pastel, só o dedo com a fita | [2026-11-10_15_icone-verde-oliva-minimalista.md](2026-11-10_15_icone-verde-oliva-minimalista.md) | Concluído (v0.3.1) |
 | 16 | 10/11/2026 | Tela responsiva e fixa, sem rolagem lateral | [2026-11-10_16_tela-responsiva-fixa.md](2026-11-10_16_tela-responsiva-fixa.md) | Concluído (v0.3.2) |
 | 17 | 10/11/2026 | Pergunta: como está o ícone no Dock | [2026-11-10_17_pergunta-icone-dock.md](2026-11-10_17_pergunta-icone-dock.md) | Respondido |
+| 18 | 10/11/2026 | Botão "marcar todas" + imagens do app no GitHub | [2026-11-10_18_marcar-todas-e-imagens-github.md](2026-11-10_18_marcar-todas-e-imagens-github.md) | Concluído (v0.4.0) |
+| 19 | 10/11/2026 | Prazo para manifestação visível no celular | [2026-11-10_19_prazo-visivel-no-celular.md](2026-11-10_19_prazo-visivel-no-celular.md) | Concluído (v0.4.0) |
+| 20 | 10/11/2026 | Compartilhar a tela inteira da publicação (não PDF) | [2026-11-10_20_compartilhar-tela-inteira.md](2026-11-10_20_compartilhar-tela-inteira.md) | Substituído pelo 23 |
+| 21 | 10/11/2026 | Botão no menu para compartilhar o app com outros advogados | [2026-11-10_21_botao-compartilhar-o-app.md](2026-11-10_21_botao-compartilhar-o-app.md) | Concluído (v0.4.0) |
+| 22 | 10/11/2026 | Botão "Como funciona" + Termos de uso com responsabilidade do usuário | [2026-11-10_22_como-funciona-e-termos.md](2026-11-10_22_como-funciona-e-termos.md) | Concluído (v0.4.0) |
+| 23 | 10/11/2026 | Compartilhar o teor (texto), não imagem | [2026-11-10_23_compartilhar-o-teor.md](2026-11-10_23_compartilhar-o-teor.md) | Concluído (v0.4.0) |
 
 ## Entregas
 
@@ -29,3 +35,4 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 - **v0.3.0 — 10/11/2026**: pedidos 08 a 14. Botão de instalar o app, novo ícone, sem login com aviso e backup mensal, palavras-chave nome/CPF/OAB, diários municipais e estaduais.
 - **v0.3.1 — 10/11/2026**: pedido 15. Ícone verde-oliva pastel, só o dedo com a fita.
 - **v0.3.2 — 10/11/2026**: pedido 16. Tela fixa e responsiva, sem rolagem lateral.
+- **v0.4.0 — 10/11/2026**: pedidos 18 a 23. Marcar todas como lidas, imagens no GitHub, prazo no celular, compartilhar o teor, compartilhar o app, Como funciona e Termos de uso.

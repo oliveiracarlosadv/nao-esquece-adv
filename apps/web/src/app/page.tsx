@@ -8,6 +8,7 @@ import { ensureDemoUser } from '@/lib/demo';
 import { LogoMark } from '@/components/Logo';
 import { PublicShell } from '@/components/PublicShell';
 import { InstallButton } from '@/components/InstallApp';
+import { ShareAppButton } from '@/components/ShareApp';
 import { Button } from '@/components/ui';
 
 const FEATURES = [
@@ -51,6 +52,8 @@ export default function Home() {
             </>
           )}
           <InstallButton className="px-6" />
+          <Link href="/como-funciona/"><Button className="w-full px-6 sm:w-auto">Como funciona</Button></Link>
+          <ShareAppButton variant="button" className="px-6" />
         </div>
         <p className="mt-4 text-xs text-faint">100% gratuito e completo · Funciona sem instalar · Dados salvos só no seu navegador</p>
       </section>

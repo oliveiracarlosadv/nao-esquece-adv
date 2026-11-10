@@ -46,11 +46,18 @@ O botão **Buscar agora** força uma busca imediata.
 - **Tabela**: Status (lida/não lida) · Data (publicação e disponibilização) · Processo · Partes · Tribunal/Vara · Comarca · Fim do prazo · Tipo · Origem · Ações.
 - **Cores do prazo**: vermelho (até 2 dias úteis), amarelo (até 5), verde (mais de 5), riscado (vencido). “Presumido” = o texto não trazia o prazo; confira.
 - **Ações por linha**: 👁 visualizar · ✓ marcar como lida (vai para Lidas) / não lida (volta ao Painel) · ★ salvar · ⬇ exportar · compartilhar.
+- **Marcar todas como lidas**: botão ao lado do total de resultados (vale para tudo o que está na tela, respeitando filtros e busca). Em Intimações lidas, “Marcar todas como não lidas”.
+- **No celular**: cada item mostra sempre a linha “Prazo para manifestação”, com a data final e os dias úteis restantes.
 - **Seleção em lote**: marque várias linhas e use “Marcar como lida” (no Painel), “Marcar como não lida” (em Lidas) ou “Exportar”.
 - **Filtros**: processo, parte, tribunal, vara, comarca, datas, lidas/não lidas, tipo, origem e favoritas.
 - **Busca global** (topo): digite e escolha onde buscar (tudo, partes, processo, advogado, OAB).
 
 Ao abrir uma publicação, ela é marcada como lida. No detalhe você pode **ajustar o prazo** (dias úteis ou corridos), copiar o texto, abrir na fonte, fixar o processo e escrever uma anotação interna.
+
+## 3.1 Compartilhar
+
+- **Publicação**: o botão Compartilhar envia o **teor completo em texto** (tipo, processo, partes, tribunal/vara, comarca, datas, fim do prazo e inteiro teor) pelo compartilhamento do aparelho. Sem compartilhamento nativo, aparecem WhatsApp, e-mail e copiar.
+- **O app**: no menu, “Compartilhar o app” envia um convite com o link para outros advogados.
 
 ## 4. Exportar
 
@@ -86,3 +93,7 @@ Altere nome completo, CPF, OAB (as palavras-chave), telefone, e-mail, foto e log
 ## 9. Administração (somente administradores)
 
 Logomarcas · Bases e APIs · Logs de pesquisas · Auditoria · Relatórios · Página Sobre (escolha da pasta de conteúdo).
+
+## 10. Como funciona e Termos de uso
+
+Menu **Como funciona**: explicação passo a passo e aviso de responsabilidade. **Termos de uso**: rodapé do menu e da página inicial ([texto completo](TERMOS-DE-USO.md)). O aceite é obrigatório na primeira abertura e a cada nova versão dos termos.

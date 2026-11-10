@@ -9,7 +9,9 @@ import { exportCsv, exportPdf, exportXlsx } from '@/lib/export';
 import { applyFilters } from '@/lib/filters';
 import { cx, fmtDate, todayIso } from '@/lib/format';
 import { mailtoLink, shareText, whatsappLink } from '@/lib/notify';
+import { shareTeor } from '@/lib/share';
 import { PUBLICATION_TYPES } from '@/lib/extract';
+import { LogoMark } from './Logo';
 import { useUi } from './Providers';
 import { Badge, Button, Drawer, Field, IconButton, Input, Modal, Select, Textarea, Toggle } from './ui';
 
@@ -28,6 +30,26 @@ export function DeadlineBadge({ p }: { p: Publication }) {
         {p.deadline.basis === 'presumido' && ' · presumido'}
       </Badge>
     </div>
+  );
+}
+
+/** Linha de prazo do celular: sempre visível, com data final e dias úteis restantes. */
+export function MobileDeadline({ p }: { p: Publication }) {
+  if (!p.deadline) {
+    return (
+      <p className="mt-2 rounded-lg bg-muted px-2.5 py-1.5 text-xs text-soft">
+        Prazo para manifestação: <strong className="text-ink">não identificado</strong> — confira a publicação
+      </p>
+    );
+  }
+  const left = businessDaysUntil(p.deadline.endAt, todayIso());
+  const tone = left < 0 ? 'bg-muted text-faint' : left <= 2 ? 'bg-red-50 text-red-700 dark:bg-red-500/15 dark:text-red-300' : left <= 5 ? 'bg-amber-50 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300' : 'bg-emerald-50 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300';
+  const label = left < 0 ? 'vencido' : left === 0 ? 'vence hoje' : `${left} dia(s) útil(eis)`;
+  return (
+    <p className={cx('mt-2 rounded-lg px-2.5 py-1.5 text-xs', tone)}>
+      Prazo para manifestação: <strong>{fmtDate(p.deadline.endAt)}</strong> · {label}
+      {p.deadline.basis === 'presumido' && ' · presumido'}
+    </p>
   );
 }
 
@@ -175,11 +197,7 @@ export function PublicationTable({ rows, selected, onSelect, onOpen, onShare, on
                 </div>
                 <p className={cx('mt-1.5 font-mono text-[13px]', p.read ? 'text-soft' : 'font-semibold text-ink')}>{p.processNumber || p.organ}</p>
                 <p className="mt-0.5 line-clamp-1 text-sm text-soft">{p.parties.join(' × ')}</p>
-                {p.deadline && (
-                  <div className="mt-2">
-                    <DeadlineBadge p={p} />
-                  </div>
-                )}
+                <MobileDeadline p={p} />
               </button>
               <div className="flex flex-col">
                 <IconButton label="Salvar" onClick={() => toggleFavorite(p)}>
@@ -269,8 +287,21 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
   const [days, setDays] = useState('');
   const [corridos, setCorridos] = useState(false);
   const [note, setNote] = useState('');
+  const [sharing, setSharing] = useState(false);
 
   if (!p) return null;
+
+  // Compartilha o teor completo em texto (sem imagem, sem PDF).
+  const shareWhole = async () => {
+    setSharing(true);
+    try {
+      const r = await shareTeor(p);
+      if (r === 'sem-suporte') onShare(p);
+      else if (r === 'compartilhado') await audit('compartilhar', p.processNumber || p.type, user.id);
+    } finally {
+      setSharing(false);
+    }
+  };
 
   const saveDeadline = async () => {
     const n = Number(days);
@@ -316,8 +347,8 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
           <Button size="sm" icon={<Star size={15} className={p.favorite ? 'fill-alert text-alert' : ''} />} onClick={() => toggleFavorite(p)}>
             {p.favorite ? 'Salvo' : 'Salvar'}
           </Button>
-          <Button size="sm" icon={<Share2 size={15} />} onClick={() => onShare(p)}>
-            Compartilhar
+          <Button size="sm" icon={<Share2 size={15} />} onClick={shareWhole} disabled={sharing} title="Compartilha o teor completo da publicação">
+            {sharing ? 'Preparando…' : 'Compartilhar'}
           </Button>
           <Button size="sm" icon={<FileText size={15} />} onClick={() => exportPdf([p], user, `${p.type} — ${p.processNumber || ''}`)}>
             PDF
@@ -331,6 +362,13 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
       }
     >
       <div className="space-y-6">
+        <div className="flex items-center gap-2 border-b border-line pb-3">
+          <LogoMark size={28} />
+          <div className="min-w-0 leading-tight">
+            <p className="text-xs font-bold tracking-tight text-ink">NÃO ESQUECE ADV</p>
+            <p className="truncate text-xs text-soft">{p.type}{p.court ? ` · ${p.court}` : ''}{p.processNumber ? ` · ${p.processNumber}` : ''}</p>
+          </div>
+        </div>
         <div className="rounded-xl border border-line p-4">
           <div className="flex items-start justify-between gap-3">
             <div>
@@ -345,12 +383,12 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
                 </p>
               )}
             </div>
-            <Button size="sm" variant="ghost" onClick={() => { setEditing((e) => !e); setDays(String(p.deadline?.days || '')); setCorridos(!!p.deadline?.corridos); }}>
+            <Button data-share-exclude size="sm" variant="ghost" onClick={() => { setEditing((e) => !e); setDays(String(p.deadline?.days || '')); setCorridos(!!p.deadline?.corridos); }}>
               Ajustar
             </Button>
           </div>
           {editing && (
-            <div className="mt-4 flex flex-wrap items-end gap-3 border-t border-line pt-4">
+            <div data-share-exclude className="mt-4 flex flex-wrap items-end gap-3 border-t border-line pt-4">
               <Field label="Dias">
                 <Input type="number" min={1} value={days} onChange={(e) => setDays(e.target.value)} className="w-24" />
               </Field>
@@ -396,7 +434,7 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
         <div>
           <div className="mb-2 flex items-center justify-between">
             <p className="text-xs text-faint">Inteiro teor</p>
-            <div className="flex gap-1">
+            <div data-share-exclude className="flex gap-1">
               <IconButton label="Copiar texto" onClick={() => navigator.clipboard.writeText(p.text).then(() => toast('Texto copiado.'))}>
                 <Copy size={15} />
               </IconButton>
@@ -410,9 +448,11 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
           <div className="whitespace-pre-wrap rounded-xl bg-muted p-4 text-[14px] leading-7 text-ink">{p.text}</div>
         </div>
 
+        <div data-share-exclude>
         <Field label="Anotação interna">
           <Textarea rows={3} defaultValue={p.note} onChange={(e) => setNote(e.target.value)} onBlur={() => note !== (p.note || '') && db.publications.update(p.id, { note })} placeholder="Visível só para você" />
         </Field>
+        </div>
       </div>
     </Drawer>
   );

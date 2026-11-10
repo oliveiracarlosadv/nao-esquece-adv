@@ -11,6 +11,8 @@
   &nbsp;·&nbsp;
   <a href="docs/MANUAL-DO-USUARIO.md">Manual</a>
   &nbsp;·&nbsp;
+  <a href="docs/TERMOS-DE-USO.md">Termos de uso</a>
+  &nbsp;·&nbsp;
   <a href="CHANGELOG.md">Novidades</a>
 </p>
 
@@ -26,6 +28,34 @@ Diferencial: **os dados ficam no seu computador**, guardados no próprio navegad
 
 **Link direto:** https://oliveiracarlosadv.github.io/nao-esquece-adv/
 Para conhecer sem cadastrar nada, clique em **“Ver demonstração”** (dados fictícios).
+
+---
+
+## Imagens do app
+
+<p align="center"><img src="docs/imagens/03-painel.png" alt="Painel com as publicações não lidas" width="900"></p>
+
+| | |
+|---|---|
+| <img src="docs/imagens/04-detalhe-da-publicacao.png" alt="Detalhe da publicação com prazo e inteiro teor"> | <img src="docs/imagens/05-intimacoes-lidas.png" alt="Intimações lidas"> |
+| **Publicação aberta:** prazo, dados extraídos e inteiro teor | **Intimações lidas:** o que já foi lido sai do Painel |
+| <img src="docs/imagens/06-palavras-chave.png" alt="Palavras-chave: nome, CPF e OAB"> | <img src="docs/imagens/07-diarios-oficiais.png" alt="Diários oficiais estaduais"> |
+| **Palavras-chave:** nome completo, CPF e OAB | **Diários oficiais:** estaduais, DF e União |
+| <img src="docs/imagens/08-meus-paineis.png" alt="Meus painéis"> | <img src="docs/imagens/09-backup.png" alt="Backup"> |
+| **Meus painéis:** consultas, painéis e processos fixados | **Backup:** criar, exportar e importar |
+| <img src="docs/imagens/10-painel-tema-escuro.png" alt="Tema escuro"> | <img src="docs/imagens/13-como-funciona.png" alt="Como funciona"> |
+| **Tema escuro** | **Como funciona** e aviso de responsabilidade |
+| <img src="docs/imagens/01-inicio.png" alt="Página inicial"> | <img src="docs/imagens/02-primeira-abertura.png" alt="Primeira abertura: aviso e termos"> |
+| **Página inicial** | **Primeira abertura:** aviso, backup mensal e Termos de uso |
+
+<p align="center">
+  <img src="docs/imagens/11-celular-painel.png" alt="Celular: painel" width="260">
+  &nbsp;&nbsp;
+  <img src="docs/imagens/12-celular-detalhe.png" alt="Celular: publicação aberta" width="260">
+  <br><em>No celular: prazo para manifestação sempre visível e publicação aberta</em>
+</p>
+
+> Imagens geradas com a conta de demonstração (dados fictícios).
 
 ---
 
@@ -72,7 +102,10 @@ Para conhecer sem cadastrar nada, clique em **“Ver demonstração”** (dados 
 - **Busca global** com lupa: partes, processo, advogado ou OAB.
 - **Exportação** para **PDF, Excel e CSV**, por resultado atual, selecionados ou filtros próprios (vara, processo, tribunal, período, lidos/não lidos).
 - **Meus painéis**: consultas e filtros salvos, painéis personalizados com contadores, processos fixados e publicações favoritas.
-- **Intimações lidas**: lista própria para o que já foi lido, com filtros, exportação e “Marcar como não lida”.
+- **Intimações lidas**: lista própria para o que já foi lido, com filtros, exportação e “Marcar como não lida”. Botão **“Marcar todas como lidas”** no Painel.
+- **Compartilhar** uma publicação envia o **teor completo em texto** (dados, prazo e inteiro teor) pelo WhatsApp, e-mail ou outros apps.
+- **Compartilhar o app** (menu): indica o NÃO ESQUECE ADV a outros advogados.
+- **Como funciona** e **Termos de uso**: o usuário tem plena responsabilidade pelo gerenciamento de suas intimações; aceite obrigatório na primeira abertura.
 - **Central de notificações**: histórico de avisos de tudo o que chegou de novo. Avisa no app, no computador (push), por e-mail e WhatsApp (envio automático é integração futura).
 - **Backup**: pontos de restauração, exportação `.json` (com criptografia AES-256 opcional) e importação (mesclar ou substituir).
 - **Painel administrativo**: logomarcas, bases e APIs, logs de pesquisas, auditoria, relatórios e a pasta da página Sobre.
@@ -155,11 +188,12 @@ scripts/backup.sh    Gera um .zip datado do código em BACKUPS/
 - [Segurança e LGPD](docs/SEGURANCA-LGPD.md)
 - [Backup e restauração](docs/BACKUP.md)
 - [Publicação (GitHub Pages)](docs/PUBLICACAO.md)
+- [Termos de uso](docs/TERMOS-DE-USO.md)
 - [Histórico de pedidos](PEDIDOS/README.md)
 
 ## Aviso
 
-O NÃO ESQUECE ADV é uma ferramenta de apoio. Prazos calculados automaticamente, sobretudo os marcados como *presumidos*, devem ser conferidos pelo advogado responsável na fonte oficial.
+O NÃO ESQUECE ADV é uma ferramenta gratuita de apoio. **O usuário tem plena e exclusiva responsabilidade pelo gerenciamento de suas intimações, publicações e prazos**, devendo conferir tudo nas fontes oficiais; o criador não se responsabiliza por publicações não captadas, prazos calculados ou falhas das fontes. Veja os [Termos de uso](docs/TERMOS-DE-USO.md).
 
 ## Autor
 
