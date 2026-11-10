@@ -1,5 +1,12 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.4.4] — 10/11/2026
+
+Pedido atendido: 30.
+
+### Alterado
+- “Exportar em PDF” aparece só no topo da publicação aberta (removido do rodapé). O ícone de PDF em cada linha da lista continua.
+
 ## [0.4.3] — 10/11/2026
 
 Pedidos atendidos: 28 e 29.

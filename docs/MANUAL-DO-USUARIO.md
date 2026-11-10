@@ -57,7 +57,7 @@ Ao abrir uma publicação, ela é marcada como lida. No detalhe você pode **aju
 
 ## 3.1 Exportar em PDF e compartilhar
 
-- **Exportar em PDF**: em toda publicação aberta (no topo e no rodapé) e como ícone em cada linha da lista. Gera o documento completo — seus dados (nome, OAB, telefone, e-mail e logomarca), processo, partes, tribunal, vara, comarca, **data da intimação, da publicação, início e fim do prazo** e **inteiro teor** — e oferece **Salvar PDF** ou **Compartilhar** (WhatsApp, e-mail, Mensagens, AirDrop e outros apps). O CPF não vai no PDF. [Exemplo](exemplos/pdf-da-intimacao-exemplo.pdf).
+- **Exportar em PDF**: em toda publicação aberta (no topo) e como ícone em cada linha da lista. Gera o documento completo — seus dados (nome, OAB, telefone, e-mail e logomarca), processo, partes, tribunal, vara, comarca, **data da intimação, da publicação, início e fim do prazo** e **inteiro teor** — e oferece **Salvar PDF** ou **Compartilhar** (WhatsApp, e-mail, Mensagens, AirDrop e outros apps). O CPF não vai no PDF. [Exemplo](exemplos/pdf-da-intimacao-exemplo.pdf).
 - **O app**: no menu, “Compartilhar o app” envia um convite com o link para outros advogados.
 
 ## 4. Exportar

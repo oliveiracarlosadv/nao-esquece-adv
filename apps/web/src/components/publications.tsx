@@ -327,7 +327,6 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
       title={`${p.type}${p.court ? ` · ${p.court}` : ''}`}
       footer={
         <>
-          <PdfExportButton p={p} />
           <Button size="sm" icon={p.read ? <EyeOff size={15} /> : <Check size={15} />} onClick={() => setRead([p.id], !p.read)}>
             {p.read ? 'Marcar como não lida (volta ao Painel)' : 'Marcar como lida (vai para Lidas)'}
           </Button>
