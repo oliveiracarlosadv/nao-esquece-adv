@@ -1,17 +1,18 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 import {
-  Check, Copy, Download, ExternalLink, Eye, EyeOff, FileSpreadsheet, FileText, Mail, MessageCircle, Share2, Star, Table2,
+  CalendarX2, Check, Copy, Download, ExternalLink, Eye, EyeOff, FileSpreadsheet, FileText, Mail, MessageCircle, Share2, Star, Table2,
 } from 'lucide-react';
 import { businessDaysUntil, computeDeadline } from '@/lib/deadline';
 import { audit, db, type Filters, type Publication, type User } from '@/lib/db';
 import { exportCsv, exportPdf, exportXlsx, publicationPdf } from '@/lib/export';
 import { applyFilters } from '@/lib/filters';
-import { cx, fmtDate, todayIso } from '@/lib/format';
+import { cx, downloadBlob, fmtDate, todayIso } from '@/lib/format';
 import { mailtoLink, shareText, whatsappLink } from '@/lib/notify';
 import { shareFile, shareTeor } from '@/lib/share';
 import { PUBLICATION_TYPES } from '@/lib/extract';
 import { LogoMark } from './Logo';
+import { AVISO_FERIADOS } from '@/lib/termos';
 import { useUi } from './Providers';
 import { Badge, Button, Drawer, Field, IconButton, Input, Modal, Select, Textarea, Toggle } from './ui';
 
@@ -38,7 +39,7 @@ export function MobileDeadline({ p }: { p: Publication }) {
   if (!p.deadline) {
     return (
       <p className="mt-2 rounded-lg bg-muted px-2.5 py-1.5 text-xs text-soft">
-        Prazo para manifestação: <strong className="text-ink">não identificado</strong> — confira a publicação
+        Prazo para manifestação: <strong className="text-ink">não identificado</strong> — confira a publicação e os feriados nacionais e locais
       </p>
     );
   }
@@ -49,6 +50,7 @@ export function MobileDeadline({ p }: { p: Publication }) {
     <p className={cx('mt-2 rounded-lg px-2.5 py-1.5 text-xs', tone)}>
       Prazo para manifestação: <strong>{fmtDate(p.deadline.endAt)}</strong> · {label}
       {p.deadline.basis === 'presumido' && ' · presumido'}
+      <span className="mt-0.5 block opacity-80">Consulte os feriados nacionais e locais.</span>
     </p>
   );
 }
@@ -290,6 +292,7 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
   const [sharing, setSharing] = useState(false);
   const [pdf, setPdf] = useState<{ blob: Blob; name: string; key: string } | null>(null);
   const [pdfBusy, setPdfBusy] = useState(false);
+  const [pdfMenu, setPdfMenu] = useState(false);
   const pdfKey = p ? `${p.id}|${p.deadline?.endAt || ''}|${user.name}|${user.oab}` : '';
 
   // Gera o PDF da intimação assim que ela abre: no iPhone o compartilhamento precisa sair logo após o toque.
@@ -305,13 +308,21 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
   if (!p) return null;
 
   // PDF completo da intimação (dados do advogado, processo, datas, prazo e inteiro teor), já para compartilhar.
-  const sharePdf = async () => {
+  const pdfAction = async (kind: 'salvar' | 'compartilhar') => {
     setPdfBusy(true);
     try {
       const doc = pdf?.key === pdfKey ? pdf : await publicationPdf(p, user);
-      const r = await shareFile(doc.blob, doc.name, `${p.type}${p.processNumber ? ` — ${p.processNumber}` : ''}`, `Intimação ${p.processNumber || ''} — NÃO ESQUECE ADV`);
-      if (r === 'baixado') toast('PDF da intimação baixado. Envie pelo app que preferir.');
+      let r: string;
+      if (kind === 'salvar') {
+        downloadBlob(doc.blob, doc.name);
+        r = 'baixado';
+        toast('PDF da intimação salvo na pasta de downloads.');
+      } else {
+        r = await shareFile(doc.blob, doc.name, `${p.type}${p.processNumber ? ` — ${p.processNumber}` : ''}`, `Intimação ${p.processNumber || ''} — NÃO ESQUECE ADV`);
+        if (r === 'baixado') toast('Este navegador não compartilha arquivos: o PDF foi salvo na pasta de downloads.');
+      }
       if (r !== 'cancelado') await audit('pdf.intimacao', `${r}: ${p.processNumber || p.type}`, user.id);
+      setPdfMenu(false);
     } finally {
       setPdfBusy(false);
     }
@@ -376,7 +387,7 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
           <Button size="sm" icon={<Share2 size={15} />} onClick={shareWhole} disabled={sharing} title="Compartilha o teor completo da publicação">
             {sharing ? 'Preparando…' : 'Compartilhar'}
           </Button>
-          <Button size="sm" icon={<FileText size={15} />} onClick={sharePdf} disabled={pdfBusy} title="Gera o PDF completo da intimação e abre o compartilhamento">
+          <Button size="sm" icon={<FileText size={15} />} onClick={() => setPdfMenu(true)} title="PDF completo da intimação: salvar ou compartilhar">
             PDF
           </Button>
           {p.processNumber && (
@@ -402,6 +413,9 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
               <div className="mt-1 text-lg">
                 <DeadlineBadge p={p} />
               </div>
+              <p className="mt-2 flex items-start gap-1.5 rounded-md bg-amber-50 px-2 py-1.5 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-200">
+                <CalendarX2 size={14} className="mt-px shrink-0" /> {AVISO_FERIADOS}
+              </p>
               {p.deadline && (
                 <p className="mt-2 text-xs text-soft">
                   {p.deadline.days} dias {p.deadline.corridos ? 'corridos' : 'úteis'} · início em {fmtDate(p.deadline.startAt)} ·{' '}
@@ -480,6 +494,14 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
         </Field>
         </div>
       </div>
+      <Modal open={pdfMenu} onClose={() => setPdfMenu(false)} title="PDF da intimação">
+        <p className="text-sm text-soft">Documento completo: seus dados, processo, datas da intimação e da publicação, prazo e inteiro teor.</p>
+        <div className="mt-4 grid gap-2 sm:grid-cols-2">
+          <Button icon={<Download size={16} />} disabled={pdfBusy} onClick={() => pdfAction('salvar')}>Salvar</Button>
+          <Button variant="primary" icon={<Share2 size={16} />} disabled={pdfBusy} onClick={() => pdfAction('compartilhar')}>Compartilhar</Button>
+        </div>
+        {pdfBusy && <p className="mt-3 text-xs text-faint">Preparando o PDF…</p>}
+      </Modal>
     </Drawer>
   );
 }

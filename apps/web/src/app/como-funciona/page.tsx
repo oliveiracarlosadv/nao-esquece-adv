@@ -7,7 +7,7 @@ import { PublicShell } from '@/components/PublicShell';
 const PASSOS = [
   { icon: KeyRound, t: 'Você informa suas palavras-chave', d: 'Nome completo, CPF e número da OAB. Opcionalmente, processos, partes e termos de licitação.' },
   { icon: FileSearch, t: 'O app pesquisa sozinho, a cada hora', d: 'No DJEN (intimações de todos os tribunais integrados ao CNJ), nos diários oficiais municipais, no DataJud e no PNCP (licitações). Nos diários estaduais, do DF e da União, a busca é assistida: o app abre o site oficial com a palavra-chave pronta.' },
-  { icon: AlarmClock, t: 'Lê a publicação e estima o prazo', d: 'Identifica processo, partes, tribunal, vara, comarca e tipo, e calcula o fim do prazo em dias úteis (feriados e recesso de 20/12 a 20/01). Quando o texto não informa o prazo, ele aparece como “presumido”.' },
+  { icon: AlarmClock, t: 'Lê a publicação e estima o prazo', d: 'Identifica processo, partes, tribunal, vara, comarca e tipo, e calcula o fim do prazo em dias úteis (feriados e recesso de 20/12 a 20/01). Quando o texto não informa o prazo, ele aparece como “presumido”. Consulte sempre os feriados nacionais e locais e cadastre os locais em Monitoramento → Configurações.' },
   { icon: Bell, t: 'Avisa você', d: 'Notificação no app e no computador; resumo por e-mail e WhatsApp.' },
   { icon: CheckCheck, t: 'Você lê e organiza', d: 'O Painel mostra só o que não foi lido. Ao abrir uma publicação (ou clicar no número do processo), ela vai para “Intimações lidas”. Há filtros, busca, exportação em PDF/Excel/CSV e compartilhamento da tela inteira.' },
   { icon: HardDrive, t: 'Tudo fica no seu computador', d: 'Não há login nem servidor: os dados ficam nos arquivos do navegador. Faça backup mensal em Backup → Exportar arquivo.' },

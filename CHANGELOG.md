@@ -1,5 +1,16 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.4.2] — 10/11/2026
+
+Pedidos atendidos: 25, 26 e 27.
+
+### Alterado
+- **Botão PDF** da intimação abre as opções **Salvar** ou **Compartilhar**.
+- **PDF leve:** a logomarca é reduzida antes de entrar no PDF (um caso real tinha 3,7 MB).
+- **Texto exportado em Times New Roman 12, justificado, entrelinhas 1,5:** PDF da intimação, PDF do relatório e Excel. CSV continua texto puro (o formato não aceita fonte nem alinhamento).
+- **Aviso de feriados:** consulte os feriados nacionais, estaduais e municipais e as suspensões do tribunal — no detalhe da publicação, no PDF, na lista do celular, em Monitoramento → Configurações, em Como funciona, na primeira abertura e nos Termos de uso.
+- Termos de uso atualizados para a versão 1.1 (inclui a consulta aos feriados); novo aceite pedido a todos.
+
 ## [0.4.1] — 10/11/2026
 
 Pedido atendido: 24.

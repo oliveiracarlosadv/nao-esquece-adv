@@ -44,6 +44,7 @@ O botão **Buscar agora** força uma busca imediata.
 
 - **Contadores**: não lidas, prazos que vencem em até 3 dias úteis, novas hoje e total.
 - **Tabela**: Status (lida/não lida) · Data (publicação e disponibilização) · Processo · Partes · Tribunal/Vara · Comarca · Fim do prazo · Tipo · Origem · Ações.
+- **Feriados**: o cálculo considera feriados nacionais, a suspensão de 20/12 a 20/01 e os feriados locais cadastrados. **Consulte sempre os feriados nacionais, estaduais e municipais e as suspensões do tribunal.**
 - **Cores do prazo**: vermelho (até 2 dias úteis), amarelo (até 5), verde (mais de 5), riscado (vencido). “Presumido” = o texto não trazia o prazo; confira.
 - **Ações por linha**: 👁 visualizar · ✓ marcar como lida (vai para Lidas) / não lida (volta ao Painel) · ★ salvar · ⬇ exportar · compartilhar.
 - **Marcar todas como lidas**: botão ao lado do total de resultados (vale para tudo o que está na tela, respeitando filtros e busca). Em Intimações lidas, “Marcar todas como não lidas”.
@@ -57,10 +58,13 @@ Ao abrir uma publicação, ela é marcada como lida. No detalhe você pode **aju
 ## 3.1 Compartilhar
 
 - **Publicação**: o botão Compartilhar envia o **teor completo em texto** (tipo, processo, partes, tribunal/vara, comarca, datas, fim do prazo e inteiro teor) pelo compartilhamento do aparelho. Sem compartilhamento nativo, aparecem WhatsApp, e-mail e copiar.
-- **PDF da intimação**: na publicação aberta, o botão **PDF** gera um documento com seus dados (nome, OAB, telefone, e-mail e logomarca), número do processo, tipo, tribunal, vara, comarca, partes, **data da intimação (disponibilização), data da publicação, início e fim do prazo** e o **inteiro teor**, e abre o compartilhamento do aparelho. Sem suporte, o PDF é baixado. O CPF não vai no PDF. [Exemplo](exemplos/pdf-da-intimacao-exemplo.pdf).
+- **PDF da intimação**: na publicação aberta, o botão **PDF** gera um documento com seus dados (nome, OAB, telefone, e-mail e logomarca), número do processo, tipo, tribunal, vara, comarca, partes, **data da intimação (disponibilização), data da publicação, início e fim do prazo** e o **inteiro teor**, e oferece duas opções: **Salvar** (baixa o arquivo) ou **Compartilhar** (abre o compartilhamento do aparelho). O CPF não vai no PDF. [Exemplo](exemplos/pdf-da-intimacao-exemplo.pdf).
 - **O app**: no menu, “Compartilhar o app” envia um convite com o link para outros advogados.
 
 ## 4. Exportar
+
+Padrão do texto exportado: **Times New Roman 12, justificado, entrelinhas 1,5** (PDF e Excel). O CSV é texto puro.
+
 
 **Exportar** abre três opções de escopo: resultado atual do painel, itens selecionados ou filtros próprios de exportação (vara, processo, tribunal, período, apenas lidos/não lidos). Formatos: **PDF**, **Excel** e **CSV**. O PDF usa a sua logomarca (PNG/JPG) ou a padrão do escritório.
 

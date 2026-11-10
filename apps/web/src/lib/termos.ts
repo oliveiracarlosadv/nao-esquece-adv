@@ -2,11 +2,14 @@
  * Termos de uso do NÃO ESQUECE ADV.
  * Ao mudar o texto de forma relevante, aumente TERMOS_VERSAO: todos terão de aceitar de novo.
  */
-export const TERMOS_VERSAO = '1.0';
+export const TERMOS_VERSAO = '1.1';
 export const TERMOS_DATA = '10/11/2026';
 
 export const RESPONSABILIDADE_RESUMO =
   'O NÃO ESQUECE ADV é uma ferramenta gratuita de apoio. O usuário tem plena e exclusiva responsabilidade pelo gerenciamento de suas intimações, publicações e prazos, devendo sempre conferir as informações nas fontes oficiais. O criador do app não se responsabiliza por publicações não captadas, prazos calculados de forma incorreta, falhas das fontes públicas ou perda de dados.';
+
+export const AVISO_FERIADOS =
+  'O prazo calculado considera apenas os feriados nacionais, a suspensão de 20/12 a 20/01 e os feriados locais cadastrados no app. Consulte sempre os feriados nacionais, estaduais e municipais e as suspensões de expediente do tribunal antes de confiar na data final.';
 
 export const TERMOS_MD = `# Termos de uso — NÃO ESQUECE ADV
 
@@ -30,6 +33,7 @@ Estes Termos regulam o uso do aplicativo **NÃO ESQUECE ADV** ("app"), criado e 
 
 - acompanhar diretamente as fontes oficiais e os sistemas dos tribunais, independentemente do uso do app;
 - **conferir na fonte oficial** toda publicação exibida pelo app, inclusive seu inteiro teor;
+- **consultar os feriados nacionais, estaduais e municipais** e as suspensões de expediente de cada tribunal;
 - **conferir e calcular por conta própria os prazos**, considerando feriados locais, suspensões, prazos em dobro, regras específicas de cada procedimento e decisões dos tribunais. O prazo exibido pelo app é apenas uma **estimativa**, em especial quando marcado como "presumido";
 - manter corretos o nome completo, o CPF e o número da OAB cadastrados;
 - manter o app aberto ou instalado para que as buscas automáticas ocorram, sabendo que elas não funcionam com o app fechado;

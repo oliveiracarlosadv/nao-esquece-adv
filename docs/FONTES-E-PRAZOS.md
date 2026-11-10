@@ -78,6 +78,10 @@ O prazo pode ser ajustado manualmente em cada publicação.
 ### Exemplo (coberto por teste automático)
 Disponibilizado em seg 09/11/2026 → publicado ter 10/11 → início qua 11/11 → 15 dias úteis (pulando o feriado de 20/11) → **fim em 02/12/2026**.
 
+### Aviso
+
+**Consulte sempre os feriados nacionais, estaduais e municipais e as suspensões de expediente do tribunal.** O app avisa isso junto de cada prazo e no PDF.
+
 ### Limitações
 - Não considera automaticamente feriados estaduais/municipais nem suspensões por portaria do tribunal: cadastre-os em “Feriados locais”.
 - Prazos em dobro (Fazenda Pública, Defensoria, litisconsortes com procuradores diferentes) e prazos penais devem ser ajustados manualmente.

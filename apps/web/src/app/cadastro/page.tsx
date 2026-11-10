@@ -109,6 +109,10 @@ export default function PrimeirosPassos() {
                 </span>
               </li>
               <li className="flex gap-3">
+                <Archive className="mt-1 shrink-0 text-amber-500" size={20} />
+                <span><strong className="text-ink">Feriados:</strong> consulte sempre os feriados nacionais, estaduais e municipais e as suspensões de expediente do tribunal. Cadastre os feriados locais em Monitoramento → Configurações.</span>
+              </li>
+              <li className="flex gap-3">
                 <ShieldCheck className="mt-1 shrink-0 text-emerald-500" size={20} />
                 <span>Quem usar este computador e este navegador terá acesso ao app. Proteja o computador com senha.</span>
               </li>

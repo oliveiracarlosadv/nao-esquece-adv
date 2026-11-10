@@ -239,7 +239,7 @@ function Config() {
           <Field label="Na primeira busca, olhar quantos dias para trás" hint="Depois disso, só o período desde a última busca.">
             <Input type="number" min={1} max={365} value={s.initialDays} onChange={(e) => setS({ ...s, initialDays: Number(e.target.value) || 30 })} />
           </Field>
-          <Field label="Feriados locais (um por linha)" hint="AAAA-MM-DD para um dia específico ou MM-DD para todo ano. Ex.: 08-15 (Adesão do Pará).">
+          <Field label="Feriados locais (um por linha)" hint="Consulte os feriados nacionais, estaduais e municipais e as suspensões do tribunal e cadastre aqui os locais. AAAA-MM-DD para um dia específico ou MM-DD para todo ano. Ex.: 08-15 (Adesão do Pará).">
             <Textarea rows={3} value={s.extraHolidays.join('\n')} onChange={(e) => setS({ ...s, extraHolidays: e.target.value.split('\n').map((x) => x.trim()).filter(Boolean) })} />
           </Field>
         </div>

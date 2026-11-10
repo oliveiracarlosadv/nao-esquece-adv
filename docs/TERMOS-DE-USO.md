@@ -2,7 +2,7 @@
 
 # Termos de uso — NÃO ESQUECE ADV
 
-**Versão 1.0 — vigente desde 10/11/2026**
+**Versão 1.1 — vigente desde 10/11/2026**
 
 Estes Termos regulam o uso do aplicativo **NÃO ESQUECE ADV** ("app"), criado e mantido por **Carlos Alexandre Albuquerque Oliveira** ("criador"). Ao marcar a opção de aceite e usar o app, você ("usuário") declara que leu, entendeu e concorda integralmente com estes Termos. Se não concordar, não utilize o app.
 
@@ -22,6 +22,7 @@ Estes Termos regulam o uso do aplicativo **NÃO ESQUECE ADV** ("app"), criado e 
 
 - acompanhar diretamente as fontes oficiais e os sistemas dos tribunais, independentemente do uso do app;
 - **conferir na fonte oficial** toda publicação exibida pelo app, inclusive seu inteiro teor;
+- **consultar os feriados nacionais, estaduais e municipais** e as suspensões de expediente de cada tribunal;
 - **conferir e calcular por conta própria os prazos**, considerando feriados locais, suspensões, prazos em dobro, regras específicas de cada procedimento e decisões dos tribunais. O prazo exibido pelo app é apenas uma **estimativa**, em especial quando marcado como "presumido";
 - manter corretos o nome completo, o CPF e o número da OAB cadastrados;
 - manter o app aberto ou instalado para que as buscas automáticas ocorram, sabendo que elas não funcionam com o app fechado;
