@@ -12,14 +12,11 @@ O que sai do computador:
 
 | Requisito | Como foi atendido |
 |---|---|
-| Criptografia de senhas | PBKDF2-SHA256, 210.000 iterações, sal aleatório por usuário |
+| Acesso | Sem login (decisão de 10/11/2026): quem usa o computador e o navegador acessa o app |
 | Criptografia de backups | AES-256-GCM com chave derivada de senha (opcional) |
-| Autenticação em dois fatores | TOTP (Google Authenticator, Microsoft Authenticator etc.) |
-| Controle de acesso por perfil | Administrador × Advogado; telas administrativas bloqueadas |
-| Sessão | Expira em 12 horas |
-| Logs de auditoria | Login, falhas de login, cadastro, alterações de perfil e senha, 2FA, termos, prazos manuais, exportações, backups, ações administrativas |
+| Logs de auditoria | Criação e alteração do perfil, consultas a diários, termos, prazos manuais, exportações, backups, ações administrativas |
 | Logs de pesquisa | Cada consulta às fontes, com horário, termo, resultado e erro |
-| Consentimento | Aceite explícito no cadastro (LGPD, art. 7º) |
+| Consentimento | Aviso e aceite explícito na primeira abertura (LGPD, art. 7º) |
 | Minimização | Só os termos necessários são enviados às fontes |
 | Portabilidade e eliminação | Exportar backup / apagar dados do navegador |
 | Conector local | Escuta só em 127.0.0.1 e só repassa para domínios oficiais |
@@ -31,4 +28,4 @@ O que sai do computador:
 - **Quem tem acesso ao computador tem acesso aos dados.** Use senha no usuário do sistema operacional e criptografia de disco (FileVault no Mac, BitLocker no Windows).
 - **Limpeza do navegador apaga os dados.** Use “Proteger dados” na tela Backup e exporte backups com frequência.
 - **Backups sem senha são legíveis.** Para guardar em nuvem ou pendrive, prefira backup com senha.
-- As contas são locais: a senha protege o acesso pelo app, mas não criptografa o banco do navegador. Para sigilo forte, combine com a criptografia de disco.
+- Não há senha no app: o sigilo depende do computador. Combine com a criptografia de disco.

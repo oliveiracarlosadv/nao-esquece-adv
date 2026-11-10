@@ -1,6 +1,7 @@
 'use client';
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 import { AuthProvider } from '@/lib/auth';
+import { InstallProvider } from './InstallApp';
 
 type Toast = { id: number; text: string; tone: 'ok' | 'erro' };
 type UiCtx = { toast: (text: string, tone?: Toast['tone']) => void; theme: 'light' | 'dark'; toggleTheme: () => void };
@@ -44,7 +45,9 @@ export function Providers({ children }: { children: ReactNode }) {
 
   return (
     <Ctx.Provider value={{ toast, theme, toggleTheme }}>
-      <AuthProvider>{children}</AuthProvider>
+      <InstallProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </InstallProvider>
       <div aria-live="polite" className="pointer-events-none fixed bottom-4 left-1/2 z-[60] flex w-full max-w-sm -translate-x-1/2 flex-col gap-2 px-4">
         {toasts.map((t) => (
           <div key={t.id} className={`pointer-events-auto rounded-lg px-4 py-3 text-sm shadow-lg ${t.tone === 'erro' ? 'bg-red-600 text-white' : 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'}`}>

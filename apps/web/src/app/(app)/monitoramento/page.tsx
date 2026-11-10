@@ -9,6 +9,7 @@ import { cx, fmtDateTime } from '@/lib/format';
 import { DEFAULT_MONITOR, getMonitorSettings, type MonitorSettings } from '@/lib/monitor';
 import { SOURCES } from '@/lib/sources';
 import { useMonitor } from '@/components/AppShell';
+import { DiariosEstaduais, KeywordsCard } from '@/components/Diarios';
 import { useUi } from '@/components/Providers';
 import { Badge, Button, Card, Empty, Field, IconButton, Input, PageHeader, Select, Spinner, Tabs, Textarea, Toggle } from '@/components/ui';
 
@@ -23,7 +24,7 @@ const KINDS: { id: TermKind; label: string; hint: string }[] = [
 
 export default function MonitoramentoPage() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<'termos' | 'fontes' | 'config' | 'historico'>('termos');
+  const [tab, setTab] = useState<'termos' | 'diarios' | 'fontes' | 'config' | 'historico'>('termos');
   if (!user) return null;
   return (
     <>
@@ -32,13 +33,20 @@ export default function MonitoramentoPage() {
         value={tab}
         onChange={setTab}
         tabs={[
-          { id: 'termos', label: 'Processos e partes' },
+          { id: 'termos', label: 'Palavras-chave' },
+          { id: 'diarios', label: 'Diários oficiais' },
           { id: 'fontes', label: 'Fontes consultadas' },
           { id: 'config', label: 'Configurações' },
           { id: 'historico', label: 'Histórico de buscas' },
         ]}
       />
-      {tab === 'termos' && <Terms userId={user.id} />}
+      {tab === 'termos' && (
+        <div className="space-y-6">
+          <KeywordsCard />
+          <Terms userId={user.id} />
+        </div>
+      )}
+      {tab === 'diarios' && <DiariosEstaduais />}
       {tab === 'fontes' && <Sources userId={user.id} />}
       {tab === 'config' && <Config />}
       {tab === 'historico' && <History userId={user.id} />}
@@ -84,7 +92,7 @@ function Terms({ userId }: { userId: string }) {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
-      <Card title="Adicionar ao monitoramento">
+      <Card title="Adicionar processos e partes (opcional)">
         <form onSubmit={onSubmit} className="space-y-4">
           <Field label="Tipo" hint={KINDS.find((k) => k.id === kind)?.hint}>
             <Select value={kind} onChange={(e) => setKind(e.target.value as TermKind)}>
@@ -167,7 +175,7 @@ function Sources({ userId }: { userId: string }) {
                 </div>
                 <p className="mt-1.5 text-sm text-soft">{s.description}</p>
               </div>
-              {s.status === 'ativo' ? <Toggle checked={!!settings.sources[s.id]} onChange={(v) => toggle(s.id, v)} label="" /> : <Badge>Em breve</Badge>}
+              {s.status === 'ativo' ? <Toggle checked={!!settings.sources[s.id]} onChange={(v) => toggle(s.id, v)} label="" /> : <Badge tone={s.status === 'assistido' ? 'amber' : 'neutral'}>{s.status === 'assistido' ? 'Busca assistida' : 'Em breve'}</Badge>}
             </div>
             <div className="mt-4 flex flex-wrap gap-1.5">
               {s.coverage.map((c) => (

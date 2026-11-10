@@ -30,13 +30,13 @@
 
 | Tabela | Conteúdo |
 |---|---|
-| `users` | Contas locais (senha com hash PBKDF2, segredo 2FA, foto, logomarca, perfil) |
+| `users` | Perfil local do advogado (nome, CPF, OAB, foto, logomarca). Sem login |
 | `terms` | Processos, partes, CPF/CNPJ e termos monitorados |
 | `publications` | Publicações encontradas, com prazo, leitura, favorito e anotação |
 | `workspace` | Consultas salvas, painéis personalizados e processos fixados |
 | `notifications` | Central de notificações |
 | `runs` | Log de cada pesquisa feita nas fontes |
-| `audit` | Auditoria (login, alterações, exportações, backups) |
+| `audit` | Auditoria (perfil, alterações, exportações, backups) |
 | `plans` | Legado (vazia). O app é gratuito e completo, sem planos |
 | `settings` | Configurações (monitoramento, notificações, pasta do Sobre…) |
 | `files` | Arquivos da página Sobre carregados de uma pasta |
@@ -56,7 +56,7 @@ O pedido 01 previa NestJS + PostgreSQL + Redis + JWT + S3. O pedido 05 determino
 |---|---|---|
 | PostgreSQL | IndexedDB | Dados ficam no PC |
 | Redis | Não necessário | Sem servidor; cache feito pelo Service Worker |
-| JWT | Sessão local (12 h) | Sem API remota para autenticar |
+| JWT | Sem login | Dados só no PC; perfil único local |
 | AWS S3 | Imagens como data URL no IndexedDB | Sem armazenamento remoto |
 | NestJS cron | Agendador no navegador | Sem servidor |
 

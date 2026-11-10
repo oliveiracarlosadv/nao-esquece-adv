@@ -1,7 +1,7 @@
 // Service worker do NÃO ESQUECE ADV: deixa o app abrir sem internet.
 // - Arquivos com hash (/_next/static/): cache primeiro (nunca mudam).
 // - Todo o resto (páginas, manifesto, ícones): rede primeiro, cache se estiver offline.
-const CACHE = 'nea-v2';
+const CACHE = 'nea-v3';
 
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', (e) => {

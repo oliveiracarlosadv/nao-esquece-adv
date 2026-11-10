@@ -1,6 +1,6 @@
 # Backup e restauração
 
-Os dados do NÃO ESQUECE ADV ficam **somente no navegador deste computador**. Se o navegador for limpo, reinstalado ou o computador trocado, os dados só voltam com um backup.
+Os dados do NÃO ESQUECE ADV ficam **somente no navegador deste computador**. **Recomenda-se backup mensal**: o app mostra um lembrete no topo quando o último backup exportado tem mais de 30 dias. Se o navegador for limpo, reinstalado ou o computador trocado, os dados só voltam com um backup.
 
 ## Tela Backup
 
@@ -21,12 +21,12 @@ Antes de importar ou restaurar, o app cria **automaticamente** um ponto de resta
 ## Trocar de computador
 
 1. No computador antigo: Backup → Exportar arquivo.
-2. No novo: abra o app → tela de entrada → **“Trocou de computador? Importar backup”**.
-3. Entre com o mesmo e-mail e senha.
+2. No novo: abra o app → no aviso da primeira abertura, clique em **“Já usa o app em outro computador? Restaurar um backup”**.
+3. Pronto: o app abre com todos os dados.
 
 ## O que vai no backup
 
-Contas, processos e partes monitorados, publicações (com leitura, favoritos, prazos e anotações), área de trabalho, notificações, histórico de buscas, auditoria, configurações e arquivos da página Sobre. Pontos de restauração não entram no arquivo.
+Perfil, processos e partes monitorados, publicações (com leitura, favoritos, prazos e anotações), meus painéis, notificações, histórico de buscas, auditoria, configurações e arquivos da página Sobre. Pontos de restauração não entram no arquivo.
 
 ## Backup do código-fonte
 

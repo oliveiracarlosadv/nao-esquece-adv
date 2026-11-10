@@ -3,7 +3,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Download, FolderOpen, Plus, RefreshCw, Trash2, UserPlus } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
-import { hashPassword } from '@/lib/crypto';
 import { audit, db, getSetting, nowIso, setSetting, uid, type User } from '@/lib/db';
 import { exportCsv } from '@/lib/export';
 import { fmtDateTime } from '@/lib/format';
@@ -13,21 +12,20 @@ import { SOURCES } from '@/lib/sources';
 import { useUi } from '@/components/Providers';
 import { Badge, Button, Card, Empty, Field, IconButton, Input, Modal, PageHeader, Select, Spinner, Tabs, Toggle } from '@/components/ui';
 
-type Tab = 'usuarios' | 'logos' | 'fontes' | 'logs' | 'historico' | 'relatorios' | 'sobre';
+type Tab = 'logos' | 'fontes' | 'logs' | 'historico' | 'relatorios' | 'sobre';
 
 export default function Admin() {
   const { user } = useAuth();
-  const [tab, setTab] = useState<Tab>('usuarios');
+  const [tab, setTab] = useState<Tab>('fontes');
   if (!user) return null;
   if (user.role !== 'admin') return <Card><Empty title="Acesso restrito" text="Apenas administradores acessam esta área." /></Card>;
   return (
     <>
-      <PageHeader title="Administração" subtitle="Gestão de usuários, fontes, registros e conteúdo institucional." />
+      <PageHeader title="Administração" subtitle="Gestão de fontes, registros e conteúdo institucional." />
       <Tabs
         value={tab}
         onChange={setTab}
         tabs={[
-          { id: 'usuarios', label: 'Usuários' },
           { id: 'logos', label: 'Logomarcas' },
           { id: 'fontes', label: 'Bases e APIs' },
           { id: 'logs', label: 'Logs de pesquisas' },
@@ -36,7 +34,6 @@ export default function Admin() {
           { id: 'sobre', label: 'Página Sobre' },
         ]}
       />
-      {tab === 'usuarios' && <Users me={user} />}
       {tab === 'logos' && <Logos />}
       {tab === 'fontes' && <Sources />}
       {tab === 'logs' && <Logs />}
@@ -47,64 +44,6 @@ export default function Admin() {
   );
 }
 
-function Users({ me }: { me: User }) {
-  const { toast } = useUi();
-  const users = useLiveQuery(() => db.users.toArray(), []);
-  const [open, setOpen] = useState(false);
-  const [f, setF] = useState({ name: '', email: '', password: '', role: 'usuario', oab: '', oabUf: 'PA' });
-
-  const create = async () => {
-    if (!f.name || !f.email || f.password.length < 8) return toast('Preencha nome, e-mail e senha (mín. 8).', 'erro');
-    if (await db.users.where('email').equals(f.email.toLowerCase()).first()) return toast('E-mail já cadastrado.', 'erro');
-    const { hash, salt } = await hashPassword(f.password);
-    await db.users.add({ id: uid('u_'), name: f.name, email: f.email.toLowerCase(), cpf: '', oab: f.oab, oabUf: f.oabUf, phone: '', role: f.role as User['role'], passwordHash: hash, passwordSalt: salt, active: true, createdAt: nowIso() });
-    await audit('admin.usuario.criado', f.email, me.id);
-    setOpen(false);
-    toast('Usuário criado.');
-  };
-
-  const update = async (u: User, patch: Partial<User>) => {
-    if (u.id === me.id && (patch.role === 'usuario' || patch.active === false)) return toast('Você não pode remover seu próprio acesso.', 'erro');
-    await db.users.update(u.id, patch);
-    await audit('admin.usuario.alterado', `${u.email}: ${JSON.stringify(patch)}`, me.id);
-  };
-
-  return (
-    <Card title={`Usuários (${users?.length || 0})`} action={<Button size="sm" icon={<UserPlus size={15} />} onClick={() => setOpen(true)}>Novo usuário</Button>} className="overflow-hidden">
-      <div className="-m-5 overflow-x-auto">
-        <table className="w-full min-w-[820px] text-left text-sm">
-          <thead className="border-b border-line text-xs uppercase tracking-wide text-faint">
-            <tr><th className="px-5 py-3">Nome</th><th className="px-3 py-3">OAB</th><th className="px-3 py-3">Perfil</th><th className="px-3 py-3">2FA</th><th className="px-3 py-3">Ativo</th><th className="px-3 py-3">Desde</th></tr>
-          </thead>
-          <tbody className="divide-y divide-line">
-            {users?.map((u) => (
-              <tr key={u.id}>
-                <td className="px-5 py-3"><p className="font-medium text-ink">{u.name}</p><p className="text-xs text-faint">{u.email}</p></td>
-                <td className="px-3 py-3 text-soft">{u.oab ? `${u.oab}/${u.oabUf}` : '—'}</td>
-                <td className="px-3 py-3">
-                  <Select value={u.role} onChange={(e) => update(u, { role: e.target.value as User['role'] })} className="h-8 w-36 text-xs"><option value="admin">Administrador</option><option value="usuario">Advogado</option></Select>
-                </td>
-                <td className="px-3 py-3">{u.totpSecret ? <Badge tone="green">Sim</Badge> : <Badge>Não</Badge>}</td>
-                <td className="px-3 py-3"><Toggle checked={u.active} onChange={(v) => update(u, { active: v })} label="" /></td>
-                <td className="px-3 py-3 text-xs text-soft">{fmtDateTime(u.createdAt)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <Modal open={open} onClose={() => setOpen(false)} title="Novo usuário" footer={<><Button onClick={() => setOpen(false)}>Cancelar</Button><Button variant="primary" onClick={create}>Criar</Button></>}>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <Field label="Nome" className="sm:col-span-2"><Input value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /></Field>
-          <Field label="E-mail"><Input type="email" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} /></Field>
-          <Field label="Senha inicial"><Input type="password" value={f.password} onChange={(e) => setF({ ...f, password: e.target.value })} autoComplete="new-password" /></Field>
-          <Field label="OAB"><Input value={f.oab} onChange={(e) => setF({ ...f, oab: e.target.value })} /></Field>
-          <Field label="UF"><Input value={f.oabUf} maxLength={2} onChange={(e) => setF({ ...f, oabUf: e.target.value.toUpperCase() })} /></Field>
-          <Field label="Perfil"><Select value={f.role} onChange={(e) => setF({ ...f, role: e.target.value })}><option value="usuario">Advogado</option><option value="admin">Administrador</option></Select></Field>
-        </div>
-      </Modal>
-    </Card>
-  );
-}
 
 
 function Logos() {
@@ -161,7 +100,7 @@ function Sources() {
               <tr key={x.id}>
                 <td className="px-5 py-3"><p className="font-medium text-ink">{x.name}</p>{x.url && <a href={x.url} target="_blank" rel="noreferrer" className="text-xs text-brand-600">{x.url}</a>}</td>
                 <td className="px-3 py-3 text-xs text-soft">{x.coverage.join(', ')}</td>
-                <td className="px-3 py-3">{x.status === 'ativo' ? <Badge tone="green">Integrada</Badge> : <Badge>Planejada</Badge>}{x.needsConnector && <Badge className="ml-1">conector</Badge>}</td>
+                <td className="px-3 py-3">{x.status === 'ativo' ? <Badge tone="green">Integrada</Badge> : <Badge tone={x.status === 'assistido' ? 'amber' : 'neutral'}>{x.status === 'assistido' ? 'Busca assistida' : 'Planejada'}</Badge>}{x.needsConnector && <Badge className="ml-1">conector</Badge>}</td>
                 <td className="px-3 py-3">{x.status === 'ativo' ? <Toggle checked={!!s.sources[x.id]} onChange={(v) => toggle(x.id, v)} label="" /> : '—'}</td>
               </tr>
             ))}

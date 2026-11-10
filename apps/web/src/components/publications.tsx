@@ -287,7 +287,7 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
     const exists = await db.workspace.where('userId').equals(user.id).filter((w) => w.kind === 'processo' && w.processNumber === p.processNumber).first();
     if (exists) return toast('Processo já está fixado.');
     await db.workspace.add({ id: crypto.randomUUID(), userId: user.id, kind: 'processo', name: p.parties.join(' × ') || p.processNumber, processNumber: p.processNumber, createdAt: new Date().toISOString() });
-    toast('Processo fixado na área de trabalho.');
+    toast('Processo fixado em Meus painéis.');
   };
 
   const info: [string, React.ReactNode][] = [
@@ -524,7 +524,7 @@ export function ExportDialog({ open, onClose, all, current, selected, user }: { 
   );
 }
 
-/* ---------------------------------------------------------------- Salvar na área de trabalho */
+/* ---------------------------------------------------------------- Salvar consulta (Meus painéis) */
 
 export function SaveWorkspaceDialog({ open, onClose, filters, user }: { open: boolean; onClose: () => void; filters: Filters; user: User }) {
   const [name, setName] = useState('');
@@ -533,12 +533,12 @@ export function SaveWorkspaceDialog({ open, onClose, filters, user }: { open: bo
   const save = async () => {
     if (!name.trim()) return;
     await db.workspace.add({ id: crypto.randomUUID(), userId: user.id, kind, name: name.trim(), filters, createdAt: new Date().toISOString() });
-    toast(kind === 'painel' ? 'Painel criado na área de trabalho.' : 'Consulta salva na área de trabalho.');
+    toast(kind === 'painel' ? 'Painel criado em Meus painéis.' : 'Consulta salva em Meus painéis.');
     setName('');
     onClose();
   };
   return (
-    <Modal open={open} onClose={onClose} title="Salvar na área de trabalho" footer={<><Button onClick={onClose}>Cancelar</Button><Button variant="primary" onClick={save}>Salvar</Button></>}>
+    <Modal open={open} onClose={onClose} title="Salvar consulta em Meus painéis" footer={<><Button onClick={onClose}>Cancelar</Button><Button variant="primary" onClick={save}>Salvar</Button></>}>
       <div className="space-y-4">
         <Field label="Nome">
           <Input autoFocus value={name} onChange={(e) => setName(e.target.value)} placeholder="Ex.: Prazos da semana — TJPA" onKeyDown={(e) => e.key === 'Enter' && save()} />

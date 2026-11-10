@@ -113,7 +113,7 @@ export function PublicationsView({ mode }: { mode: ViewMode }) {
               </Button>
             )}
             <Button icon={<BookmarkPlus size={16} />} onClick={() => setSaving(true)}>
-              Salvar na área de trabalho
+              Salvar consulta
             </Button>
             <Button variant="primary" icon={<Download size={16} />} onClick={() => setExporting(selectedRows)}>
               Exportar

@@ -26,9 +26,20 @@
 - Busca textual (nome, OAB, CPF, partes, termos) em diários municipais.
 - ⚠️ Bloqueado no navegador nos testes e sem resposta em 09/11/2026. Use o conector local e confira o histórico de buscas.
 
-### Planejadas
-- **Diário Oficial da União (INLABS)**: exige cadastro gratuito na Imprensa Nacional; será feito pelo conector local.
-- **Diários Oficiais Estaduais e do DF**: cada estado tem formato próprio, sem API nacional; conectores serão feitos estado a estado.
+### Diários Oficiais Estaduais, do DF e da União 🔎 (busca assistida)
+- Não existe API nacional; os sites estaduais (inclusive o de SP, conferido em 10/11/2026) não têm busca automatizada aberta.
+- O app lista os 26 estados + DF (endereços conferidos em 10/11/2026; MS não respondeu no teste) e o DOU. Em **Monitoramento → Diários oficiais**, o usuário escolhe a palavra-chave (nome, CPF ou OAB) e clica em Pesquisar: o site oficial abre com a palavra copiada. No DOU, a busca abre pronta pelo endereço.
+- Lista em `apps/web/src/lib/diarios-estaduais.ts`.
+
+## Palavras-chave
+
+As buscas usam o **nome completo**, o **CPF** e o **número da OAB/UF** do advogado:
+
+| Fonte | Nome | CPF | OAB |
+|---|---|---|---|
+| DJEN | ✅ (`nomeAdvogado`) | — (a API não permite) | ✅ (`numeroOab` + `ufOab`) |
+| Diários municipais | ✅ | ✅ com e sem pontuação | ✅ variações: `OAB/PA 12345`, `OAB/PA 12.345`, `OAB/PA nº 12345`, `OAB-PA 12345`, `12345/PA`… |
+| Diários estaduais/DOU | ✅ busca assistida | ✅ busca assistida | ✅ busca assistida |
 
 ## Conector local
 

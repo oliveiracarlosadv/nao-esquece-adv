@@ -41,8 +41,8 @@ Para conhecer sem cadastrar nada, clique em **“Ver demonstração”** (dados 
                          a cada 1 hora               Fim do prazo
 ```
 
-1. **Cadastro** — nome completo, CPF, OAB/UF, e-mail, telefone, foto e logomarca. **O app é gratuito e completo: sem planos, sem cobrança, sem limites.**
-2. **Monitoramento** — cadastre processos, partes, CPF/CNPJ e termos de licitação. Seu nome, CPF e OAB já entram automaticamente.
+1. **Primeira abertura (sem login)** — o app avisa que as informações ficam salvas nos arquivos do navegador deste computador e recomenda **backup mensal**. Depois você informa nome completo, CPF e OAB/UF (as **palavras-chave** das buscas), além de telefone, e-mail, foto e logomarca opcionais. **Gratuito e completo: sem planos, sem cobrança, sem limites.**
+2. **Monitoramento** — as palavras-chave são o **nome completo, o CPF e o número da OAB**. Processos, partes, CNPJ e termos de licitação podem ser adicionados (opcional).
 3. **Busca automática** — a cada hora (configurável), enquanto o app estiver aberto em alguma aba ou instalado como aplicativo. Na primeira vez, busca os últimos 30 dias.
 4. **Processamento inteligente** — cada publicação é lida para extrair número do processo, partes, tribunal, vara, comarca, órgão emissor e categoria (intimação, citação, sentença, despacho, acórdão, pauta, edital, licitação…).
 5. **Prazo automático** — quando o texto informa o prazo (“no prazo de 15 (quinze) dias”), o fim é calculado em **dias úteis**, com publicação no 1º dia útil após a disponibilização (Lei 11.419/2006, art. 4º), feriados nacionais e móveis, **suspensão de 20/12 a 20/01** (CPC, art. 220) e feriados locais. Quando não há prazo no texto, aplica-se um prazo **presumido** (CPC, art. 218, §3º), sinalizado para conferência.
@@ -56,9 +56,8 @@ Para conhecer sem cadastrar nada, clique em **“Ver demonstração”** (dados 
 | **DJEN — Diário de Justiça Eletrônico Nacional (CNJ)** | Intimações e comunicações de TJs, TRFs, TRTs/TST, TREs/TSE, Justiça Militar e tribunais superiores integrados | ✅ Funciona direto no navegador |
 | **PNCP — Portal Nacional de Contratações Públicas** | Editais e avisos de licitação (União, estados, municípios) | ✅ Funciona direto no navegador |
 | **DataJud — API pública do CNJ** | Andamentos dos processos cadastrados | ⚙️ Requer o conector local |
-| **Querido Diário** | Diários oficiais municipais | ⚙️ Requer o conector local |
-| Diário Oficial da União (INLABS) | Publicações do DOU | 🔜 Planejado |
-| Diários Oficiais Estaduais e do DF | Publicações estaduais | 🔜 Planejado (sem API nacional) |
+| **Diários Oficiais Municipais** (Querido Diário) | Menções ao nome, CPF e OAB em diários de municípios | ⚙️ Automático, via conector local |
+| **Diários Oficiais Estaduais, do DF e da União** | Publicações dos 26 estados, DF e DOU | 🔎 Busca assistida (sem API pública): o app abre o site oficial com a palavra-chave pronta |
 
 > **Conector local:** algumas fontes bloqueiam chamadas vindas do navegador. O arquivo [`conector-local/server.mjs`](conector-local/) é um programa minúsculo, sem dependências, que roda só no seu PC e repassa as consultas a uma lista fechada de sites oficiais. Veja [docs/FONTES-E-PRAZOS.md](docs/FONTES-E-PRAZOS.md).
 
@@ -66,17 +65,17 @@ Para conhecer sem cadastrar nada, clique em **“Ver demonstração”** (dados 
 
 ## Funcionalidades
 
-- **Cadastro e login** com senha (PBKDF2), **autenticação em dois fatores** (TOTP) e alteração de senha.
-- **Perfis de acesso**: administrador e advogado. O primeiro cadastro vira administrador.
+- **Sem login**: perfil único guardado no navegador; aviso de armazenamento local na primeira abertura e **lembrete de backup mensal**.
+- **Salvar na área de trabalho**: instala o app como atalho (web app) no computador (Windows, Mac, Linux) e no celular (Android, iPhone/iPad).
 - **Painel** com contadores (não lidas, prazos em até 3 dias úteis, novas hoje), filtros e seleção em lote.
 - **Filtros**: processo, parte, tribunal, vara, comarca, período, lidas/não lidas, tipo, origem e favoritas.
 - **Busca global** com lupa: partes, processo, advogado ou OAB.
 - **Exportação** para **PDF, Excel e CSV**, por resultado atual, selecionados ou filtros próprios (vara, processo, tribunal, período, lidos/não lidos).
-- **Área de trabalho**: consultas e filtros salvos, painéis personalizados com contadores, processos fixados e publicações favoritas.
+- **Meus painéis**: consultas e filtros salvos, painéis personalizados com contadores, processos fixados e publicações favoritas.
 - **Intimações lidas**: lista própria para o que já foi lido, com filtros, exportação e “Marcar como não lida”.
 - **Central de notificações**: histórico de avisos de tudo o que chegou de novo. Avisa no app, no computador (push), por e-mail e WhatsApp (envio automático é integração futura).
 - **Backup**: pontos de restauração, exportação `.json` (com criptografia AES-256 opcional) e importação (mesclar ou substituir).
-- **Painel administrativo**: usuários, logomarcas, bases e APIs, logs de pesquisas, auditoria, relatórios e a pasta da página Sobre.
+- **Painel administrativo**: logomarcas, bases e APIs, logs de pesquisas, auditoria, relatórios e a pasta da página Sobre.
 - **Página Sobre** montada automaticamente a partir dos arquivos de uma pasta (`conteudo/sobre/` ou outra escolhida pelo administrador).
 - **Tema claro e escuro**, layout responsivo (desktop, tablet e celular) e **instalável como aplicativo** (PWA), com ícone para o Dock do Mac, barra de tarefas do Windows e tela inicial do celular.
 
@@ -88,7 +87,7 @@ Para conhecer sem cadastrar nada, clique em **“Ver demonstração”** (dados 
 |---|---|
 | Interface | Next.js 15 (exportação estática), React 19, TypeScript, TailwindCSS |
 | Dados | IndexedDB (via Dexie) — **no navegador do usuário** |
-| Segurança | Web Crypto (PBKDF2-SHA256, AES-256-GCM), TOTP (otpauth) |
+| Segurança | Web Crypto (AES-256-GCM nos backups com senha) |
 | Exportação | jsPDF + AutoTable, ExcelJS, CSV nativo |
 | Offline | Service Worker + Web App Manifest |
 | Conector local | Node.js puro (sem dependências) |
@@ -135,14 +134,14 @@ npm test -w apps/web
 
 ```
 apps/web/            Webapp (Next.js)
-  src/app/           Telas: painel, monitoramento, área de trabalho, notificações,
-                     backup, perfil, administração, sobre, entrar, cadastro
+  src/app/           Telas: painel, lidas, monitoramento, meus painéis, notificações,
+                     backup, perfil, administração, sobre, primeiros passos (cadastro)
   src/lib/           Núcleo: banco local, prazos, extração, fontes, monitor,
                      backup, exportação, notificações, criptografia
   src/components/    Componentes visuais
 conector-local/      Ponte opcional para fontes que bloqueiam o navegador
 conteudo/sobre/      Textos e imagens da página Sobre
-brand/               Logomarca (SVG)
+brand/               Logomarca: mão com fita no dedo + ramo de oliveira (SVG/PNG)
 docs/                Documentação
 PEDIDOS/             Histórico de todos os pedidos (Markdown)
 scripts/backup.sh    Gera um .zip datado do código em BACKUPS/

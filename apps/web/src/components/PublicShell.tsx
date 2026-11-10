@@ -19,7 +19,7 @@ export function PublicShell({ children, wide }: { children: ReactNode; wide?: bo
             {user ? (
               <Link href="/painel/" className="rounded-lg bg-brand-600 px-3 py-2 font-medium text-white hover:bg-brand-700">Abrir painel</Link>
             ) : (
-              <Link href="/entrar/" className="rounded-lg px-3 py-2 font-medium text-ink hover:bg-muted">Entrar</Link>
+              <Link href="/cadastro/" className="rounded-lg px-3 py-2 font-medium text-ink hover:bg-muted">Começar</Link>
             )}
             <button onClick={toggleTheme} aria-label="Alternar tema" className="flex h-9 w-9 items-center justify-center rounded-lg text-soft hover:bg-muted hover:text-ink">
               {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}

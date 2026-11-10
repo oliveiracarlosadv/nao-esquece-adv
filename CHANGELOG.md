@@ -1,5 +1,24 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.3.0] — 10/11/2026
+
+Pedidos atendidos: 08 a 14.
+
+### Alterado
+- **“Salvar na área de trabalho” agora instala o app** como atalho (web app) no computador e no celular: instalação direta no Chrome/Edge/Android; passo a passo no iPhone/iPad e no Safari do Mac. Botão no topo de todas as telas e na página inicial.
+- A antiga “Área de trabalho” (consultas, painéis, processos fixados, favoritos) passou a se chamar **Meus painéis**; o botão do painel virou **Salvar consulta**.
+- **Novo ícone e logo:** mão com o indicador levantado e um laço no dedo sobre o ramo de oliveira. Recriados símbolo, logos horizontais, favicon, ícones do app (PWA), Dock do Mac e tela inicial.
+- **Sem login:** removidos e-mail/senha, troca de senha, 2FA e “Sair”. Na primeira abertura, aviso de que os dados ficam nos arquivos do navegador e recomendação de **backup mensal**; lembrete automático quando o último backup passa de 30 dias.
+- **Palavras-chave:** nome completo, CPF e número da OAB, em destaque no Monitoramento e usadas em todas as fontes possíveis (com variações de escrita nos diários).
+- Clicar no número do processo abre a publicação e já a marca como lida (confirmado).
+
+### Adicionado
+- **Diários oficiais:** municipais automáticos (Querido Diário, via conector local) e **busca assistida** nos 26 estados, DF e DOU — **todos marcados por padrão**.
+- Demonstração com botão “Começar de verdade”, que apaga os dados fictícios.
+
+### Removido
+- Aba “Usuários” da administração (perfil único).
+
 ## [0.2.0] — 09/11/2026
 
 Pedidos atendidos: 06 e 07.

@@ -7,6 +7,7 @@ import { useAuth } from '@/lib/auth';
 import { ensureDemoUser } from '@/lib/demo';
 import { LogoMark } from '@/components/Logo';
 import { PublicShell } from '@/components/PublicShell';
+import { InstallButton } from '@/components/InstallApp';
 import { Button } from '@/components/ui';
 
 const FEATURES = [
@@ -27,8 +28,7 @@ export default function Home() {
 
   const demo = async () => {
     setBusy(true);
-    const u = await ensureDemoUser();
-    localStorage.setItem('nea.session', JSON.stringify({ userId: u.id, expiresAt: Date.now() + 12 * 3600_000 }));
+    await ensureDemoUser();
     await refresh();
     router.push('/painel/');
   };
@@ -46,10 +46,11 @@ export default function Home() {
             <Link href="/painel/"><Button variant="primary" className="w-full px-6 sm:w-auto">Abrir meu painel</Button></Link>
           ) : (
             <>
-              <Link href="/cadastro/"><Button variant="primary" className="w-full px-6 sm:w-auto">Criar minha conta</Button></Link>
+              <Link href="/cadastro/"><Button variant="primary" className="w-full px-6 sm:w-auto">Começar agora</Button></Link>
               <Button onClick={demo} disabled={busy} className="px-6">{busy ? 'Preparando…' : 'Ver demonstração'}</Button>
             </>
           )}
+          <InstallButton className="px-6" />
         </div>
         <p className="mt-4 text-xs text-faint">100% gratuito e completo · Funciona sem instalar · Dados salvos só no seu navegador</p>
       </section>

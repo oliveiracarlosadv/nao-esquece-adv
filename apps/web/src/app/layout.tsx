@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   manifest: `${base}/manifest.webmanifest`,
   applicationName: 'Não Esquece Adv',
   icons: {
-    icon: [{ url: `${base}/icon-192.png`, sizes: '192x192', type: 'image/png' }, { url: `${base}/logo.svg`, type: 'image/svg+xml' }],
+    icon: [{ url: `${base}/favicon.svg`, type: 'image/svg+xml' }, { url: `${base}/favicon-32.png`, sizes: '32x32', type: 'image/png' }],
     apple: [{ url: `${base}/apple-touch-icon.png`, sizes: '180x180' }],
   },
   appleWebApp: { capable: true, title: 'Não Esquece', statusBarStyle: 'default' },

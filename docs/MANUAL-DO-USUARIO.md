@@ -1,15 +1,17 @@
 # Manual do usuário — NÃO ESQUECE ADV
 
-## 1. Primeiro acesso
+## 1. Primeiro acesso (sem login)
 
-1. Abra o app: https://oliveiracarlosadv.github.io/nao-esquece-adv/
-2. Clique em **Criar minha conta** e preencha nome completo, CPF, OAB e UF, e-mail, telefone e senha. Foto e logomarca são opcionais.
-3. O app é gratuito e completo: não há planos nem limites.
-4. Aceite o tratamento de dados (LGPD). Pronto: você vai direto para **Monitoramento**.
+1. Abra o app: https://oliveiracarlosadv.github.io/nao-esquece-adv/ e clique em **Começar agora**.
+2. Leia o aviso: **as informações ficam salvas nos arquivos do navegador deste computador** e **recomenda-se fazer backup mensal**. Marque “Li e entendi”.
+3. Informe seu **nome completo, CPF e número da OAB/UF**: são as palavras-chave das buscas automáticas. Telefone, e-mail, foto e logomarca são opcionais.
+4. Pronto: o app abre direto no Painel. Não há e-mail e senha para entrar.
+
+Já usa o app em outro computador? Na tela do aviso, clique em **Restaurar um backup**.
 
 > Quer só conhecer? Use **Ver demonstração**. A conta de demonstração tem dados fictícios e **não** faz buscas reais.
 
-**Dica:** instale o app para ele abrir como um programa e continuar monitorando enquanto estiver aberto.
+**Dica:** clique em **Salvar na área de trabalho** (topo da tela) para instalar o app como atalho no computador ou no celular. Ele abre como um programa e continua monitorando enquanto estiver aberto. Em Chrome, Edge e Android a instalação abre direto; no iPhone e no Safari do Mac o app mostra o passo a passo.
 - **Chrome/Edge (Mac ou Windows):** ícone de instalar na barra de endereço, ou menu ⋮ → Transmitir, salvar e compartilhar → Instalar página como app.
 - **Safari no Mac:** menu Arquivo → Adicionar ao Dock.
 
@@ -17,7 +19,7 @@
 
 ## 2. Monitoramento
 
-Menu **Monitoramento → Processos e partes**:
+As **palavras-chave** são o seu **nome completo, CPF e número da OAB** (aba **Palavras-chave**; altere em Meu perfil). Também é possível adicionar, de forma opcional:
 
 | Tipo | Exemplo | Onde é pesquisado |
 |---|---|---|
@@ -27,7 +29,7 @@ Menu **Monitoramento → Processos e partes**:
 | Termo de licitação | serviços advocatícios | PNCP |
 | Termo livre | qualquer expressão | Diários municipais |
 
-Seu **nome, CPF e OAB** (do perfil) são pesquisados automaticamente.
+Aba **Diários oficiais**: os diários estaduais, do DF e da União não têm API pública. Escolha a palavra-chave (nome, CPF ou OAB), clique em **Pesquisar** e o app abre o site oficial com a palavra já copiada (cole com Ctrl/⌘+V). No Diário Oficial da União, a busca já abre pronta. Todos os estados vêm marcados por padrão; desmarque os que não quiser.
 
 Aba **Configurações**: frequência (padrão: 1 hora), dias da primeira busca, feriados locais e conector local.
 Aba **Fontes consultadas**: liga/desliga cada fonte e mostra o resultado da última consulta.
@@ -54,9 +56,9 @@ Ao abrir uma publicação, ela é marcada como lida. No detalhe você pode **aju
 
 **Exportar** abre três opções de escopo: resultado atual do painel, itens selecionados ou filtros próprios de exportação (vara, processo, tribunal, período, apenas lidos/não lidos). Formatos: **PDF**, **Excel** e **CSV**. O PDF usa a sua logomarca (PNG/JPG) ou a padrão do escritório.
 
-## 5. Área de trabalho
+## 5. Meus painéis
 
-Use **Salvar na área de trabalho** no painel para guardar os filtros atuais como:
+Use **Salvar consulta** no painel para guardar os filtros atuais como:
 - **Consulta salva** — um atalho para reabrir aquela pesquisa;
 - **Painel personalizado** — um cartão com o total e as não lidas daquele recorte.
 
@@ -75,12 +77,12 @@ Também ficam aqui os **processos fixados** e as **publicações salvas** (estre
 
 ## 7. Backup
 
-Veja [BACKUP.md](BACKUP.md). Resumo: **exporte um backup com frequência** e guarde o arquivo em local seguro. Se o navegador for limpo, os dados somem.
+Veja [BACKUP.md](BACKUP.md). Resumo: **exporte um backup todo mês** (o app avisa quando passar de 30 dias) e guarde o arquivo em local seguro. Se o navegador for limpo, os dados somem.
 
 ## 8. Perfil
 
-Altere dados, foto, logomarca e senha. Ative a **autenticação em dois fatores** lendo o QR code com um aplicativo autenticador.
+Altere nome completo, CPF, OAB (as palavras-chave), telefone, e-mail, foto e logomarca.
 
 ## 9. Administração (somente administradores)
 
-Usuários · Logomarcas · Bases e APIs · Logs de pesquisas · Auditoria · Relatórios · Página Sobre (escolha da pasta de conteúdo).
+Logomarcas · Bases e APIs · Logs de pesquisas · Auditoria · Relatórios · Página Sobre (escolha da pasta de conteúdo).

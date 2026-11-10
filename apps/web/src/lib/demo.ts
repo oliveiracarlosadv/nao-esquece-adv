@@ -2,7 +2,6 @@
  * Dados de exemplo (fictícios) para conhecer o app sem cadastrar nada.
  */
 import { db, nowIso, uid, type Publication, type Term, type User } from './db';
-import { hashPassword, randomB64 } from './crypto';
 import { daysAgoIso } from './format';
 import { classify, extractComarca, extractDeadline, extractVara, presumedDeadline } from './extract';
 import { withDeadline } from './monitor';
@@ -85,14 +84,17 @@ export async function ensureDemoUser(): Promise<User> {
   const email = 'demo@naoesqueceadv.local';
   const existing = await db.users.where('email').equals(email).first();
   if (existing) return existing;
-  const { hash, salt } = await hashPassword(randomB64(24));
-  const first = (await db.users.count()) === 0;
   const user: User = {
     id: uid('u_'), email, name: 'Carlos Exemplo', cpf: '000.000.000-00', oab: '12345', oabUf: 'PA', phone: '(91) 90000-0000',
-    role: first ? 'admin' : 'usuario', passwordHash: hash, passwordSalt: salt, active: true, createdAt: nowIso(),
+    role: 'admin', active: true, createdAt: nowIso(),
   };
   await db.users.add(user);
   await loadDemoData(user);
   return user;
 }
 
+
+/** Sai da demonstração: apaga os dados fictícios para começar com o perfil real. */
+export async function leaveDemo(): Promise<void> {
+  await Promise.all(db.tables.map((t) => t.clear()));
+}

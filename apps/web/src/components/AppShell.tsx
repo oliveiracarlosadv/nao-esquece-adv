@@ -4,12 +4,14 @@ import { usePathname, useRouter } from 'next/navigation';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
-  Archive, Bell, Bookmark, CheckCheck, Info, LayoutList, LogOut, Menu, Moon, Radar, RefreshCw, Search, Shield, Sun, User as UserIcon, X,
+  Archive, Bell, Bookmark, CheckCheck, Info, LayoutList, Menu, Moon, Radar, RefreshCw, Search, Shield, Sun, User as UserIcon, X,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { db } from '@/lib/db';
 import { cx, fmtDateTime } from '@/lib/format';
-import { lastRunAt, runMonitor, startScheduler, type RunResult } from '@/lib/monitor';
+import { isDemo, lastRunAt, runMonitor, startScheduler, type RunResult } from '@/lib/monitor';
+import { leaveDemo } from '@/lib/demo';
+import { InstallButton } from './InstallApp';
 import { Logo } from './Logo';
 import { useUi } from './Providers';
 import { Spinner } from './ui';
@@ -22,7 +24,7 @@ const NAV = [
   { href: '/painel/', label: 'Painel', icon: LayoutList },
   { href: '/lidas/', label: 'Intimações lidas', icon: CheckCheck },
   { href: '/monitoramento/', label: 'Monitoramento', icon: Radar },
-  { href: '/area-de-trabalho/', label: 'Área de trabalho', icon: Bookmark },
+  { href: '/meus-paineis/', label: 'Meus painéis', icon: Bookmark },
   { href: '/notificacoes/', label: 'Notificações', icon: Bell },
   { href: '/backup/', label: 'Backup', icon: Archive },
   { href: '/perfil/', label: 'Meu perfil', icon: UserIcon },
@@ -38,7 +40,7 @@ const SCOPES = [
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const { user, ready, logout } = useAuth();
+  const { user, ready } = useAuth();
   const { theme, toggleTheme, toast } = useUi();
   const router = useRouter();
   const pathname = usePathname();
@@ -50,10 +52,12 @@ export function AppShell({ children }: { children: ReactNode }) {
   const userRef = useRef(user);
   userRef.current = user;
 
+  const lastExport = useLiveQuery(() => db.settings.get('backup.lastExport'), []);
+  const snoozed = useLiveQuery(() => db.settings.get('backup.lembreteAdiado'), []);
   const unread = useLiveQuery(() => (user ? db.notifications.where('userId').equals(user.id).filter((n) => !n.read).count() : 0), [user?.id]) ?? 0;
 
   useEffect(() => {
-    if (ready && !user) router.replace('/entrar/');
+    if (ready && !user) router.replace('/cadastro/');
   }, [ready, user, router]);
 
   useEffect(() => {
@@ -137,9 +141,6 @@ export function AppShell({ children }: { children: ReactNode }) {
             <p className="truncate font-medium text-ink">{user.name}</p>
             <p className="truncate text-faint">{user.oab ? `OAB ${user.oab}/${user.oabUf}` : user.email}</p>
           </div>
-          <button onClick={logout} className="text-faint hover:text-ink" aria-label="Sair" title="Sair">
-            <LogOut size={16} />
-          </button>
         </div>
       </div>
     </nav>
@@ -173,6 +174,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               </select>
             </form>
             <div className="ml-auto flex items-center gap-1">
+              <InstallButton compact className="mr-1 h-9" />
               <button onClick={toggleTheme} className="flex h-9 w-9 items-center justify-center rounded-lg text-soft hover:bg-muted hover:text-ink" aria-label="Alternar tema" title={theme === 'dark' ? 'Tema claro' : 'Tema escuro'}>
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
@@ -182,9 +184,44 @@ export function AppShell({ children }: { children: ReactNode }) {
               </Link>
             </div>
           </header>
-          <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 sm:px-6 lg:py-8">{children}</main>
+          <main className="mx-auto w-full max-w-[1400px] flex-1 px-4 py-6 sm:px-6 lg:py-8">
+            {isDemo(user) && (
+              <div className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-brand-500/30 bg-brand-50 px-4 py-3 text-sm text-brand-700 dark:bg-brand-600/15 dark:text-brand-100">
+                <span className="flex-1">Você está na <strong>demonstração</strong>, com dados fictícios. As buscas reais ficam desligadas.</span>
+                <button
+                  className="rounded-lg bg-brand-600 px-3 py-1.5 font-medium text-white hover:bg-brand-700"
+                  onClick={async () => {
+                    if (!confirm('Sair da demonstração? Os dados fictícios serão apagados.')) return;
+                    await leaveDemo();
+                    location.href = `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/cadastro/`;
+                  }}
+                >
+                  Começar de verdade
+                </button>
+              </div>
+            )}
+            {!isDemo(user) && backupDue(user.createdAt, lastExport?.value as string | undefined, snoozed?.value as string | undefined) && (
+              <div className="mb-5 flex flex-wrap items-center gap-3 rounded-xl border border-amber-500/30 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:bg-amber-500/10 dark:text-amber-200">
+                <Archive size={18} className="shrink-0" />
+                <span className="flex-1">
+                  <strong>Hora do backup mensal.</strong> {lastExport ? 'Seu último backup tem mais de 30 dias.' : 'Você ainda não exportou nenhum backup.'} Seus dados ficam só neste navegador.
+                </span>
+                <Link href="/backup/" className="rounded-lg bg-amber-500 px-3 py-1.5 font-medium text-white hover:bg-amber-600">Fazer backup agora</Link>
+                <button className="text-xs underline" onClick={() => db.settings.put({ key: 'backup.lembreteAdiado', value: new Date().toISOString() })}>Lembrar em 3 dias</button>
+              </div>
+            )}
+            {children}
+          </main>
         </div>
       </div>
     </MCtx.Provider>
   );
+}
+
+/** Backup mensal: avisa quando o último backup exportado (ou o início do uso) tem mais de 30 dias. */
+function backupDue(createdAt: string, lastExport?: string, snoozed?: string): boolean {
+  const day = 86400000;
+  if (snoozed && Date.now() - new Date(snoozed).getTime() < 3 * day) return false;
+  const ref = lastExport || createdAt;
+  return Date.now() - new Date(ref).getTime() > 30 * day;
 }

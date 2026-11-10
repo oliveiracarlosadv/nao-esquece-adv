@@ -18,8 +18,9 @@ export type User = {
   role: Role;
   /** Campo legado (versões com planos). O app é gratuito e completo. */
   planId?: string;
-  passwordHash: string;
-  passwordSalt: string;
+  /** Campos legados (versões com login). Não são mais usados. */
+  passwordHash?: string;
+  passwordSalt?: string;
   totpSecret?: string;
   logo?: string; // data URL
   avatar?: string; // data URL

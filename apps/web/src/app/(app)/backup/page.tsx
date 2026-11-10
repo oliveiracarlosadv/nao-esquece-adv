@@ -10,7 +10,7 @@ import { useUi } from '@/components/Providers';
 import { Badge, Button, Card, Field, IconButton, Input, Modal, PageHeader, Toggle } from '@/components/ui';
 
 const LABELS: Record<string, string> = {
-  users: 'Contas', terms: 'Processos e partes', publications: 'Publicações', workspace: 'Área de trabalho', notifications: 'Notificações',
+  users: 'Contas', terms: 'Processos e partes', publications: 'Publicações', workspace: 'Meus painéis', notifications: 'Notificações',
   runs: 'Histórico de buscas', audit: 'Auditoria', settings: 'Configurações', files: 'Arquivos (Sobre)',
 };
 
@@ -132,7 +132,7 @@ export default function BackupPage() {
         </Card>
 
         <Card title="Exportar backup">
-          <p className="mb-4 text-sm text-soft">Baixa um arquivo <code>.json</code> com todos os dados: contas, processos, publicações, área de trabalho e configurações.</p>
+          <p className="mb-4 text-sm text-soft">Baixa um arquivo <code>.json</code> com todos os dados: contas, processos, publicações, meus painéis e configurações.</p>
           <Toggle checked={protect} onChange={setProtect} label="Proteger com senha" description="Criptografia AES-256. Sem a senha, o arquivo não pode ser aberto." />
           {protect && (
             <Field label="Senha do backup" className="mt-2">

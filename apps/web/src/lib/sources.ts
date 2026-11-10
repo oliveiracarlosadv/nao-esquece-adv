@@ -14,7 +14,7 @@ export type SourceInfo = {
   description: string;
   coverage: string[];
   searchBy: string[];
-  status: 'ativo' | 'planejado';
+  status: 'ativo' | 'planejado' | 'assistido';
   needsConnector?: boolean;
   url: string;
 };
@@ -25,7 +25,7 @@ export const SOURCES: SourceInfo[] = [
     name: 'DJEN — Diário de Justiça Eletrônico Nacional (CNJ)',
     description: 'Intimações, citações e comunicações processuais de todos os tribunais integrados à Plataforma de Comunicações Processuais do CNJ.',
     coverage: ['Tribunais de Justiça (estaduais)', 'Tribunais Regionais Federais', 'Justiça do Trabalho (TRTs e TST)', 'Justiça Eleitoral (TREs e TSE)', 'Justiça Militar', 'Tribunais Superiores integrados', 'CNJ'],
-    searchBy: ['Número da OAB + UF', 'Nome do advogado', 'Nome das partes', 'Número do processo'],
+    searchBy: ['Número da OAB + UF', 'Nome completo do advogado', 'Nome das partes', 'Número do processo'],
     status: 'ativo',
     url: 'https://comunica.pje.jus.br',
   },
@@ -44,7 +44,7 @@ export const SOURCES: SourceInfo[] = [
     name: 'Querido Diário — Diários Oficiais Municipais',
     description: 'Busca textual em diários oficiais de municípios brasileiros (Open Knowledge Brasil).',
     coverage: ['Diários Oficiais Municipais'],
-    searchBy: ['Nome do advogado', 'OAB', 'CPF', 'Partes', 'Processos', 'Termos livres'],
+    searchBy: ['Nome completo', 'CPF', 'OAB (com variações)', 'Partes', 'Processos', 'Termos livres'],
     status: 'ativo',
     url: 'https://queridodiario.ok.org.br',
   },
@@ -59,22 +59,12 @@ export const SOURCES: SourceInfo[] = [
     url: 'https://pncp.gov.br',
   },
   {
-    id: 'dou',
-    name: 'Diário Oficial da União (INLABS)',
-    description: 'Exige credenciais gratuitas da Imprensa Nacional. Será feito via conector local.',
-    coverage: ['Diário Oficial da União'],
-    searchBy: ['Todos os termos'],
-    status: 'planejado',
-    needsConnector: true,
-    url: 'https://inlabs.in.gov.br',
-  },
-  {
     id: 'doe',
-    name: 'Diários Oficiais Estaduais e do DF',
-    description: 'Cada estado publica em formato próprio, sem API nacional. Conectores por estado em desenvolvimento.',
-    coverage: ['Diários Oficiais Estaduais', 'Diário Oficial do Distrito Federal'],
-    searchBy: ['Todos os termos'],
-    status: 'planejado',
+    name: 'Diários Oficiais Estaduais, do DF e da União',
+    description: 'Sem API pública: busca assistida pelo nome, CPF ou OAB nos sites oficiais dos 26 estados, do DF e do DOU (Monitoramento → Diários oficiais).',
+    coverage: ['Diários Oficiais Estaduais', 'Diário Oficial do Distrito Federal', 'Diário Oficial da União'],
+    searchBy: ['Nome completo', 'CPF', 'OAB'],
+    status: 'assistido',
     url: '',
   },
 ];
@@ -300,16 +290,14 @@ async function datajud(ctx: MonitorContext): Promise<FoundPublication[]> {
 type Gazette = { territory_id: string; territory_name: string; state_code: string; date: string; url: string; excerpts: string[]; edition?: string };
 
 async function queridoDiario(ctx: MonitorContext): Promise<FoundPublication[]> {
-  const terms: string[] = [];
-  if (ctx.user.name) terms.push(ctx.user.name);
-  if (ctx.user.oab) terms.push(`OAB/${ctx.user.oabUf} ${ctx.user.oab}`);
-  if (ctx.user.cpf) terms.push(ctx.user.cpf);
-  for (const t of ctx.terms) if (['parte', 'cpf', 'cnpj', 'termo', 'processo'].includes(t.kind)) terms.push(t.value);
+  // Palavras-chave principais (nome completo, CPF, OAB) com as variações de escrita mais comuns.
+  const terms: { label: string; query: string }[] = keywordQueries(ctx.user);
+  for (const t of ctx.terms) if (['parte', 'cpf', 'cnpj', 'termo', 'processo'].includes(t.kind)) terms.push({ label: t.value, query: `"${t.value}"` });
 
   const out: FoundPublication[] = [];
-  for (const term of terms) {
+  for (const { label: term, query } of terms) {
     await ctx.log(term, async () => {
-      const params = new URLSearchParams({ querystring: `"${term}"`, published_since: ctx.since, published_until: ctx.until, size: '20', excerpt_size: '600', number_of_excerpts: '2' });
+      const params = new URLSearchParams({ querystring: query, published_since: ctx.since, published_until: ctx.until, size: '20', excerpt_size: '600', number_of_excerpts: '2' });
       const data = await fetchJson<{ gazettes: Gazette[] }>(`https://api.queridodiario.ok.org.br/gazettes?${params}`, {}, ctx.connectorUrl);
       for (const g of data.gazettes || []) {
         const text = (g.excerpts || []).join('\n…\n').trim() || `Menção a "${term}" no diário oficial.`;
@@ -382,6 +370,29 @@ async function pncp(ctx: MonitorContext): Promise<FoundPublication[]> {
     });
     await sleep(400);
   }
+  return out;
+}
+
+/** Variações de escrita das palavras-chave do advogado, para busca textual em diários oficiais. */
+export function keywordVariants(user: Pick<User, 'name' | 'cpf' | 'oab' | 'oabUf'>): { nome: string[]; cpf: string[]; oab: string[] } {
+  const n = (user.oab || '').replace(/\D/g, '');
+  const uf = (user.oabUf || '').toUpperCase();
+  const dotted = n.length > 3 ? Number(n).toLocaleString('pt-BR') : n;
+  const cpfDigits = (user.cpf || '').replace(/\D/g, '');
+  return {
+    nome: user.name ? [user.name.trim()] : [],
+    cpf: cpfDigits.length === 11 ? [user.cpf, cpfDigits] : [],
+    oab: n ? [...new Set([`OAB/${uf} ${n}`, `OAB/${uf} ${dotted}`, `OAB/${uf} nº ${n}`, `OAB/${uf} nº ${dotted}`, `OAB-${uf} ${n}`, `OAB ${uf} ${n}`, `${n}/${uf}`, `${dotted}/${uf}`, `${n}-${uf}`])] : [],
+  };
+}
+
+function keywordQueries(user: User): { label: string; query: string }[] {
+  const v = keywordVariants(user);
+  const q = (list: string[]) => list.map((x) => `"${x}"`).join(' | ');
+  const out: { label: string; query: string }[] = [];
+  if (v.nome.length) out.push({ label: `Nome: ${v.nome[0]}`, query: q(v.nome) });
+  if (v.cpf.length) out.push({ label: `CPF: ${v.cpf[0]}`, query: q(v.cpf) });
+  if (v.oab.length) out.push({ label: `OAB: ${user.oab}/${user.oabUf}`, query: q(v.oab) });
   return out;
 }
 
