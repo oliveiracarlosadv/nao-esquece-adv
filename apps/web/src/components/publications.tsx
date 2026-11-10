@@ -395,11 +395,11 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
           )}
         </div>
 
-        <dl className="grid grid-cols-1 gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
+        <dl className="grid min-w-0 grid-cols-1 gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
           {info.map(([k, v]) => (
             <div key={k}>
               <dt className="text-xs text-faint">{k}</dt>
-              <dd className="mt-0.5 text-ink">{v}</dd>
+              <dd className="mt-0.5 break-words text-ink [overflow-wrap:anywhere]">{v}</dd>
             </div>
           ))}
         </dl>
@@ -409,7 +409,7 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
             <p className="mb-2 text-xs text-faint">Partes</p>
             <div className="flex flex-wrap gap-1.5">
               {p.parties.map((x) => (
-                <Badge key={x}>{x}</Badge>
+                <Badge key={x} className="!whitespace-normal break-words text-left">{x}</Badge>
               ))}
             </div>
           </div>
@@ -435,7 +435,7 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
               )}
             </div>
           </div>
-          <div className="whitespace-pre-wrap rounded-xl bg-muted p-4 text-[14px] leading-7 text-ink">{p.text}</div>
+          <div className="whitespace-pre-wrap break-words rounded-xl bg-muted p-4 text-justify text-[14px] leading-7 text-ink [overflow-wrap:anywhere]">{p.text}</div>
         </div>
 
         <div data-share-exclude>

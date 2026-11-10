@@ -137,7 +137,7 @@ export function Modal({ open, onClose, title, children, footer, wide }: { open: 
             <X size={18} />
           </IconButton>
         </header>
-        <div className="max-h-[70vh] overflow-y-auto p-5">{children}</div>
+        <div className="max-h-[70vh] overflow-y-auto overflow-x-hidden break-words p-5 [overflow-wrap:anywhere]">{children}</div>
         {footer && <footer className="flex flex-wrap justify-end gap-2 border-t border-line px-5 py-3.5">{footer}</footer>}
       </div>
     </div>
@@ -148,15 +148,15 @@ export function Drawer({ open, onClose, title, children, footer }: { open: boole
   useEsc(open, onClose);
   if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-slate-950/30 backdrop-blur-[1px]" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
-      <aside role="dialog" aria-modal="true" aria-label={title} className="flex h-full w-full max-w-2xl flex-col border-l border-line bg-surface shadow-2xl">
+    <div className="fixed inset-0 z-50 flex justify-end overflow-hidden overscroll-contain bg-slate-950/30 backdrop-blur-[1px]" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      <aside role="dialog" aria-modal="true" aria-label={title} className="flex h-full w-full max-w-2xl flex-col overflow-hidden border-l border-line bg-surface shadow-2xl">
         <header className="flex items-center justify-between border-b border-line px-5 py-3.5">
-          <h2 className="truncate font-semibold text-ink">{title}</h2>
+          <h2 className="min-w-0 truncate font-semibold text-ink">{title}</h2>
           <IconButton label="Fechar" onClick={onClose}>
             <X size={18} />
           </IconButton>
         </header>
-        <div className="flex-1 overflow-y-auto p-5">{children}</div>
+        <div className="min-w-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain break-words p-5 [overflow-wrap:anywhere]">{children}</div>
         {footer && <footer className="flex flex-wrap gap-2 border-t border-line px-5 py-3.5">{footer}</footer>}
       </aside>
     </div>

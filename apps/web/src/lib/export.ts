@@ -137,6 +137,35 @@ export async function exportPdf(list: Publication[], user: User | null, title = 
 export const EXPORT_FONT = { pdf: 'times', excel: 'Times New Roman', size: 12, lineHeight: 1.5 } as const;
 const LH = EXPORT_FONT.size * EXPORT_FONT.lineHeight; // 18 pt
 
+type PdfDoc = import('jspdf').jsPDF;
+
+/** Desenha uma linha justificada: distribui o espaço que sobra entre as palavras (margens alinhadas). */
+function justifiedLine(doc: PdfDoc, line: string, x: number, y: number, width: number): void {
+  const words = line.trim().split(/\s+/).filter(Boolean);
+  if (words.length < 2) {
+    doc.text(line.trim(), x, y);
+    return;
+  }
+  const wordsWidth = words.reduce((sum, w) => sum + doc.getTextWidth(w), 0);
+  const gap = (width - wordsWidth) / (words.length - 1);
+  // Se a linha for curta demais (gap exagerado), não estica.
+  if (gap > doc.getTextWidth(' ') * 6) {
+    doc.text(words.join(' '), x, y);
+    return;
+  }
+  let cx = x;
+  for (const w of words) {
+    doc.text(w, cx, y);
+    cx += doc.getTextWidth(w) + gap;
+  }
+}
+
+/** Quebra o texto em linhas (espaços repetidos normalizados) para a largura dada. */
+function wrap(doc: PdfDoc, text: string, width: number): string[] {
+  const clean = text.replace(/[ \t\u00a0]+/g, ' ').trim();
+  return clean ? (doc.splitTextToSize(clean, width) as string[]) : [''];
+}
+
 /**
  * Documento completo de UMA publicação, pronto para salvar ou compartilhar:
  * dados do advogado, processo, datas (intimação, publicação, prazo) e inteiro teor.
@@ -170,12 +199,11 @@ export async function publicationPdf(p: Publication, user: User | null): Promise
   /** Parágrafo justificado (última linha à esquerda), com quebra de página. */
   const paragraph = (text: string, x: number, width: number, style: 'normal' | 'bold' | 'italic' = 'normal', color = INK) => {
     font(style, color);
-    const lines: string[] = text.trim() ? doc.splitTextToSize(text.trim(), width) : [''];
+    const lines = wrap(doc, text, width);
     lines.forEach((line, idx) => {
       ensure(LH);
-      const last = idx === lines.length - 1;
-      if (last || !line.includes(' ')) doc.text(line, x, y);
-      else doc.text(line, x, y, { align: 'justify', maxWidth: width });
+      if (idx === lines.length - 1) doc.text(line, x, y);
+      else justifiedLine(doc, line, x, y, width);
       y += LH;
     });
   };
@@ -192,7 +220,7 @@ export async function publicationPdf(p: Publication, user: User | null): Promise
   const field = (label: string, value?: string) => {
     if (!value) return;
     font('normal');
-    const vLines: string[] = doc.splitTextToSize(value, CW - LABEL_W);
+    const vLines = wrap(doc, value, CW - LABEL_W);
     const lLines: string[] = doc.splitTextToSize(label, LABEL_W - 10);
     const rows = Math.max(vLines.length, lLines.length);
     ensure(rows * LH);
@@ -200,9 +228,8 @@ export async function publicationPdf(p: Publication, user: User | null): Promise
     doc.text(lLines, M, y);
     font('normal');
     vLines.forEach((line, idx) => {
-      const last = idx === vLines.length - 1;
-      if (last || !line.includes(' ')) doc.text(line, M + LABEL_W, y + idx * LH);
-      else doc.text(line, M + LABEL_W, y + idx * LH, { align: 'justify', maxWidth: CW - LABEL_W });
+      if (idx === vLines.length - 1) doc.text(line, M + LABEL_W, y + idx * LH);
+      else justifiedLine(doc, line, M + LABEL_W, y + idx * LH, CW - LABEL_W);
     });
     y += rows * LH;
   };

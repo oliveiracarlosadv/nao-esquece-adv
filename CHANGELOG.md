@@ -1,5 +1,13 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.4.5] — 10/11/2026
+
+Pedidos atendidos: 31 e 32.
+
+### Corrigido
+- **Texto do PDF justificado de verdade:** a justificação passou a ser feita pelo app (o espaço que sobra em cada linha é distribuído entre as palavras). Última linha do parágrafo à esquerda; espaços repetidos do original normalizados.
+- **Publicação aberta não mexe mais para os lados no celular:** painel e janelas travados na largura da tela; textos longos (classe do processo, vara, nomes das partes, links e inteiro teor) quebram de linha. O inteiro teor na tela também aparece justificado.
+
 ## [0.4.4] — 10/11/2026
 
 Pedido atendido: 30.

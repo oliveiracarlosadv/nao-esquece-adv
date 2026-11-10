@@ -34,6 +34,8 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 | 28 | 10/11/2026 | Botão "Exportar em PDF" em todas as leituras | [2026-11-10_28_exportar-pdf-em-todas-as-leituras.md](2026-11-10_28_exportar-pdf-em-todas-as-leituras.md) | Concluído (v0.4.3) |
 | 29 | 10/11/2026 | Somente "Exportar em PDF" (sem Compartilhar/PDF) | [2026-11-10_29_somente-exportar-em-pdf.md](2026-11-10_29_somente-exportar-em-pdf.md) | Concluído (v0.4.3) |
 | 30 | 10/11/2026 | "Exportar em PDF" só no topo (sem rodapé) | [2026-11-10_30_pdf-so-no-topo.md](2026-11-10_30_pdf-so-no-topo.md) | Concluído (v0.4.4) |
+| 31 | 10/11/2026 | Texto do PDF não estava justificado | [2026-11-10_31_texto-nao-justificado.md](2026-11-10_31_texto-nao-justificado.md) | Concluído (v0.4.5) |
+| 32 | 10/11/2026 | Publicação aberta ainda mexia para os lados no celular | [2026-11-10_32_tela-mexe-no-celular.md](2026-11-10_32_tela-mexe-no-celular.md) | Concluído (v0.4.5) |
 
 ## Entregas
 
@@ -47,3 +49,4 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 - **v0.4.2 — 10/11/2026**: pedidos 25 a 27. Aviso de feriados, PDF com Salvar/Compartilhar, exportação em Times 12 justificado 1,5.
 - **v0.4.3 — 10/11/2026**: pedidos 28 e 29. Somente “Exportar em PDF” em toda leitura (salvar ou compartilhar).
 - **v0.4.4 — 10/11/2026**: pedido 30. “Exportar em PDF” só no topo da publicação aberta.
+- **v0.4.5 — 10/11/2026**: pedidos 31 e 32. PDF justificado de verdade; publicação aberta travada na largura do celular.
