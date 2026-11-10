@@ -25,6 +25,14 @@
   color-scheme: dark;
 }
 
+/* Tela fixa: a página nunca rola para os lados. Tabelas largas rolam só dentro do próprio quadro. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
+
 body {
   background: rgb(var(--bg));
   color: rgb(var(--ink));
@@ -45,3 +53,9 @@ body {
 @media print {
   aside, header, nav { display: none !important; }
 }
+
+/* Itens de grade e flex podem encolher abaixo do conteúdo (evita textos longos alargarem a tela). */
+main > *, .grid > * { min-width: 0; }
+img, svg, video, canvas { max-width: 100%; }
+pre, code { overflow-wrap: anywhere; }
+button svg, a svg { flex-shrink: 0; }

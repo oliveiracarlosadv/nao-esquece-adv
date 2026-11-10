@@ -119,7 +119,7 @@ export function InstallButton({ compact, variant = 'secondary', className }: { c
 
   return (
     <>
-      <Button variant={variant} icon={installed ? <CheckCircle2 size={16} /> : <MonitorDown size={16} />} onClick={onClick} className={cx(compact && 'px-2.5 sm:px-4', className)} title="Instala o app como atalho no computador ou no celular">
+      <Button variant={variant} icon={installed ? <CheckCircle2 size={16} /> : <MonitorDown size={16} />} onClick={onClick} className={cx(compact && 'shrink-0', className)} title="Instala o app como atalho no computador ou no celular">
         <span className={cx(compact && 'hidden sm:inline')}>{installed ? 'App instalado' : 'Salvar na área de trabalho'}</span>
       </Button>
 

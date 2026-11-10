@@ -1,5 +1,13 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.3.2] — 10/11/2026
+
+Pedido atendido: 16.
+
+### Corrigido
+- **Tela fixa e responsiva:** a página não rola mais para os lados no celular. O topo (busca, instalar, tema e sino) passava da tela; quadros com texto longo (Meus painéis) alargavam a coluna. Trava global contra rolagem lateral; tabelas largas rolam só dentro do próprio quadro. Verificado em 320, 375, 768 e 1280 px, em todas as telas.
+- Ícone do botão “Salvar na área de trabalho” aparecia espremido no celular.
+
 ## [0.3.1] — 10/11/2026
 
 Pedido atendido: 15.

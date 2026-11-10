@@ -1,6 +1,6 @@
 {
   "name": "nao-esquece-adv",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "private": true,
   "description": "NÃO ESQUECE ADV — monitoramento automático de publicações jurídicas. Nenhuma intimação passa despercebida.",
   "workspaces": [

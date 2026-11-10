@@ -63,10 +63,10 @@ export function Field({ label, hint, children, className }: { label: string; hin
 
 export function Card({ className, children, title, action }: { className?: string; children: ReactNode; title?: string; action?: ReactNode }) {
   return (
-    <section className={cx('rounded-xl border border-line bg-surface', className)}>
+    <section className={cx('min-w-0 rounded-xl border border-line bg-surface', className)}>
       {(title || action) && (
         <header className="flex items-center justify-between gap-3 border-b border-line px-5 py-3.5">
-          {title && <h2 className="text-[15px] font-semibold text-ink">{title}</h2>}
+          {title && <h2 className="min-w-0 truncate text-[15px] font-semibold text-ink">{title}</h2>}
           {action}
         </header>
       )}
@@ -201,8 +201,8 @@ export function Tabs<T extends string>({ tabs, value, onChange }: { tabs: { id: 
 
 export function Stat({ label, value, tone, icon }: { label: string; value: ReactNode; tone?: 'brand' | 'amber' | 'red'; icon?: ReactNode }) {
   return (
-    <div className="rounded-xl border border-line bg-surface p-4">
-      <div className="flex items-center justify-between text-[13px] text-soft">
+    <div className="min-w-0 rounded-xl border border-line bg-surface p-4">
+      <div className="flex items-center justify-between gap-2 text-[13px] text-soft">
         {label}
         <span className={cx(tone === 'brand' && 'text-brand-600', tone === 'amber' && 'text-amber-500', tone === 'red' && 'text-red-500', !tone && 'text-faint')}>{icon}</span>
       </div>

@@ -148,7 +148,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <MCtx.Provider value={{ running, lastRun, runNow }}>
-      <div className="flex min-h-screen bg-app">
+      <div className="flex min-h-screen w-full max-w-full overflow-x-clip bg-app">
         <aside className="sticky top-0 hidden h-screen w-64 shrink-0 border-r border-line bg-surface lg:block">{sidebar}</aside>
         {menu && (
           <div className="fixed inset-0 z-40 bg-slate-950/40 lg:hidden" onClick={() => setMenu(false)}>
@@ -158,11 +158,11 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
         )}
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-line bg-surface/85 px-4 backdrop-blur sm:px-6">
-            <button className="text-soft lg:hidden" onClick={() => setMenu((m) => !m)} aria-label="Menu">
+          <header className="sticky top-0 z-30 flex h-16 items-center gap-2 border-b sm:gap-3 border-line bg-surface/85 px-4 backdrop-blur sm:px-6">
+            <button className="shrink-0 text-soft lg:hidden" onClick={() => setMenu((m) => !m)} aria-label="Menu">
               {menu ? <X size={22} /> : <Menu size={22} />}
             </button>
-            <form onSubmit={onSearch} className="flex h-10 max-w-xl flex-1 items-center rounded-lg border border-line bg-app focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500/20">
+            <form onSubmit={onSearch} className="flex h-10 min-w-0 max-w-xl flex-1 items-center rounded-lg border border-line bg-app focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500/20">
               <Search size={17} className="ml-3 shrink-0 text-faint" />
               <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar partes, processo, advogado ou OAB" className="min-w-0 flex-1 bg-transparent px-2.5 text-sm text-ink placeholder:text-faint focus:outline-none" aria-label="Busca global" />
               <select value={scope} onChange={(e) => setScope(e.target.value)} className="hidden h-full border-l border-line bg-transparent px-2 text-xs text-soft focus:outline-none sm:block" aria-label="Buscar em">
@@ -173,8 +173,8 @@ export function AppShell({ children }: { children: ReactNode }) {
                 ))}
               </select>
             </form>
-            <div className="ml-auto flex items-center gap-1">
-              <InstallButton compact className="mr-1 h-9" />
+            <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1">
+              <InstallButton compact className="!h-9 !w-9 !px-0 sm:mr-1 sm:!w-auto sm:!px-4" />
               <button onClick={toggleTheme} className="flex h-9 w-9 items-center justify-center rounded-lg text-soft hover:bg-muted hover:text-ink" aria-label="Alternar tema" title={theme === 'dark' ? 'Tema claro' : 'Tema escuro'}>
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
