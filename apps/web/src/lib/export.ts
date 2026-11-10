@@ -95,3 +95,158 @@ export async function exportPdf(list: Publication[], user: User | null, title = 
   });
   doc.save(`publicacoes_${stamp()}.pdf`);
 }
+
+/* ---------------------------------------------------------------- PDF de uma intimação */
+
+/**
+ * Documento completo de UMA publicação, pronto para compartilhar:
+ * dados do advogado, processo, datas (disponibilização, publicação, prazo) e inteiro teor.
+ * O CPF do usuário não entra (o documento é feito para ser enviado a terceiros).
+ */
+export async function publicationPdf(p: Publication, user: User | null): Promise<{ blob: Blob; name: string }> {
+  const { jsPDF } = await import('jspdf');
+  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+  const W = doc.internal.pageSize.getWidth();
+  const H = doc.internal.pageSize.getHeight();
+  const M = 48;
+  const CW = W - M * 2;
+  let y = M;
+  const OLIVE: [number, number, number] = [91, 107, 58];
+  const GRAY: [number, number, number] = [100, 116, 139];
+  const INK: [number, number, number] = [15, 23, 42];
+
+  const footer = () => {
+    const pages = doc.getNumberOfPages();
+    for (let i = 1; i <= pages; i++) {
+      doc.setPage(i);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(...GRAY);
+      doc.text(`NÃO ESQUECE ADV · gerado em ${new Date().toLocaleString('pt-BR')} · página ${i} de ${pages}`, M, H - 24);
+      doc.text('Confira sempre a publicação na fonte oficial.', W - M, H - 24, { align: 'right' });
+    }
+  };
+  const ensure = (h: number) => {
+    if (y + h > H - 48) {
+      doc.addPage();
+      y = M;
+    }
+  };
+  const section = (title: string) => {
+    ensure(34);
+    y += 8;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(...OLIVE);
+    doc.text(title.toUpperCase(), M, y);
+    y += 6;
+    doc.setDrawColor(220, 226, 198);
+    doc.line(M, y, W - M, y);
+    y += 14;
+  };
+  const field = (label: string, value?: string) => {
+    if (!value) return;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    const lines = doc.splitTextToSize(value, CW - 160);
+    const labels = doc.splitTextToSize(label, 150);
+    const rows = Math.max(lines.length, labels.length);
+    ensure(rows * 13 + 4);
+    doc.setTextColor(...GRAY);
+    doc.text(labels, M, y);
+    doc.setTextColor(...INK);
+    doc.text(lines, M + 160, y);
+    y += rows * 13 + 4;
+  };
+
+  // Cabeçalho
+  const logo = user?.logo || (await getSetting<string | null>('app.reportLogo', null));
+  const fmt = logo?.match(/^data:image\/(png|jpe?g)/)?.[1];
+  if (logo && fmt) {
+    try {
+      const pr = doc.getImageProperties(logo);
+      const h = 36;
+      const w = Math.min(140, (pr.width / pr.height) * h);
+      doc.addImage(logo, fmt.startsWith('j') ? 'JPEG' : 'PNG', W - M - w, y - 6, w, h);
+    } catch {
+      /* segue sem logo */
+    }
+  }
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(16);
+  doc.setTextColor(...INK);
+  doc.text(`${p.type}${p.court ? ` — ${p.court}` : ''}`, M, y + 8);
+  y += 26;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(...GRAY);
+  doc.text(p.processNumber ? `Processo nº ${p.processNumber}` : p.organ || '', M, y);
+  y += 12;
+
+  // Prazo em destaque
+  if (p.deadline) {
+    ensure(64);
+    y += 8;
+    doc.setFillColor(243, 245, 236);
+    doc.roundedRect(M, y, CW, 52, 6, 6, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...OLIVE);
+    doc.text('FIM DO PRAZO', M + 14, y + 18);
+    doc.setFontSize(18);
+    doc.setTextColor(192, 87, 62);
+    doc.text(fmtDate(p.deadline.endAt), M + 14, y + 40);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...GRAY);
+    const basis = p.deadline.basis === 'extraido' ? 'prazo identificado no texto' : p.deadline.basis === 'presumido' ? 'prazo presumido — confira' : 'prazo informado manualmente';
+    doc.text(`${p.deadline.days} dias ${p.deadline.corridos ? 'corridos' : 'úteis'} · início em ${fmtDate(p.deadline.startAt)} · ${basis}`, M + 140, y + 34);
+    y += 64;
+  }
+
+  section('Advogado(a)');
+  field('Nome', user?.name);
+  field('OAB', user?.oab ? `${user.oab}/${user.oabUf}` : undefined);
+  field('Telefone', user?.phone || undefined);
+  field('E-mail', user?.email || undefined);
+
+  section('Processo');
+  field('Número do processo', p.processNumber);
+  field('Tipo de publicação', p.sourceType ? `${p.type} (${p.sourceType})` : p.type);
+  field('Tribunal', p.court);
+  field('Vara / Órgão julgador', p.vara);
+  field('Comarca', p.comarca);
+  field('Órgão emissor', p.organ);
+  field('Partes', p.parties.join('; ') || undefined);
+  field('Advogados na publicação', p.lawyers.join('; ') || undefined);
+
+  section('Datas');
+  field('Data da intimação (disponibilização)', fmtDate(p.availableAt));
+  field('Data da publicação', fmtDate(p.publishedAt));
+  if (p.deadline) {
+    field('Início do prazo', fmtDate(p.deadline.startAt));
+    field('Fim do prazo', `${fmtDate(p.deadline.endAt)} (${p.deadline.days} dias ${p.deadline.corridos ? 'corridos' : 'úteis'})`);
+  } else field('Fim do prazo', 'não identificado — confira a publicação');
+
+  section('Origem');
+  field('Fonte', p.origin);
+  field('Link', p.link);
+  field('Encontrado por', p.matchedBy.join('; '));
+
+  section('Inteiro teor');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.setTextColor(...INK);
+  for (const para of p.text.split('\n')) {
+    const lines = para.trim() ? doc.splitTextToSize(para, CW) : [''];
+    for (const line of lines) {
+      ensure(14);
+      doc.text(line, M, y);
+      y += 14;
+    }
+  }
+
+  footer();
+  const name = `intimacao_${(p.processNumber || p.type).replace(/[^\w.-]+/g, '_')}.pdf`;
+  return { blob: doc.output('blob'), name };
+}

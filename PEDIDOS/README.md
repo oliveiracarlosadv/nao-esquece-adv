@@ -27,6 +27,7 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 | 21 | 10/11/2026 | Botão no menu para compartilhar o app com outros advogados | [2026-11-10_21_botao-compartilhar-o-app.md](2026-11-10_21_botao-compartilhar-o-app.md) | Concluído (v0.4.0) |
 | 22 | 10/11/2026 | Botão "Como funciona" + Termos de uso com responsabilidade do usuário | [2026-11-10_22_como-funciona-e-termos.md](2026-11-10_22_como-funciona-e-termos.md) | Concluído (v0.4.0) |
 | 23 | 10/11/2026 | Compartilhar o teor (texto), não imagem | [2026-11-10_23_compartilhar-o-teor.md](2026-11-10_23_compartilhar-o-teor.md) | Concluído (v0.4.0) |
+| 24 | 10/11/2026 | PDF completo da intimação, pronto para compartilhar | [2026-11-10_24_pdf-da-intimacao.md](2026-11-10_24_pdf-da-intimacao.md) | Concluído (v0.4.1) |
 
 ## Entregas
 
@@ -36,3 +37,4 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 - **v0.3.1 — 10/11/2026**: pedido 15. Ícone verde-oliva pastel, só o dedo com a fita.
 - **v0.3.2 — 10/11/2026**: pedido 16. Tela fixa e responsiva, sem rolagem lateral.
 - **v0.4.0 — 10/11/2026**: pedidos 18 a 23. Marcar todas como lidas, imagens no GitHub, prazo no celular, compartilhar o teor, compartilhar o app, Como funciona e Termos de uso.
+- **v0.4.1 — 10/11/2026**: pedido 24. PDF completo da intimação, pronto para compartilhar.

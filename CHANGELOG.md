@@ -1,5 +1,12 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.4.1] — 10/11/2026
+
+Pedido atendido: 24.
+
+### Alterado
+- **PDF da intimação:** o botão PDF da publicação aberta gera um documento completo daquela intimação — dados do advogado (nome, OAB, telefone, e-mail, logomarca), número do processo, tipo, tribunal, vara, comarca, partes, data da intimação (disponibilização), data da publicação, início e fim do prazo em destaque e inteiro teor completo (várias páginas, se preciso) — e abre o compartilhamento do aparelho com o arquivo. Sem suporte, baixa o PDF. O CPF do usuário não é incluído. Exemplo em `docs/exemplos/`.
+
 ## [0.4.0] — 10/11/2026
 
 Pedidos atendidos: 18 a 23.

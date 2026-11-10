@@ -15,3 +15,19 @@ export async function shareTeor(p: Publication): Promise<'compartilhado' | 'canc
     return (e as Error).name === 'AbortError' ? 'cancelado' : 'sem-suporte';
   }
 }
+
+/** Compartilha um arquivo (ex.: PDF da intimação). Sem suporte a arquivos, baixa o arquivo. */
+export async function shareFile(blob: Blob, name: string, title: string, text?: string): Promise<'compartilhado' | 'cancelado' | 'baixado'> {
+  const file = new File([blob], name, { type: blob.type || 'application/pdf' });
+  if (navigator.canShare?.({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title, text });
+      return 'compartilhado';
+    } catch (e) {
+      if ((e as Error).name === 'AbortError') return 'cancelado';
+    }
+  }
+  const { downloadBlob } = await import('./format');
+  downloadBlob(blob, name);
+  return 'baixado';
+}

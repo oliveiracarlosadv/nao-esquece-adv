@@ -57,6 +57,7 @@ Ao abrir uma publicação, ela é marcada como lida. No detalhe você pode **aju
 ## 3.1 Compartilhar
 
 - **Publicação**: o botão Compartilhar envia o **teor completo em texto** (tipo, processo, partes, tribunal/vara, comarca, datas, fim do prazo e inteiro teor) pelo compartilhamento do aparelho. Sem compartilhamento nativo, aparecem WhatsApp, e-mail e copiar.
+- **PDF da intimação**: na publicação aberta, o botão **PDF** gera um documento com seus dados (nome, OAB, telefone, e-mail e logomarca), número do processo, tipo, tribunal, vara, comarca, partes, **data da intimação (disponibilização), data da publicação, início e fim do prazo** e o **inteiro teor**, e abre o compartilhamento do aparelho. Sem suporte, o PDF é baixado. O CPF não vai no PDF. [Exemplo](exemplos/pdf-da-intimacao-exemplo.pdf).
 - **O app**: no menu, “Compartilhar o app” envia um convite com o link para outros advogados.
 
 ## 4. Exportar
