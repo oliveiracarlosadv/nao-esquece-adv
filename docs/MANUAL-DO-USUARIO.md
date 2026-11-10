@@ -46,7 +46,7 @@ O botão **Buscar agora** força uma busca imediata.
 - **Tabela**: Status (lida/não lida) · Data (publicação e disponibilização) · Processo · Partes · Tribunal/Vara · Comarca · Fim do prazo · Tipo · Origem · Ações.
 - **Feriados**: o cálculo considera feriados nacionais, a suspensão de 20/12 a 20/01 e os feriados locais cadastrados. **Consulte sempre os feriados nacionais, estaduais e municipais e as suspensões do tribunal.**
 - **Cores do prazo**: vermelho (até 2 dias úteis), amarelo (até 5), verde (mais de 5), riscado (vencido). “Presumido” = o texto não trazia o prazo; confira.
-- **Ações por linha**: 👁 visualizar · ✓ marcar como lida (vai para Lidas) / não lida (volta ao Painel) · ★ salvar · ⬇ exportar · compartilhar.
+- **Ações por linha**: 👁 visualizar · ✓ marcar como lida (vai para Lidas) / não lida (volta ao Painel) · ★ favoritar · PDF exportar em PDF.
 - **Marcar todas como lidas**: botão ao lado do total de resultados (vale para tudo o que está na tela, respeitando filtros e busca). Em Intimações lidas, “Marcar todas como não lidas”.
 - **No celular**: cada item mostra sempre a linha “Prazo para manifestação”, com a data final e os dias úteis restantes.
 - **Seleção em lote**: marque várias linhas e use “Marcar como lida” (no Painel), “Marcar como não lida” (em Lidas) ou “Exportar”.
@@ -55,10 +55,9 @@ O botão **Buscar agora** força uma busca imediata.
 
 Ao abrir uma publicação, ela é marcada como lida. No detalhe você pode **ajustar o prazo** (dias úteis ou corridos), copiar o texto, abrir na fonte, fixar o processo e escrever uma anotação interna.
 
-## 3.1 Compartilhar
+## 3.1 Exportar em PDF e compartilhar
 
-- **Publicação**: o botão Compartilhar envia o **teor completo em texto** (tipo, processo, partes, tribunal/vara, comarca, datas, fim do prazo e inteiro teor) pelo compartilhamento do aparelho. Sem compartilhamento nativo, aparecem WhatsApp, e-mail e copiar.
-- **PDF da intimação**: na publicação aberta, o botão **PDF** gera um documento com seus dados (nome, OAB, telefone, e-mail e logomarca), número do processo, tipo, tribunal, vara, comarca, partes, **data da intimação (disponibilização), data da publicação, início e fim do prazo** e o **inteiro teor**, e oferece duas opções: **Salvar** (baixa o arquivo) ou **Compartilhar** (abre o compartilhamento do aparelho). O CPF não vai no PDF. [Exemplo](exemplos/pdf-da-intimacao-exemplo.pdf).
+- **Exportar em PDF**: em toda publicação aberta (no topo e no rodapé) e como ícone em cada linha da lista. Gera o documento completo — seus dados (nome, OAB, telefone, e-mail e logomarca), processo, partes, tribunal, vara, comarca, **data da intimação, da publicação, início e fim do prazo** e **inteiro teor** — e oferece **Salvar PDF** ou **Compartilhar** (WhatsApp, e-mail, Mensagens, AirDrop e outros apps). O CPF não vai no PDF. [Exemplo](exemplos/pdf-da-intimacao-exemplo.pdf).
 - **O app**: no menu, “Compartilhar o app” envia um convite com o link para outros advogados.
 
 ## 4. Exportar

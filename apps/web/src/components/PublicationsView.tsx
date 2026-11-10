@@ -19,6 +19,7 @@ import { applyFilters, countActive, distinct, sortPublications } from '@/lib/fil
 import { cx, todayIso } from '@/lib/format';
 import { shareTeor } from '@/lib/share';
 import { useMonitor } from './AppShell';
+import { PdfExportModal } from './PdfExport';
 import { useUi } from './Providers';
 import { ExportDialog, FiltersForm, PublicationDrawer, PublicationTable, SaveWorkspaceDialog, ShareDialog, setRead } from './publications';
 import { Button, Card, Empty, PageHeader, Spinner, Stat } from './ui';
@@ -39,6 +40,7 @@ export function PublicationsView({ mode }: { mode: ViewMode }) {
   const [shareP, setShareP] = useState<Publication | null>(null);
   const [exporting, setExporting] = useState<Publication[] | null>(null);
   const [saving, setSaving] = useState(false);
+  const [pdfFor, setPdfFor] = useState<Publication | null>(null);
   const [limit, setLimit] = useState(PAGE);
   const lidas = mode === 'lidas';
 
@@ -224,7 +226,7 @@ export function PublicationsView({ mode }: { mode: ViewMode }) {
             )
           ) : (
             <>
-              <PublicationTable rows={rows.slice(0, limit)} selected={selected} onSelect={setSelected} onOpen={(p) => setOpenId(p.id)} onShare={shareOrDialog} onExportOne={(p) => setExporting([p])} />
+              <PublicationTable rows={rows.slice(0, limit)} selected={selected} onSelect={setSelected} onOpen={(p) => setOpenId(p.id)} onShare={shareOrDialog} onExportOne={(p) => setPdfFor(p)} />
               {rows.length > limit && (
                 <div className="border-t border-line p-3 text-center">
                   <Button size="sm" variant="ghost" onClick={() => setLimit((l) => l + PAGE)}>
@@ -239,6 +241,7 @@ export function PublicationsView({ mode }: { mode: ViewMode }) {
 
       {open && <PublicationDrawer p={open} user={user} onClose={() => setOpenId(null)} onShare={setShareP} />}
       <ShareDialog p={shareP} onClose={() => setShareP(null)} />
+      {pdfFor && <PdfExportModal p={pdfFor} onClose={() => setPdfFor(null)} />}
       {exporting && <ExportDialog open onClose={() => setExporting(null)} all={all} current={{ ...filters, read: lidas ? 'lidos' : 'nao-lidos' }} selected={exporting} user={user} />}
       <SaveWorkspaceDialog open={saving} onClose={() => setSaving(false)} filters={{ ...filters, read: lidas ? 'lidos' : 'nao-lidos' }} user={user} />
     </>

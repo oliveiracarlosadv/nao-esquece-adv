@@ -1,5 +1,14 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.4.3] — 10/11/2026
+
+Pedidos atendidos: 28 e 29.
+
+### Alterado
+- **Exportar em PDF em toda leitura:** botão em destaque no topo e no rodapé de toda publicação aberta (intimação, citação, sentença, notificação, despacho, decisão, acórdão…) e ícone em cada linha da lista, no computador e no celular. Abre **Salvar PDF** ou **Compartilhar** (WhatsApp, e-mail, Mensagens, AirDrop e outros apps).
+- Removidos os botões “Compartilhar” (texto) e “PDF” da leitura e os ícones de compartilhar das linhas: fica somente **Exportar em PDF**.
+- A estrela de favorita passou a se chamar “Favoritar” (antes “Salvar”), para não confundir com “Salvar PDF”.
+
 ## [0.4.2] — 10/11/2026
 
 Pedidos atendidos: 25, 26 e 27.

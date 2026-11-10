@@ -1,18 +1,18 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
-  CalendarX2, Check, Copy, Download, ExternalLink, Eye, EyeOff, FileSpreadsheet, FileText, Mail, MessageCircle, Share2, Star, Table2,
+  CalendarX2, Check, Copy, Download, FileDown, ExternalLink, Eye, EyeOff, FileSpreadsheet, FileText, Mail, MessageCircle, Share2, Star, Table2,
 } from 'lucide-react';
 import { businessDaysUntil, computeDeadline } from '@/lib/deadline';
 import { audit, db, type Filters, type Publication, type User } from '@/lib/db';
-import { exportCsv, exportPdf, exportXlsx, publicationPdf } from '@/lib/export';
+import { exportCsv, exportPdf, exportXlsx } from '@/lib/export';
 import { applyFilters } from '@/lib/filters';
-import { cx, downloadBlob, fmtDate, todayIso } from '@/lib/format';
+import { cx, fmtDate, todayIso } from '@/lib/format';
 import { mailtoLink, shareText, whatsappLink } from '@/lib/notify';
-import { shareFile, shareTeor } from '@/lib/share';
 import { PUBLICATION_TYPES } from '@/lib/extract';
 import { LogoMark } from './Logo';
 import { AVISO_FERIADOS } from '@/lib/termos';
+import { PdfExportButton } from './PdfExport';
 import { useUi } from './Providers';
 import { Badge, Button, Drawer, Field, IconButton, Input, Modal, Select, Textarea, Toggle } from './ui';
 
@@ -166,14 +166,11 @@ export function PublicationTable({ rows, selected, onSelect, onOpen, onShare, on
                     <IconButton label={p.read ? 'Marcar como não lida (volta ao Painel)' : 'Marcar como lida (vai para Lidas)'} onClick={() => setRead([p.id], !p.read)}>
                       {p.read ? <EyeOff size={16} /> : <Check size={16} />}
                     </IconButton>
-                    <IconButton label={p.favorite ? 'Remover dos salvos' : 'Salvar'} onClick={() => toggleFavorite(p)}>
+                    <IconButton label={p.favorite ? 'Remover dos favoritos' : 'Favoritar'} onClick={() => toggleFavorite(p)}>
                       <Star size={16} className={p.favorite ? 'fill-alert text-alert' : ''} />
                     </IconButton>
-                    <IconButton label="Exportar" onClick={() => onExportOne(p)}>
-                      <Download size={16} />
-                    </IconButton>
-                    <IconButton label="Compartilhar" onClick={() => onShare(p)}>
-                      <Share2 size={16} />
+                    <IconButton label="Exportar em PDF (salvar ou compartilhar)" onClick={() => onExportOne(p)}>
+                      <FileDown size={16} className="text-[#C0573E]" />
                     </IconButton>
                   </div>
                 </td>
@@ -202,11 +199,11 @@ export function PublicationTable({ rows, selected, onSelect, onOpen, onShare, on
                 <MobileDeadline p={p} />
               </button>
               <div className="flex flex-col">
-                <IconButton label="Salvar" onClick={() => toggleFavorite(p)}>
+                <IconButton label="Favoritar" onClick={() => toggleFavorite(p)}>
                   <Star size={16} className={p.favorite ? 'fill-alert text-alert' : ''} />
                 </IconButton>
-                <IconButton label="Compartilhar" onClick={() => onShare(p)}>
-                  <Share2 size={16} />
+                <IconButton label="Exportar em PDF" onClick={() => onExportOne(p)}>
+                  <FileDown size={16} className="text-[#C0573E]" />
                 </IconButton>
               </div>
             </div>
@@ -289,56 +286,8 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
   const [days, setDays] = useState('');
   const [corridos, setCorridos] = useState(false);
   const [note, setNote] = useState('');
-  const [sharing, setSharing] = useState(false);
-  const [pdf, setPdf] = useState<{ blob: Blob; name: string; key: string } | null>(null);
-  const [pdfBusy, setPdfBusy] = useState(false);
-  const [pdfMenu, setPdfMenu] = useState(false);
-  const pdfKey = p ? `${p.id}|${p.deadline?.endAt || ''}|${user.name}|${user.oab}` : '';
-
-  // Gera o PDF da intimação assim que ela abre: no iPhone o compartilhamento precisa sair logo após o toque.
-  useEffect(() => {
-    if (!p) return;
-    let alive = true;
-    publicationPdf(p, user).then((r) => alive && setPdf({ ...r, key: pdfKey })).catch(() => undefined);
-    return () => {
-      alive = false;
-    };
-  }, [pdfKey]); // eslint-disable-line react-hooks/exhaustive-deps
-
   if (!p) return null;
 
-  // PDF completo da intimação (dados do advogado, processo, datas, prazo e inteiro teor), já para compartilhar.
-  const pdfAction = async (kind: 'salvar' | 'compartilhar') => {
-    setPdfBusy(true);
-    try {
-      const doc = pdf?.key === pdfKey ? pdf : await publicationPdf(p, user);
-      let r: string;
-      if (kind === 'salvar') {
-        downloadBlob(doc.blob, doc.name);
-        r = 'baixado';
-        toast('PDF da intimação salvo na pasta de downloads.');
-      } else {
-        r = await shareFile(doc.blob, doc.name, `${p.type}${p.processNumber ? ` — ${p.processNumber}` : ''}`, `Intimação ${p.processNumber || ''} — NÃO ESQUECE ADV`);
-        if (r === 'baixado') toast('Este navegador não compartilha arquivos: o PDF foi salvo na pasta de downloads.');
-      }
-      if (r !== 'cancelado') await audit('pdf.intimacao', `${r}: ${p.processNumber || p.type}`, user.id);
-      setPdfMenu(false);
-    } finally {
-      setPdfBusy(false);
-    }
-  };
-
-  // Compartilha o teor completo em texto (sem imagem, sem PDF).
-  const shareWhole = async () => {
-    setSharing(true);
-    try {
-      const r = await shareTeor(p);
-      if (r === 'sem-suporte') onShare(p);
-      else if (r === 'compartilhado') await audit('compartilhar', p.processNumber || p.type, user.id);
-    } finally {
-      setSharing(false);
-    }
-  };
 
   const saveDeadline = async () => {
     const n = Number(days);
@@ -378,17 +327,12 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
       title={`${p.type}${p.court ? ` · ${p.court}` : ''}`}
       footer={
         <>
-          <Button size="sm" variant="primary" icon={p.read ? <EyeOff size={15} /> : <Check size={15} />} onClick={() => setRead([p.id], !p.read)}>
+          <PdfExportButton p={p} />
+          <Button size="sm" icon={p.read ? <EyeOff size={15} /> : <Check size={15} />} onClick={() => setRead([p.id], !p.read)}>
             {p.read ? 'Marcar como não lida (volta ao Painel)' : 'Marcar como lida (vai para Lidas)'}
           </Button>
           <Button size="sm" icon={<Star size={15} className={p.favorite ? 'fill-alert text-alert' : ''} />} onClick={() => toggleFavorite(p)}>
-            {p.favorite ? 'Salvo' : 'Salvar'}
-          </Button>
-          <Button size="sm" icon={<Share2 size={15} />} onClick={shareWhole} disabled={sharing} title="Compartilha o teor completo da publicação">
-            {sharing ? 'Preparando…' : 'Compartilhar'}
-          </Button>
-          <Button size="sm" icon={<FileText size={15} />} onClick={() => setPdfMenu(true)} title="PDF completo da intimação: salvar ou compartilhar">
-            PDF
+            {p.favorite ? 'Favorita' : 'Favoritar'}
           </Button>
           {p.processNumber && (
             <Button size="sm" variant="ghost" onClick={pin}>
@@ -399,6 +343,13 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
       }
     >
       <div className="space-y-6">
+        <div className="flex flex-wrap items-center gap-3 rounded-xl border border-[#C0573E]/30 bg-[#C0573E]/5 p-3">
+          <div className="min-w-0 flex-1 text-sm">
+            <p className="font-medium text-ink">Exportar este documento</p>
+            <p className="text-xs text-soft">PDF completo para salvar ou compartilhar no WhatsApp, e-mail e outros apps.</p>
+          </div>
+          <PdfExportButton p={p} size="md" />
+        </div>
         <div className="flex items-center gap-2 border-b border-line pb-3">
           <LogoMark size={28} />
           <div className="min-w-0 leading-tight">
@@ -494,14 +445,6 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
         </Field>
         </div>
       </div>
-      <Modal open={pdfMenu} onClose={() => setPdfMenu(false)} title="PDF da intimação">
-        <p className="text-sm text-soft">Documento completo: seus dados, processo, datas da intimação e da publicação, prazo e inteiro teor.</p>
-        <div className="mt-4 grid gap-2 sm:grid-cols-2">
-          <Button icon={<Download size={16} />} disabled={pdfBusy} onClick={() => pdfAction('salvar')}>Salvar</Button>
-          <Button variant="primary" icon={<Share2 size={16} />} disabled={pdfBusy} onClick={() => pdfAction('compartilhar')}>Compartilhar</Button>
-        </div>
-        {pdfBusy && <p className="mt-3 text-xs text-faint">Preparando o PDF…</p>}
-      </Modal>
     </Drawer>
   );
 }

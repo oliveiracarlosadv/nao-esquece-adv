@@ -103,8 +103,7 @@ Para conhecer sem cadastrar nada, clique em **“Ver demonstração”** (dados 
 - **Exportação** para **PDF, Excel e CSV**, por resultado atual, selecionados ou filtros próprios (vara, processo, tribunal, período, lidos/não lidos).
 - **Meus painéis**: consultas e filtros salvos, painéis personalizados com contadores, processos fixados e publicações favoritas.
 - **Intimações lidas**: lista própria para o que já foi lido, com filtros, exportação e “Marcar como não lida”. Botão **“Marcar todas como lidas”** no Painel.
-- **Compartilhar** uma publicação envia o **teor completo em texto** (dados, prazo e inteiro teor) pelo WhatsApp, e-mail ou outros apps.
-- **PDF da intimação**: o botão PDF gera um documento completo da intimação aberta (dados do advogado, processo, data da intimação, da publicação, início e fim do prazo e inteiro teor) e já abre o compartilhamento. [Ver exemplo](docs/exemplos/pdf-da-intimacao-exemplo.pdf).
+- **Exportar em PDF** em toda leitura (intimação, citação, sentença, notificação…), no topo e no rodapé da publicação aberta e como ícone em cada linha: gera o documento completo (dados do advogado, processo, data da intimação, da publicação, início e fim do prazo e inteiro teor, em Times New Roman 12 justificado) e oferece **Salvar PDF** ou **Compartilhar** com WhatsApp, e-mail e outros apps. [Ver exemplo](docs/exemplos/pdf-da-intimacao-exemplo.pdf).
 - **Compartilhar o app** (menu): indica o NÃO ESQUECE ADV a outros advogados.
 - **Como funciona** e **Termos de uso**: o usuário tem plena responsabilidade pelo gerenciamento de suas intimações; aceite obrigatório na primeira abertura.
 - **Central de notificações**: histórico de avisos de tudo o que chegou de novo. Avisa no app, no computador (push), por e-mail e WhatsApp (envio automático é integração futura).

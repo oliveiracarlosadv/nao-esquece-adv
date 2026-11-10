@@ -31,6 +31,8 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 | 25 | 10/11/2026 | Aviso para consultar feriados nacionais e locais | [2026-11-10_25_aviso-feriados.md](2026-11-10_25_aviso-feriados.md) | Concluído (v0.4.2) |
 | 26 | 10/11/2026 | Botão PDF com opções Salvar ou Compartilhar | [2026-11-10_26_pdf-salvar-ou-compartilhar.md](2026-11-10_26_pdf-salvar-ou-compartilhar.md) | Concluído (v0.4.2) |
 | 27 | 10/11/2026 | Exportação em Times New Roman 12, justificado, entrelinhas 1,5 | [2026-11-10_27_formatacao-exportacao.md](2026-11-10_27_formatacao-exportacao.md) | Concluído (v0.4.2) |
+| 28 | 10/11/2026 | Botão "Exportar em PDF" em todas as leituras | [2026-11-10_28_exportar-pdf-em-todas-as-leituras.md](2026-11-10_28_exportar-pdf-em-todas-as-leituras.md) | Concluído (v0.4.3) |
+| 29 | 10/11/2026 | Somente "Exportar em PDF" (sem Compartilhar/PDF) | [2026-11-10_29_somente-exportar-em-pdf.md](2026-11-10_29_somente-exportar-em-pdf.md) | Concluído (v0.4.3) |
 
 ## Entregas
 
@@ -42,3 +44,4 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 - **v0.4.0 — 10/11/2026**: pedidos 18 a 23. Marcar todas como lidas, imagens no GitHub, prazo no celular, compartilhar o teor, compartilhar o app, Como funciona e Termos de uso.
 - **v0.4.1 — 10/11/2026**: pedido 24. PDF completo da intimação, pronto para compartilhar.
 - **v0.4.2 — 10/11/2026**: pedidos 25 a 27. Aviso de feriados, PDF com Salvar/Compartilhar, exportação em Times 12 justificado 1,5.
+- **v0.4.3 — 10/11/2026**: pedidos 28 e 29. Somente “Exportar em PDF” em toda leitura (salvar ou compartilhar).
