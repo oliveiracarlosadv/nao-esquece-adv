@@ -1,5 +1,12 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.3.1] — 10/11/2026
+
+Pedido atendido: 15.
+
+### Alterado
+- **Novo ícone:** verde-oliva pastel, sem o ramo de oliveira, apenas o dedo levantado com a fita (laço terracota). Estilo minimalista e moderno. Atualizados símbolo, logos horizontais, favicon, ícones do app (PWA), Dock do Mac e tela inicial; cor do app instalado (barra de título) em verde-oliva.
+
 ## [0.3.0] — 10/11/2026
 
 Pedidos atendidos: 08 a 14.

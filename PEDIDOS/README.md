@@ -18,9 +18,11 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 | 12 | 10/11/2026 | Palavras-chave: nome completo, CPF e OAB | [2026-11-10_12_palavras-chave-nome-cpf-oab.md](2026-11-10_12_palavras-chave-nome-cpf-oab.md) | Concluído (v0.3.0) |
 | 13 | 10/11/2026 | Clicar no número do processo marca como lida | [2026-11-10_13_clique-no-processo-marca-lida.md](2026-11-10_13_clique-no-processo-marca-lida.md) | Concluído (v0.3.0) |
 | 14 | 10/11/2026 | Diários: todos os estados marcados por padrão | [2026-11-10_14_diarios-todos-marcados.md](2026-11-10_14_diarios-todos-marcados.md) | Concluído (v0.3.0) |
+| 15 | 10/11/2026 | Ícone verde-oliva pastel, só o dedo com a fita | [2026-11-10_15_icone-verde-oliva-minimalista.md](2026-11-10_15_icone-verde-oliva-minimalista.md) | Concluído (v0.3.1) |
 
 ## Entregas
 
 - **v0.1.0 — 09/11/2026**: pedidos 01 a 05. Webapp publicado em https://oliveiracarlosadv.github.io/nao-esquece-adv/ · repositório https://github.com/oliveiracarlosadv/nao-esquece-adv · detalhes em [CHANGELOG.md](../CHANGELOG.md).
 - **v0.2.0 — 09/11/2026**: pedidos 06 e 07. App gratuito e completo, tela Intimações lidas, explicação das Notificações e ícone do Dock.
 - **v0.3.0 — 10/11/2026**: pedidos 08 a 14. Botão de instalar o app, novo ícone, sem login com aviso e backup mensal, palavras-chave nome/CPF/OAB, diários municipais e estaduais.
+- **v0.3.1 — 10/11/2026**: pedido 15. Ícone verde-oliva pastel, só o dedo com a fita.
