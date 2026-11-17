@@ -102,6 +102,7 @@ Para conhecer sem cadastrar nada, clique em **“Ver demonstração”** (dados 
 - **Busca global** com lupa: partes, processo, advogado ou OAB.
 - **Exportação** para **PDF, Excel e CSV**, por resultado atual, selecionados ou filtros próprios (vara, processo, tribunal, período, lidos/não lidos).
 - **Meus painéis**: consultas e filtros salvos, painéis personalizados com contadores, processos fixados e publicações favoritas.
+- **Arquivar** na leitura: “Arquivar” leva a intimação para Intimações lidas; “Arquivar e abrir a próxima” segue para a próxima não lida.
 - **Intimações lidas**: lista própria para o que já foi lido, com filtros, exportação e “Marcar como não lida”. Botão **“Marcar todas como lidas”** no Painel.
 - **Exportar em PDF** em toda leitura (intimação, citação, sentença, notificação…), no topo da publicação aberta e como ícone em cada linha: gera o documento completo (dados do advogado, processo, data da intimação, da publicação, início e fim do prazo e inteiro teor, em Times New Roman 12 justificado) e oferece **Salvar PDF** ou **Compartilhar** com WhatsApp, e-mail e outros apps. [Ver exemplo](docs/exemplos/pdf-da-intimacao-exemplo.pdf).
 - **Compartilhar o app** (menu): indica o NÃO ESQUECE ADV a outros advogados.

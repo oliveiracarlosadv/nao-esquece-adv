@@ -77,13 +77,12 @@ export function PublicationsView({ mode }: { mode: ViewMode }) {
     return applyFilters((all || []).filter((p) => p.read !== lidas), filters).length;
   }, [all, filters, lidas]);
   const open = useMemo(() => (openId ? (all || []).find((p) => p.id === openId) || null : null), [all, openId]);
+  // Próxima não lida do Painel (para "Arquivar e abrir a próxima").
+  const nextId = useMemo(() => (lidas ? undefined : rows.find((r) => r.id !== openId && !r.read)?.id), [rows, openId, lidas]);
 
   // Rotina de leitura: abrir uma publicação não lida a marca como lida (vai para "Intimações lidas").
   useEffect(() => {
-    if (open && !open.read) {
-      setRead([open.id], true);
-      toast('Lida. Ela agora fica em “Intimações lidas”.');
-    }
+    if (open && !open.read) setRead([open.id], true);
   }, [open?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user || !all) return <div className="py-20 text-center text-soft"><Spinner /></div>;
@@ -239,7 +238,17 @@ export function PublicationsView({ mode }: { mode: ViewMode }) {
         </div>
       </Card>
 
-      {open && <PublicationDrawer p={open} user={user} onClose={() => setOpenId(null)} onShare={setShareP} />}
+      {open && (
+        <PublicationDrawer
+          key={open.id}
+          p={open}
+          user={user}
+          mode={lidas ? 'lidas' : 'painel'}
+          onClose={() => setOpenId(null)}
+          onShare={setShareP}
+          onNext={!lidas && nextId ? () => setOpenId(nextId) : undefined}
+        />
+      )}
       <ShareDialog p={shareP} onClose={() => setShareP(null)} />
       {pdfFor && <PdfExportModal p={pdfFor} onClose={() => setPdfFor(null)} />}
       {exporting && <ExportDialog open onClose={() => setExporting(null)} all={all} current={{ ...filters, read: lidas ? 'lidos' : 'nao-lidos' }} selected={exporting} user={user} />}

@@ -127,7 +127,7 @@ export default function AreaDeTrabalho() {
           </ul>
         )}
       </Card>
-      {open && <PublicationDrawer p={open} user={user} onClose={() => setOpenId(null)} onShare={setShareP} />}
+      {open && <PublicationDrawer key={open.id} p={open} user={user} mode={open.read ? 'lidas' : 'painel'} onClose={() => setOpenId(null)} onShare={setShareP} />}
       <ShareDialog p={shareP} onClose={() => setShareP(null)} />
     </>
   );

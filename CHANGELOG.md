@@ -1,5 +1,12 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.4.6] — 17/11/2026
+
+Pedido atendido: 33.
+
+### Alterado
+- **Leitura mais fluida:** na intimação aberta, botões **Arquivar** (vai para Intimações lidas e fecha) e **Arquivar e abrir a próxima** (lê as não lidas em sequência). “Voltar para não lidas” virou opção secundária. Em Intimações lidas, o botão é **Desarquivar (voltar ao Painel)**.
+
 ## [0.4.5] — 10/11/2026
 
 Pedidos atendidos: 31 e 32.

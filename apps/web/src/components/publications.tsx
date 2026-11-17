@@ -1,7 +1,7 @@
 'use client';
 import { useMemo, useState } from 'react';
 import {
-  CalendarX2, Check, Copy, Download, FileDown, ExternalLink, Eye, EyeOff, FileSpreadsheet, FileText, Mail, MessageCircle, Share2, Star, Table2,
+  Archive, ArrowRight, CalendarX2, Check, Copy, Download, FileDown, Undo2, ExternalLink, Eye, EyeOff, FileSpreadsheet, FileText, Mail, MessageCircle, Share2, Star, Table2,
 } from 'lucide-react';
 import { businessDaysUntil, computeDeadline } from '@/lib/deadline';
 import { audit, db, type Filters, type Publication, type User } from '@/lib/db';
@@ -280,7 +280,7 @@ export function FiltersForm({ value, onChange, courts, origins, hideRead }: { va
 
 /* ---------------------------------------------------------------- Visualizar */
 
-export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publication | null; onClose: () => void; user: User; onShare: (p: Publication) => void }) {
+export function PublicationDrawer({ p, onClose, user, onShare, mode = 'painel', onNext }: { p: Publication | null; onClose: () => void; user: User; onShare: (p: Publication) => void; mode?: 'painel' | 'lidas'; onNext?: () => void }) {
   const { toast } = useUi();
   const [editing, setEditing] = useState(false);
   const [days, setDays] = useState('');
@@ -297,6 +297,23 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
     await audit('prazo.manual', `${p.processNumber}: ${n} dias`, user.id);
     setEditing(false);
     toast('Prazo atualizado.');
+  };
+
+  // Arquivar: a intimação vai para "Intimações lidas" e a leitura fecha.
+  const archive = async () => {
+    await setRead([p.id], true);
+    toast('Arquivada em Intimações lidas.');
+    onClose();
+  };
+  const archiveAndNext = async () => {
+    await setRead([p.id], true);
+    toast('Arquivada. Abrindo a próxima.');
+    onNext?.();
+  };
+  const unarchive = async () => {
+    await setRead([p.id], false);
+    toast('De volta ao Painel, como não lida.');
+    onClose();
   };
 
   const pin = async () => {
@@ -327,15 +344,33 @@ export function PublicationDrawer({ p, onClose, user, onShare }: { p: Publicatio
       title={`${p.type}${p.court ? ` · ${p.court}` : ''}`}
       footer={
         <>
-          <Button size="sm" icon={p.read ? <EyeOff size={15} /> : <Check size={15} />} onClick={() => setRead([p.id], !p.read)}>
-            {p.read ? 'Marcar como não lida (volta ao Painel)' : 'Marcar como lida (vai para Lidas)'}
-          </Button>
+          {mode === 'painel' ? (
+            <>
+              <Button size="sm" variant="primary" icon={<Archive size={15} />} onClick={archive}>
+                Arquivar
+              </Button>
+              {onNext && (
+                <Button size="sm" variant="primary" icon={<ArrowRight size={15} />} onClick={archiveAndNext}>
+                  Arquivar e abrir a próxima
+                </Button>
+              )}
+            </>
+          ) : (
+            <Button size="sm" variant="primary" icon={<Undo2 size={15} />} onClick={unarchive}>
+              Desarquivar (voltar ao Painel)
+            </Button>
+          )}
           <Button size="sm" icon={<Star size={15} className={p.favorite ? 'fill-alert text-alert' : ''} />} onClick={() => toggleFavorite(p)}>
             {p.favorite ? 'Favorita' : 'Favoritar'}
           </Button>
           {p.processNumber && (
             <Button size="sm" variant="ghost" onClick={pin}>
               Fixar processo
+            </Button>
+          )}
+          {mode === 'painel' && (
+            <Button size="sm" variant="ghost" icon={<EyeOff size={15} />} onClick={unarchive}>
+              Voltar para não lidas
             </Button>
           )}
         </>

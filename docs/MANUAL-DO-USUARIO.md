@@ -39,6 +39,8 @@ O botão **Buscar agora** força uma busca imediata.
 
 ## 3. Painel e Intimações lidas
 
+**Arquivar:** na intimação aberta, clique em **Arquivar** (ela vai para Intimações lidas e a leitura fecha) ou em **Arquivar e abrir a próxima**, para ler as não lidas em sequência. Em Intimações lidas, **Desarquivar** devolve ao Painel.
+
 **Rotina de leitura:** o **Painel** mostra só o que ainda **não foi lido**. Ao abrir uma publicação (ou marcá-la como lida), ela **sai do Painel** e passa a ficar em **Intimações lidas** (menu lateral). Para devolvê-la ao Painel, use **Marcar como não lida**. As duas listas têm os mesmos filtros, busca e exportação; a troca entre elas fica no topo da tabela (“Não lidas · Lidas”).
 
 
