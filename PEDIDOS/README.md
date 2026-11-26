@@ -37,6 +37,7 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 | 31 | 10/11/2026 | Texto do PDF não estava justificado | [2026-11-10_31_texto-nao-justificado.md](2026-11-10_31_texto-nao-justificado.md) | Concluído (v0.4.5) |
 | 32 | 10/11/2026 | Publicação aberta ainda mexia para os lados no celular | [2026-11-10_32_tela-mexe-no-celular.md](2026-11-10_32_tela-mexe-no-celular.md) | Concluído (v0.4.5) |
 | 33 | 17/11/2026 | Botão "Arquivar" (e "Arquivar e abrir a próxima") na leitura | [2026-11-17_33_botao-arquivar.md](2026-11-17_33_botao-arquivar.md) | Concluído (v0.4.6) |
+| 34 | 25/11/2026 | Licenças MIT, GPL-3.0 e CC BY 4.0 nos repositórios públicos | [2026-11-25_34_licencas-open-source.md](2026-11-25_34_licencas-open-source.md) | Concluído (v0.4.7) |
 
 ## Entregas
 
@@ -52,3 +53,4 @@ Todo pedido feito ao assistente é salvo aqui, em Markdown, antes de ser executa
 - **v0.4.4 — 10/11/2026**: pedido 30. “Exportar em PDF” só no topo da publicação aberta.
 - **v0.4.5 — 10/11/2026**: pedidos 31 e 32. PDF justificado de verdade; publicação aberta travada na largura do celular.
 - **v0.4.6 — 17/11/2026**: pedido 33. Botões Arquivar e Arquivar e abrir a próxima.
+- **v0.4.7 — 25/11/2026**: pedido 34. Licenças de código aberto nos repositórios públicos; NÃO ESQUECE ADV em MIT.

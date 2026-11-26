@@ -1,5 +1,14 @@
 # Changelog — NÃO ESQUECE ADV
 
+## [0.4.7] — 25/11/2026
+
+Pedido atendido: 34.
+
+### Alterado
+- **Código aberto sob a Licença MIT** (`LICENSE`), © 2026 Carlos Alexandre Albuquerque Oliveira. Substitui a GPL-3.0 gravada por outra sessão no mesmo dia e o antigo “Todos os direitos reservados” do README.
+- Nome, marca e logotipo continuam fora da licença.
+- **Termos de uso 1.2:** item 7 atualizado (código MIT; marca não licenciada). Novo aceite pedido a todos.
+
 ## [0.4.6] — 17/11/2026
 
 Pedido atendido: 33.

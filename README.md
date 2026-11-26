@@ -201,4 +201,8 @@ O NÃO ESQUECE ADV é uma ferramenta gratuita de apoio. **O usuário tem plena e
 **Carlos Alexandre Albuquerque Oliveira** — advogado, Belém/PA
 [@oliveiracarlosadv](https://instagram.com/oliveiracarlosadv) · carlos.0109adv@gmail.com
 
-© 2026 LexTecnologias. Todos os direitos reservados.
+## Licença
+
+Código licenciado sob a [Licença MIT](LICENSE) — © 2026 Carlos Alexandre Albuquerque Oliveira. Você pode usar, copiar, modificar e distribuir, inclusive para fins comerciais, desde que mantenha o aviso de direitos autorais e a licença.
+
+O nome **NÃO ESQUECE ADV**, a marca e o logotipo **não** estão incluídos na licença e não podem ser usados para sugerir endosso ou vínculo sem autorização. O uso do app publicado segue os [Termos de uso](docs/TERMOS-DE-USO.md).

@@ -2,7 +2,7 @@
 
 # Termos de uso — NÃO ESQUECE ADV
 
-**Versão 1.1 — vigente desde 10/11/2026**
+**Versão 1.2 — vigente desde 25/11/2026**
 
 Estes Termos regulam o uso do aplicativo **NÃO ESQUECE ADV** ("app"), criado e mantido por **Carlos Alexandre Albuquerque Oliveira** ("criador"). Ao marcar a opção de aceite e usar o app, você ("usuário") declara que leu, entendeu e concorda integralmente com estes Termos. Se não concordar, não utilize o app.
 
@@ -61,7 +61,9 @@ Estes Termos regulam o uso do aplicativo **NÃO ESQUECE ADV** ("app"), criado e 
 
 ## 7. Propriedade intelectual
 
-7.1. A marca, o nome, o logotipo e o código do app pertencem ao criador. O uso do app não concede ao usuário nenhum direito sobre eles, além do uso pessoal e profissional da ferramenta.
+7.1. O **código-fonte** do app é de código aberto, sob a **Licença MIT** (arquivo LICENSE do repositório oliveiracarlosadv/nao-esquece-adv), © 2026 Carlos Alexandre Albuquerque Oliveira.
+
+7.2. O **nome NÃO ESQUECE ADV, a marca e o logotipo** pertencem ao criador e não são licenciados: não podem ser usados para identificar versões modificadas ou sugerir endosso sem autorização.
 
 ## 8. Alterações destes Termos
 

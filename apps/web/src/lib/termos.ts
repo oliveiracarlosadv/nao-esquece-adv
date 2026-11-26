@@ -2,8 +2,8 @@
  * Termos de uso do NÃO ESQUECE ADV.
  * Ao mudar o texto de forma relevante, aumente TERMOS_VERSAO: todos terão de aceitar de novo.
  */
-export const TERMOS_VERSAO = '1.1';
-export const TERMOS_DATA = '10/11/2026';
+export const TERMOS_VERSAO = '1.2';
+export const TERMOS_DATA = '25/11/2026';
 
 export const RESPONSABILIDADE_RESUMO =
   'O NÃO ESQUECE ADV é uma ferramenta gratuita de apoio. O usuário tem plena e exclusiva responsabilidade pelo gerenciamento de suas intimações, publicações e prazos, devendo sempre conferir as informações nas fontes oficiais. O criador do app não se responsabiliza por publicações não captadas, prazos calculados de forma incorreta, falhas das fontes públicas ou perda de dados.';
@@ -72,7 +72,9 @@ Estes Termos regulam o uso do aplicativo **NÃO ESQUECE ADV** ("app"), criado e 
 
 ## 7. Propriedade intelectual
 
-7.1. A marca, o nome, o logotipo e o código do app pertencem ao criador. O uso do app não concede ao usuário nenhum direito sobre eles, além do uso pessoal e profissional da ferramenta.
+7.1. O **código-fonte** do app é de código aberto, sob a **Licença MIT** (arquivo LICENSE do repositório oliveiracarlosadv/nao-esquece-adv), © 2026 Carlos Alexandre Albuquerque Oliveira.
+
+7.2. O **nome NÃO ESQUECE ADV, a marca e o logotipo** pertencem ao criador e não são licenciados: não podem ser usados para identificar versões modificadas ou sugerir endosso sem autorização.
 
 ## 8. Alterações destes Termos
 
